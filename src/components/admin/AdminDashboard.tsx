@@ -18,7 +18,8 @@ import {
   Home,
   BarChart3,
   FolderOpen,
-  Image
+  Image,
+  HelpCircle
 } from 'lucide-react';
 import MenuManagement from './MenuManagement';
 import ContactManagement from './ContactManagement';
@@ -26,6 +27,7 @@ import SurveyManagement from './SurveyManagement';
 import ReportsManagement from './ReportsManagement';
 import HeroSliderManagement from './HeroSliderManagement';
 import PejabatManagement from './PejabatManagement';
+import FAQManagement from './FAQManagement';
 
 interface User {
   id: string;
@@ -34,7 +36,7 @@ interface User {
   role: string;
 }
 
-type AdminView = 'dashboard' | 'menu' | 'hero' | 'pejabat' | 'kontak' | 'survey' | 'reports';
+type AdminView = 'dashboard' | 'menu' | 'hero' | 'pejabat' | 'kontak' | 'survey' | 'reports' | 'faq';
 
 interface AdminDashboardProps {
   initialView?: AdminView;
@@ -54,6 +56,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     if (pathname === '/admin/pejabat') return 'pejabat';
     if (pathname === '/admin/kontak') return 'kontak';
     if (pathname === '/admin/survey') return 'survey';
+    if (pathname === '/admin/faq') return 'faq';
     if (pathname.startsWith('/admin/reports')) return 'reports';
     return 'dashboard';
   };
@@ -121,6 +124,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     { id: 'pejabat' as AdminView, label: 'Profil Pejabat', icon: Users, href: '/admin/pejabat' },
     { id: 'menu' as AdminView, label: 'Menu', icon: MenuIcon, href: '/admin/menu' },
     { id: 'reports' as AdminView, label: 'Data Laporan', icon: FolderOpen, href: '/admin/reports' },
+    { id: 'faq' as AdminView, label: 'FAQ', icon: HelpCircle, href: '/admin/faq' },
     { id: 'kontak' as AdminView, label: 'Kontak', icon: Mail, href: '/admin/kontak' },
     { id: 'survey' as AdminView, label: 'Survey', icon: BarChart3, href: '/admin/survey' },
   ];
@@ -203,6 +207,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
             {currentView === 'dashboard' && 'Dashboard'}
             {currentView === 'menu' && 'Manajemen Menu'}
             {currentView === 'reports' && 'Manajemen Data Laporan'}
+            {currentView === 'faq' && 'Manajemen FAQ'}
             {currentView === 'kontak' && 'Manajemen Kontak'}
             {currentView === 'survey' && 'Manajemen Survey'}
           </h2>
@@ -344,6 +349,8 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
           {currentView === 'pejabat' && <PejabatManagement />}
 
           {currentView === 'reports' && <ReportsManagement />}
+
+          {currentView === 'faq' && <FAQManagement />}
 
           {currentView === 'kontak' && <ContactManagement />}
 

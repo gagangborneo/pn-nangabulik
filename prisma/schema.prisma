@@ -68,8 +68,8 @@ model Pejabat {
 
 model FAQ {
   id        String   @id @default(cuid())
-  question  String
-  answer    String
+  question  String   @db.Text
+  answer    String   @db.Text
   order     Int      @default(0)
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
