@@ -58,28 +58,44 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch('/api/auth/me');
-        const data = await response.json();
-
-        if (!response.ok || !data.user) {
-          router.push('/login');
-          return;
+        const response = await fetch('/api/auth/me', {
+          credentials: 'include'
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          if (data.user) {
+            setUser(data.user);
+            setLoading(false);
+            return;
+          }
         }
-
-        setUser(data.user);
-      } catch {
-        router.push('/login');
-      } finally {
-        setLoading(false);
+        
+        // If not authenticated, middleware will redirect
+        // But we also redirect here as fallback
+        window.location.href = '/login';
+      } catch (error) {
+        console.error('Auth check error:', error);
+        window.location.href = '/login';
       }
     };
 
     checkAuth();
-  }, [router]);
+  }, []);
 
   const handleLogout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' });
-    router.push('/login');
+    try {
+      await fetch('/api/auth/logout', { 
+        method: 'POST',
+        credentials: 'include'
+      });
+      // Hard redirect to ensure cookies are cleared
+      window.location.href = '/login';
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Still redirect even if there's an error
+      window.location.href = '/login';
+    }
   };
 
   if (loading) {

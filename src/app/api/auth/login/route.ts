@@ -23,8 +23,15 @@ export async function POST(request: NextRequest) {
 
     const token = createSessionToken(user.email);
 
-    const response = NextResponse.json({ user });
-    response.cookies.set('admin_session', token, {
+    const response = NextResponse.json({ 
+      user,
+      success: true 
+    });
+    
+    // Set cookie with explicit settings
+    response.cookies.set({
+      name: 'admin_session',
+      value: token,
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',

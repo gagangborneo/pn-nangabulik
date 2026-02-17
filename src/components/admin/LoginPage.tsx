@@ -1,13 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, Shield } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -26,6 +26,7 @@ export default function LoginPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
+        credentials: 'include', // Ensure cookies are included
       });
 
       const data = await response.json();
@@ -36,8 +37,10 @@ export default function LoginPage() {
         return;
       }
 
-      // Redirect to admin dashboard
-      router.push('/admin');
+      // Wait a bit for cookie to be set, then hard redirect
+      setTimeout(() => {
+        window.location.href = '/admin';
+      }, 100);
     } catch {
       setError('Terjadi kesalahan saat login');
       setLoading(false);
