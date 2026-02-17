@@ -52,16 +52,6 @@ export default function SMAPBannerSection() {
             </div>
           </div>
         </div>
-
-        {/* Bottom Logos */}
-        <div className="flex justify-center items-center gap-8 mt-10">
-          <div className="bg-white/20 backdrop-blur-sm rounded-lg px-6 py-2">
-            <span className="font-bold text-white">BerAKHLAK</span>
-          </div>
-          <div className="bg-white/20 backdrop-blur-sm rounded-lg px-6 py-2">
-            <span className="font-bold text-white">bangsa melayani bangsa</span>
-          </div>
-        </div>
       </div>
     </section>
   );

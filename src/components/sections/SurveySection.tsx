@@ -64,14 +64,14 @@ export default function SurveySection() {
 
   if (loading) {
     return (
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gradient-to-br from-[#8B0000] via-[#6b0000] to-[#4a0000]">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <div className="h-8 w-64 bg-gray-200 rounded mx-auto mb-3 animate-pulse"></div>
-            <div className="h-1 w-20 bg-gray-200 rounded mx-auto animate-pulse"></div>
+            <div className="h-8 w-64 bg-white/20 rounded mx-auto mb-3 animate-pulse"></div>
+            <div className="h-1 w-20 bg-white/30 rounded mx-auto animate-pulse"></div>
           </div>
           <div className="animate-pulse space-y-4">
-            <div className="h-64 bg-gray-100 rounded-xl"></div>
+            <div className="h-64 bg-white/10 rounded-xl"></div>
           </div>
         </div>
       </section>
@@ -79,27 +79,33 @@ export default function SurveySection() {
   }
 
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
+    <section className="py-16 bg-gradient-to-br from-[#8B0000] via-[#6b0000] to-[#4a0000] relative overflow-hidden">
+      {/* Decorative elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+      </div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 drop-shadow-lg">
             Survey Persepsi Anti Korupsi & Kepuasan Masyarakat
           </h2>
-          <div className="w-20 h-1 bg-[#8B0000] mx-auto"></div>
+          <div className="w-20 h-1 bg-yellow-400 mx-auto shadow-lg"></div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left: Survey Links (1/3) */}
           <div className="lg:w-1/3">
-            <div className="bg-gradient-to-br from-[#8B0000] to-[#6b0000] rounded-xl p-6 text-white">
-              <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+            <div className="bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-2xl border border-white/20">
+              <h3 className="text-lg font-bold mb-4 flex items-center gap-2 text-[#8B0000]">
                 <BarChart3 className="h-5 w-5" />
                 Link Survey
               </h3>
               <div className="space-y-3">
                 {links.length === 0 ? (
-                  <p className="text-red-200 text-sm">Belum ada link survey tersedia</p>
+                  <p className="text-gray-500 text-sm">Belum ada link survey tersedia</p>
                 ) : (
                   links.map((link) => (
                     <a
@@ -107,10 +113,10 @@ export default function SurveySection() {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 bg-white/10 hover:bg-white/20 rounded-lg px-4 py-3 transition-colors group"
+                      className="flex items-center gap-2 bg-gradient-to-r from-[#8B0000] to-[#6b0000] hover:from-[#a00000] hover:to-[#7b0000] text-white rounded-lg px-4 py-3 transition-all duration-300 group shadow-md hover:shadow-lg"
                     >
                       <ExternalLink className="h-4 w-4" />
-                      <span className="flex-1">{link.title}</span>
+                      <span className="flex-1 font-medium">{link.title}</span>
                       <ExternalLink className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </a>
                   ))
@@ -120,17 +126,17 @@ export default function SurveySection() {
 
             {/* Year Selector */}
             {years.length > 0 && (
-              <div className="mt-4 bg-gray-50 rounded-xl p-4">
-                <h4 className="text-sm font-semibold text-gray-600 mb-3">Pilih Tahun:</h4>
+              <div className="mt-4 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-2xl border border-white/20">
+                <h4 className="text-sm font-semibold text-[#8B0000] mb-3">Pilih Tahun:</h4>
                 <div className="flex flex-wrap gap-2">
                   {years.map((year) => (
                     <button
                       key={year}
                       onClick={() => setSelectedYear(year)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-sm ${
                         selectedYear === year
-                          ? 'bg-[#8B0000] text-white'
-                          : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                          ? 'bg-gradient-to-r from-[#8B0000] to-[#6b0000] text-white shadow-lg scale-105'
+                          : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 hover:border-[#8B0000]/30'
                       }`}
                     >
                       {year}
@@ -144,22 +150,22 @@ export default function SurveySection() {
           {/* Right: Survey Tables (2/3) */}
           <div className="lg:w-2/3">
             {years.length === 0 ? (
-              <div className="bg-gray-50 rounded-xl p-8 text-center">
-                <BarChart3 className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-600 mb-2">
+              <div className="bg-white/95 backdrop-blur-sm rounded-xl p-8 text-center shadow-2xl border border-white/20">
+                <BarChart3 className="h-12 w-12 text-[#8B0000]/50 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
                   Belum Ada Data Survey
                 </h3>
-                <p className="text-gray-500 text-sm">
+                <p className="text-gray-600 text-sm">
                   Data survey akan ditampilkan setelah diisi oleh admin
                 </p>
               </div>
             ) : (
               <div className="space-y-6">
                 {categoryOrder.map((category) => (
-                  <div key={category} className="bg-gray-50 rounded-xl overflow-hidden">
+                  <div key={category} className="bg-white/95 backdrop-blur-sm rounded-xl overflow-hidden shadow-2xl border border-white/20 hover:shadow-3xl transition-shadow duration-300">
                     {/* Category Header */}
-                    <div className="bg-gradient-to-r from-gray-100 to-gray-50 px-6 py-4 border-b border-gray-200">
-                      <h3 className="text-lg font-bold text-gray-800">
+                    <div className="bg-gradient-to-r from-[#8B0000] to-[#6b0000] px-6 py-4">
+                      <h3 className="text-lg font-bold text-white drop-shadow-md">
                         {categoryLabels[category]} {selectedYear}
                       </h3>
                     </div>
@@ -168,23 +174,23 @@ export default function SurveySection() {
                     <div className="overflow-x-auto">
                       <table className="w-full">
                         <thead>
-                          <tr className="bg-gray-100">
-                            <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                          <tr className="bg-gradient-to-r from-gray-50 to-gray-100">
+                            <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                               Indikator
                             </th>
                             {['Triwulan 1', 'Triwulan 2', 'Triwulan 3', 'Triwulan 4'].map((tw) => (
                               <th
                                 key={tw}
-                                className="px-4 py-3 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                                className="px-4 py-3 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider"
                               >
                                 {tw}
                               </th>
                             ))}
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr className="border-b border-gray-100">
-                            <td className="px-4 py-4 text-sm font-medium text-gray-700">
+                        <tbody className="bg-white">
+                          <tr className="border-b border-gray-200 hover:bg-gray-50/50 transition-colors">
+                            <td className="px-4 py-4 text-sm font-semibold text-gray-800">
                               Persentase
                             </td>
                             {[1, 2, 3, 4].map((quarter) => {
@@ -193,7 +199,7 @@ export default function SurveySection() {
                                 <td key={quarter} className="px-4 py-4 text-center">
                                   {data?.percentage ? (
                                     <span className="inline-flex items-center gap-1">
-                                      <span className="text-lg font-bold text-[#8B0000]">
+                                      <span className="text-lg font-bold text-[#8B0000] bg-red-50 px-3 py-1 rounded-lg">
                                         {data.percentage.toFixed(1)}%
                                       </span>
                                     </span>
@@ -204,8 +210,8 @@ export default function SurveySection() {
                               );
                             })}
                           </tr>
-                          <tr>
-                            <td className="px-4 py-4 text-sm font-medium text-gray-700">
+                          <tr className="hover:bg-gray-50/50 transition-colors">
+                            <td className="px-4 py-4 text-sm font-semibold text-gray-800">
                               Laporan
                             </td>
                             {[1, 2, 3, 4].map((quarter) => {
@@ -217,7 +223,7 @@ export default function SurveySection() {
                                       href={data.reportUrl}
                                       target="_blank"
                                       rel="noopener noreferrer"
-                                      className="inline-flex items-center gap-1 text-[#8B0000] hover:text-[#6b0000] text-sm font-medium"
+                                      className="inline-flex items-center gap-1 text-[#8B0000] hover:text-white bg-red-50 hover:bg-[#8B0000] px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 shadow-sm hover:shadow-md"
                                     >
                                       <FileText className="h-4 w-4" />
                                       Lihat
