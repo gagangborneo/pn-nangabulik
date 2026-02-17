@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Menu, Phone, Mail, MapPin, ChevronDown, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { TTSToggle } from '@/components/ui/tts-toggle';
+import { TTSText } from '@/components/ui/tts-text';
 import {
   Sheet,
   SheetContent,
@@ -138,9 +140,13 @@ export default function Header() {
                 onClick={() => toggleMobileMenu(item.id)}
                 className="flex items-center gap-2 flex-1 text-left min-w-0"
               >
-                <span className={`truncate ${level === 0 ? 'font-medium text-gray-800 text-[15px]' : 'text-gray-600 text-[14px]'}`}>
+                <TTSText 
+                  as="span" 
+                  className={`truncate ${level === 0 ? 'font-medium text-gray-800 text-[15px]' : 'text-gray-600 text-[14px]'}`}
+                  hoverEffect={false}
+                >
                   {item.label}
-                </span>
+                </TTSText>
               </button>
               <button
                 onClick={() => toggleMobileMenu(item.id)}
@@ -157,7 +163,9 @@ export default function Header() {
                 href={item.url}
                 className={`flex-1 min-w-0 truncate ${level === 0 ? 'font-medium text-gray-800 text-[15px]' : 'text-gray-600 text-[14px]'}`}
               >
-                {item.label}
+                <TTSText as="span" hoverEffect={false}>
+                  {item.label}
+                </TTSText>
               </Link>
             </SheetClose>
           )}
@@ -183,7 +191,9 @@ export default function Header() {
             onClick={(e) => toggleDesktopMenu(item.id, e)}
             className="text-sm font-medium text-gray-600 hover:text-red-800 transition-colors px-3 py-2 inline-flex items-center cursor-pointer"
           >
-            {item.label}
+            <TTSText as="span" hoverEffect={false}>
+              {item.label}
+            </TTSText>
             <ChevronDown className={`ml-1 h-3 w-3 text-gray-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
           </button>
         ) : (
@@ -191,7 +201,9 @@ export default function Header() {
             href={item.url}
             className="text-sm font-medium text-gray-600 hover:text-red-800 transition-colors px-3 py-2 inline-flex items-center"
           >
-            {item.label}
+            <TTSText as="span" hoverEffect={false}>
+              {item.label}
+            </TTSText>
           </Link>
         )}
 
@@ -218,7 +230,7 @@ export default function Header() {
             onClick={(e) => toggleDesktopMenu(item.id, e)}
             className="w-full flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-800 transition-colors whitespace-nowrap text-left"
           >
-            <span>{item.label}</span>
+            <TTSText as="span" hoverEffect={false}>{item.label}</TTSText>
             <ChevronRight className={`ml-2 h-3 w-3 text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
           </button>
         ) : (
@@ -226,7 +238,7 @@ export default function Header() {
             href={item.url}
             className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-800 transition-colors whitespace-nowrap"
           >
-            <span>{item.label}</span>
+            <TTSText as="span" hoverEffect={false}>{item.label}</TTSText>
           </Link>
         )}
 
@@ -254,20 +266,22 @@ export default function Header() {
                 className="flex items-center gap-1.5 hover:text-red-200 transition-colors"
               >
                 <Mail className="h-3.5 w-3.5" />
-                <span>info@pn-nangabulik.go.id</span>
+                <TTSText as="span" hoverEffect={false}>info@pn-nangabulik.go.id</TTSText>
               </a>
               <a
                 href="tel:+6285252555"
                 className="flex items-center gap-1.5 hover:text-red-200 transition-colors"
               >
                 <Phone className="h-3.5 w-3.5" />
-                <span>+62 8525 2555</span>
+                <TTSText as="span" hoverEffect={false}>+62 8525 2555</TTSText>
               </a>
             </div>
 
             {/* Center: Operating Hours */}
             <div className="text-center flex-1 md:flex-none">
-              <span className="text-red-200">Senin - Jumat: 08:00 - 16:00 WIB</span>
+              <TTSText as="span" className="text-red-200" hoverEffect={false}>
+                Senin - Jumat: 08:00 - 16:00 WIB
+              </TTSText>
             </div>
 
             {/* Right: Address */}
@@ -277,7 +291,7 @@ export default function Header() {
                 className="flex items-center gap-1.5 hover:text-red-200 transition-colors"
               >
                 <MapPin className="h-3.5 w-3.5" />
-                <span>Jalan Pendidikan No. 123, Nanga Bulik</span>
+                <TTSText as="span" hoverEffect={false}>Jalan Pendidikan No. 123, Nanga Bulik</TTSText>
               </a>
             </div>
           </div>
@@ -295,25 +309,36 @@ export default function Header() {
               className="w-12 h-12 object-contain"
             />
             <div>
-              <p className="text-xs md:text-sm text-gray-500 leading-tight">
+              <TTSText 
+                as="p" 
+                className="text-xs md:text-sm text-gray-500 leading-tight"
+                hoverEffect={false}
+              >
                 MAHKAMAH AGUNG REPUBLIK INDONESIA
-              </p>
-              <h1 className="text-base md:text-lg font-bold text-gray-900 leading-tight">
+              </TTSText>
+              <TTSText 
+                as="h1" 
+                className="text-base md:text-lg font-bold text-gray-900 leading-tight"
+                hoverEffect={false}
+              >
                 Pengadilan Negeri Nanga Bulik
-              </h1>
+              </TTSText>
             </div>
           </Link>
 
           {/* WhatsApp Contact Button */}
-          <a
-            href="https://wa.me/6282350442244"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden md:inline-flex items-center gap-2 bg-red-900 text-white hover:bg-red-800 transition-colors px-6 py-2.5 rounded-lg font-medium"
-          >
-            <Phone className="h-4 w-4" />
-            <span>Hubungi Kami</span>
-          </a>
+          <div className="hidden md:flex items-center gap-3">
+            <TTSToggle variant="outline" size="icon" />
+            <a
+              href="https://wa.me/6282350442244"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-red-900 text-white hover:bg-red-800 transition-colors px-6 py-2.5 rounded-lg font-medium"
+            >
+              <Phone className="h-4 w-4" />
+              <span>Hubungi Kami</span>
+            </a>
+          </div>
 
           {/* Mobile Menu Button */}
           <Sheet>
@@ -335,10 +360,12 @@ export default function Header() {
                     className="w-10 h-10 object-contain"
                   />
                   <div>
-                    <div className="text-xs text-gray-500">MAHKAMAH AGUNG RI</div>
-                    <div className="font-bold text-gray-800 text-sm">
+                    <TTSText as="div" className="text-xs text-gray-500" hoverEffect={false}>
+                      MAHKAMAH AGUNG RI
+                    </TTSText>
+                    <TTSText as="div" className="font-bold text-gray-800 text-sm" hoverEffect={false}>
                       Pengadilan Negeri Nanga Bulik
-                    </div>
+                    </TTSText>
                   </div>
                 </div>
 
@@ -349,18 +376,18 @@ export default function Header() {
                     className="flex items-center gap-2 hover:text-red-200"
                   >
                     <Mail className="h-4 w-4" />
-                    <span>info@pn-nangabulik.go.id</span>
+                    <TTSText as="span" hoverEffect={false}>info@pn-nangabulik.go.id</TTSText>
                   </a>
                   <a
                     href="tel:+6285252555"
                     className="flex items-center gap-2 hover:text-red-200"
                   >
                     <Phone className="h-4 w-4" />
-                    <span>+62 8525 2555</span>
+                    <TTSText as="span" hoverEffect={false}>+62 8525 2555</TTSText>
                   </a>
                   <div className="flex items-center gap-2 text-red-200">
                     <MapPin className="h-4 w-4" />
-                    <span>Jl. Pendidikan No. 123, Nanga Bulik</span>
+                    <TTSText as="span" hoverEffect={false}>Jl. Pendidikan No. 123, Nanga Bulik</TTSText>
                   </div>
                 </div>
 
@@ -378,15 +405,18 @@ export default function Header() {
                 </nav>
 
                 {/* WhatsApp Button in Mobile */}
-                <a
-                  href="https://wa.me/6282350442244"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center justify-center gap-2 bg-red-900 text-white hover:bg-red-800 transition-colors px-6 py-2.5 rounded-lg font-medium"
-                >
-                  <Phone className="h-4 w-4" />
-                  <span>Hubungi Kami</span>
-                </a>
+                <div className="flex gap-2 mt-4">
+                  <TTSToggle variant="outline" size="default" showLabel />
+                  <a
+                    href="https://wa.me/6282350442244"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 inline-flex items-center justify-center gap-2 bg-red-900 text-white hover:bg-red-800 transition-colors px-6 py-2.5 rounded-lg font-medium"
+                  >
+                    <Phone className="h-4 w-4" />
+                    <span>Hubungi Kami</span>
+                  </a>
+                </div>
               </div>
             </SheetContent>
           </Sheet>

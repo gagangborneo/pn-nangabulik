@@ -19,6 +19,9 @@ import {
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
+// TTS
+import { AutoTTSWrapper } from '@/components/ui/auto-tts-wrapper';
+
 interface ReportCategory {
   id: string;
   title: string;
@@ -85,7 +88,8 @@ export default function DataLaporanPage() {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Header />
-      <main className="flex-1">
+      <AutoTTSWrapper>
+        <main className="flex-1">
         {/* Header */}
         <div className="bg-gradient-to-r from-red-900 to-red-800 text-white py-12">
           <div className="container mx-auto px-4">
@@ -152,6 +156,7 @@ export default function DataLaporanPage() {
           )}
         </div>
       </main>
+      </AutoTTSWrapper>
       <Footer />
     </div>
   );

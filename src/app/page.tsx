@@ -21,6 +21,9 @@ import FAQSection from '@/components/sections/FAQSection';
 import PartnersSection from '@/components/sections/PartnersSection';
 import ContactSection from '@/components/sections/ContactSection';
 
+// TTS Components
+import { AutoTTSWrapper } from '@/components/ui/auto-tts-wrapper';
+
 export default function Home() {
   const router = useRouter();
 
@@ -28,20 +31,22 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-white">
 
       <Header />
-      <main className="flex-1">
-        <HeroSection />
-        <LogoBannerSection />
-        <ZonaIntegritasSection />
-        <ProfilPejabatSection />
-        <SMAPBannerSection />
-        <LayananPublikSection />
-        {/* <WadahKeadilanSection /> */}
-        <SurveySection />
-        <BlogSection />
-        <FAQSection />
-        <PartnersSection />
-        <ContactSection />
-      </main>
+      <AutoTTSWrapper>
+        <main className="flex-1">
+          <HeroSection />
+          <LogoBannerSection />
+          <ZonaIntegritasSection />
+          <ProfilPejabatSection />
+          <SMAPBannerSection />
+          <LayananPublikSection />
+          {/* <WadahKeadilanSection /> */}
+          <SurveySection />
+          <BlogSection />
+          <FAQSection />
+          <PartnersSection />
+          <ContactSection />
+        </main>
+      </AutoTTSWrapper>
       <Footer />
     </div>
   );

@@ -4,6 +4,7 @@ import { useRouter, useParams } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SinglePostView from '@/components/sections/SinglePostView';
+import { AutoTTSWrapper } from '@/components/ui/auto-tts-wrapper';
 
 export default function BeritaDetailPage() {
   const router = useRouter();
@@ -17,9 +18,11 @@ export default function BeritaDetailPage() {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Header />
-      <main className="flex-1">
-        <SinglePostView slug={slug} onClose={handleClose} />
-      </main>
+      <AutoTTSWrapper>
+        <main className="flex-1">
+          <SinglePostView slug={slug} onClose={handleClose} />
+        </main>
+      </AutoTTSWrapper>
       <Footer />
     </div>
   );
