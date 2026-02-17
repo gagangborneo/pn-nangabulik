@@ -9,6 +9,8 @@ import {
   SheetContent,
   SheetTrigger,
   SheetClose,
+  SheetTitle,
+  SheetHeader,
 } from '@/components/ui/sheet';
 
 interface MenuItem {
@@ -93,27 +95,27 @@ export default function Header() {
   const renderMobileMenuItem = (item: MenuItem, level: number = 0) => {
     const hasChildren = item.children && item.children.length > 0;
     const isExpanded = expandedMobileMenus.has(item.id);
-    const paddingLeft = level * 12;
+    const paddingLeft = 8 + (level * 16); // Base padding 8px + 16px per level
 
     return (
       <div key={item.id}>
         <div
-          className="flex items-center justify-between py-2 cursor-pointer hover:bg-gray-50 rounded px-2 -mx-2"
-          style={{ paddingLeft: `${paddingLeft}px` }}
+          className="flex items-center justify-between py-3 cursor-pointer hover:bg-gray-50 rounded-md transition-colors"
+          style={{ paddingLeft: `${paddingLeft}px`, paddingRight: '12px' }}
         >
           {hasChildren ? (
             <>
               <button
                 onClick={() => toggleMobileMenu(item.id)}
-                className="flex items-center gap-2 flex-1 text-left"
+                className="flex items-center gap-2 flex-1 text-left min-w-0"
               >
-                <span className={`${level === 0 ? 'font-medium text-gray-800' : 'text-gray-600'}`}>
+                <span className={`truncate ${level === 0 ? 'font-medium text-gray-800 text-[15px]' : 'text-gray-600 text-[14px]'}`}>
                   {item.label}
                 </span>
               </button>
               <button
                 onClick={() => toggleMobileMenu(item.id)}
-                className="p-1"
+                className="p-1 flex-shrink-0 ml-2"
               >
                 <ChevronDown
                   className={`h-4 w-4 text-gray-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
@@ -124,7 +126,7 @@ export default function Header() {
             <SheetClose asChild>
               <Link
                 href={item.url}
-                className={`flex-1 ${level === 0 ? 'font-medium text-gray-800' : 'text-gray-600'}`}
+                className={`flex-1 min-w-0 truncate ${level === 0 ? 'font-medium text-gray-800 text-[15px]' : 'text-gray-600 text-[14px]'}`}
               >
                 {item.label}
               </Link>
@@ -132,7 +134,7 @@ export default function Header() {
           )}
         </div>
         {hasChildren && isExpanded && (
-          <div className="space-y-1">
+          <div className="mt-1 space-y-1">
             {item.children!.map((child) => renderMobileMenuItem(child, level + 1))}
           </div>
         )}
@@ -276,6 +278,9 @@ export default function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px] overflow-y-auto">
+              <SheetHeader className="sr-only">
+                <SheetTitle>Menu Navigasi</SheetTitle>
+              </SheetHeader>
               <div className="flex flex-col gap-4 mt-8">
                 {/* Logo in mobile menu */}
                 <div className="flex items-center gap-3 mb-4">
@@ -315,7 +320,7 @@ export default function Header() {
                 </div>
 
                 {/* Mobile Menu Items */}
-                <nav className="space-y-1">
+                <nav className="space-y-1 -mx-6 px-6">
                   {loading ? (
                     <MobileMenuSkeleton />
                   ) : menuItems.length === 0 ? (
