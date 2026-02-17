@@ -2,7 +2,7 @@
 
 export default function ZonaIntegritasSection() {
   return (
-    <section className="py-8 bg-white overflow-hidden">
+    <section className="py-16 bg-white overflow-hidden">
       <div className="container mx-auto px-4">
         {/* Banner Zona Integritas */}
         <div className="relative bg-gradient-to-r from-[#8B0000] via-[#A50000] to-[#B22222] rounded-xl overflow-hidden shadow-xl">
@@ -73,24 +73,6 @@ export default function ZonaIntegritasSection() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Bottom Links */}
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-6">
-          <a 
-            href="https://zi.pn-nangabulik.go.id/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-gradient-to-r from-[#8B0000] to-[#A50000] text-white px-8 py-3 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all hover:scale-105 text-center"
-          >
-            Zona Integritas
-          </a>
-          <div className="flex items-center gap-4">
-            <span className="text-gray-500 font-medium">Layanan:</span>
-            <span className="text-[#8B0000] font-bold">BerAKHLAK</span>
-            <span className="text-orange-600 font-bold">•</span>
-            <span className="text-orange-600 font-medium italic">"bangsa melayani bangsa"</span>
           </div>
         </div>
       </div>

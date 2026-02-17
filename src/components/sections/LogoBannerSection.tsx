@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export default function LogoBannerSection() {
   return (
-    <section className="bg-white py-4 md:py-6 border-b-4 border-red-900">
+    <section className="bg-white border-b-4 border-red-900">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-6 md:gap-12">
           {/* Left Logo - BerAKHLAK */}

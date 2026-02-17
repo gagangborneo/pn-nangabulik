@@ -124,7 +124,7 @@ export default function ProfilPejabatSection() {
           {/* Cards Container */}
           <div className="overflow-hidden px-2">
             <div
-              className="grid grid-cols-2 gap-4 md:gap-6 transition-transform duration-500"
+              className="grid grid-cols-2 gap-4 md:gap-6 transition-transform duration-500 my-6"
             >
               {getVisibleItems().map((person, index) => (
                 <div

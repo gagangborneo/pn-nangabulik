@@ -4,7 +4,7 @@ import { ShieldAlert } from 'lucide-react';
 
 export default function SMAPBannerSection() {
   return (
-    <section className="py-16 bg-gradient-to-r from-[#8B0000] to-[#A50000] relative overflow-hidden">
+    <section className="py-16 my-16 bg-gradient-to-r from-[#8B0000] to-[#A50000] relative overflow-hidden">
       {/* Decorative Elements */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-yellow-500/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
       <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-500/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>

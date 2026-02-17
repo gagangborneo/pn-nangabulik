@@ -35,7 +35,7 @@ export default function Home() {
         <ProfilPejabatSection />
         <SMAPBannerSection />
         <LayananPublikSection />
-        <WadahKeadilanSection />
+        {/* <WadahKeadilanSection /> */}
         <SurveySection />
         <BlogSection />
         <FAQSection />

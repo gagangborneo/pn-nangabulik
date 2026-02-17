@@ -81,22 +81,11 @@ const layananData: LayananItem[] = [
 export default function LayananPublikSection() {
   return (
     <section className="py-16 bg-white relative overflow-hidden">
-      {/* Curved Gradient Top */}
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-red-900/5 to-transparent"></div>
-      <div className="absolute top-0 left-0 right-0">
-        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-          <path
-            d="M0 120V60C240 20 480 0 720 20C960 40 1200 80 1440 60V120H0Z"
-            fill="url(#gradient1)"
-          />
-          <defs>
-            <linearGradient id="gradient1" x1="0" y1="0" x2="0" y2="120">
-              <stop offset="0%" stopColor="#7f1d1d" stopOpacity="0.05" />
-              <stop offset="100%" stopColor="#7f1d1d" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
+       {/* Decorative elements */}
+      <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+      <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-white/5 rounded-full"></div>
+
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
@@ -149,22 +138,6 @@ export default function LayananPublikSection() {
             );
           })}
         </div>
-      </div>
-
-      {/* Curved Gradient Bottom */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full rotate-180">
-          <path
-            d="M0 80V40C240 10 480 0 720 10C960 20 1200 50 1440 40V80H0Z"
-            fill="url(#gradient2)"
-          />
-          <defs>
-            <linearGradient id="gradient2" x1="0" y1="0" x2="0" y2="80">
-              <stop offset="0%" stopColor="#7f1d1d" stopOpacity="0.03" />
-              <stop offset="100%" stopColor="#7f1d1d" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-        </svg>
       </div>
     </section>
   );
