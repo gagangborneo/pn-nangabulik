@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Menu, Phone, Mail, MapPin, ChevronDown, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -54,6 +54,8 @@ export default function Header() {
   const [loading, setLoading] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [expandedMobileMenus, setExpandedMobileMenus] = useState<Set<string>>(new Set());
+  const [expandedDesktopMenus, setExpandedDesktopMenus] = useState<Set<string>>(new Set());
+  const desktopMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchMenus = async () => {
@@ -90,6 +92,33 @@ export default function Header() {
       return newSet;
     });
   };
+
+  // Toggle desktop menu expansion
+  const toggleDesktopMenu = (id: string, event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setExpandedDesktopMenus((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
+  };
+
+  // Close all desktop menus when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (desktopMenuRef.current && !desktopMenuRef.current.contains(event.target as Node)) {
+        setExpandedDesktopMenus(new Set());
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Render mobile menu item recursively
   const renderMobileMenuItem = (item: MenuItem, level: number = 0) => {
@@ -145,21 +174,29 @@ export default function Header() {
   // Render desktop menu item (level 0 - horizontal)
   const renderDesktopMenuItem = (item: MenuItem) => {
     const hasChildren = item.children && item.children.length > 0;
+    const isExpanded = expandedDesktopMenus.has(item.id);
 
     return (
-      <div key={item.id} className="relative group">
-        <Link
-          href={item.url}
-          className="text-sm font-medium text-gray-600 hover:text-red-800 transition-colors px-3 py-2 inline-flex items-center"
-        >
-          {item.label}
-          {hasChildren && (
-            <ChevronDown className="ml-1 h-3 w-3 text-gray-400 group-hover:text-red-800 transition-colors" />
-          )}
-        </Link>
+      <div key={item.id} className="relative">
+        {hasChildren ? (
+          <button
+            onClick={(e) => toggleDesktopMenu(item.id, e)}
+            className="text-sm font-medium text-gray-600 hover:text-red-800 transition-colors px-3 py-2 inline-flex items-center cursor-pointer"
+          >
+            {item.label}
+            <ChevronDown className={`ml-1 h-3 w-3 text-gray-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+          </button>
+        ) : (
+          <Link
+            href={item.url}
+            className="text-sm font-medium text-gray-600 hover:text-red-800 transition-colors px-3 py-2 inline-flex items-center"
+          >
+            {item.label}
+          </Link>
+        )}
 
-        {hasChildren && (
-          <div className="absolute top-full left-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[9999]">
+        {hasChildren && isExpanded && (
+          <div className="absolute top-full left-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg z-[9999] mt-1">
             <div className="py-2">
               {item.children!.map((child) => renderDesktopSubMenuItem(child, 1))}
             </div>
@@ -172,21 +209,29 @@ export default function Header() {
   // Render desktop submenu item recursively (level 1+ - dropdown)
   const renderDesktopSubMenuItem = (item: MenuItem, level: number) => {
     const hasChildren = item.children && item.children.length > 0;
+    const isExpanded = expandedDesktopMenus.has(item.id);
 
     return (
-      <div key={item.id} className="relative group/submenu">
-        <Link
-          href={item.url}
-          className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-800 transition-colors whitespace-nowrap"
-        >
-          <span>{item.label}</span>
-          {hasChildren && (
-            <ChevronRight className="ml-2 h-3 w-3 text-gray-400" />
-          )}
-        </Link>
+      <div key={item.id} className="relative">
+        {hasChildren ? (
+          <button
+            onClick={(e) => toggleDesktopMenu(item.id, e)}
+            className="w-full flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-800 transition-colors whitespace-nowrap text-left"
+          >
+            <span>{item.label}</span>
+            <ChevronRight className={`ml-2 h-3 w-3 text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
+          </button>
+        ) : (
+          <Link
+            href={item.url}
+            className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-800 transition-colors whitespace-nowrap"
+          >
+            <span>{item.label}</span>
+          </Link>
+        )}
 
-        {hasChildren && (
-          <div className="absolute left-full top-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg opacity-0 invisible group-hover/submenu:opacity-100 group-hover/submenu:visible transition-all duration-200 z-[9999]">
+        {hasChildren && isExpanded && (
+          <div className="absolute left-full top-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg z-[9999] -ml-1">
             <div className="py-2">
               {item.children!.map((child) => renderDesktopSubMenuItem(child, level + 1))}
             </div>
@@ -349,7 +394,7 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <div className="relative flex justify-center border-t border-gray-100 hidden md:flex">
-          <nav className="flex items-center">
+          <nav ref={desktopMenuRef} className="flex items-center">
             {loading ? (
               <MenuSkeleton />
             ) : menuItems.length === 0 ? (
