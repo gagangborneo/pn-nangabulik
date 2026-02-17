@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { getSession } from '@/lib/auth';
 
 // GET - Fetch all pejabat
 export async function GET() {
@@ -19,6 +20,11 @@ export async function GET() {
 // POST - Create new pejabat
 export async function POST(request: NextRequest) {
   try {
+    const session = await getSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const body = await request.json();
     const { name, title, imageUrl, order } = body;
 
@@ -41,6 +47,11 @@ export async function POST(request: NextRequest) {
 // PUT - Update pejabat
 export async function PUT(request: NextRequest) {
   try {
+    const session = await getSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const body = await request.json();
     const { id, name, title, imageUrl, order, isActive } = body;
 
@@ -65,6 +76,11 @@ export async function PUT(request: NextRequest) {
 // DELETE - Delete pejabat
 export async function DELETE(request: NextRequest) {
   try {
+    const session = await getSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 

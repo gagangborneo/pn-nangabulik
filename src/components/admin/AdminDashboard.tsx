@@ -25,6 +25,7 @@ import ContactManagement from './ContactManagement';
 import SurveyManagement from './SurveyManagement';
 import ReportsManagement from './ReportsManagement';
 import HeroSliderManagement from './HeroSliderManagement';
+import PejabatManagement from './PejabatManagement';
 
 interface User {
   id: string;
@@ -33,7 +34,7 @@ interface User {
   role: string;
 }
 
-type AdminView = 'dashboard' | 'menu' | 'hero' | 'kontak' | 'survey' | 'reports';
+type AdminView = 'dashboard' | 'menu' | 'hero' | 'pejabat' | 'kontak' | 'survey' | 'reports';
 
 interface AdminDashboardProps {
   initialView?: AdminView;
@@ -50,6 +51,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     if (initialView) return initialView;
     if (pathname === '/admin/menu') return 'menu';
     if (pathname === '/admin/hero') return 'hero';
+    if (pathname === '/admin/pejabat') return 'pejabat';
     if (pathname === '/admin/kontak') return 'kontak';
     if (pathname === '/admin/survey') return 'survey';
     if (pathname.startsWith('/admin/reports')) return 'reports';
@@ -116,6 +118,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
   const menuItems = [
     { id: 'dashboard' as AdminView, label: 'Dashboard', icon: LayoutDashboard, href: '/admin' },
     { id: 'hero' as AdminView, label: 'Hero Slider', icon: Image, href: '/admin/hero' },
+    { id: 'pejabat' as AdminView, label: 'Profil Pejabat', icon: Users, href: '/admin/pejabat' },
     { id: 'menu' as AdminView, label: 'Menu', icon: MenuIcon, href: '/admin/menu' },
     { id: 'reports' as AdminView, label: 'Data Laporan', icon: FolderOpen, href: '/admin/reports' },
     { id: 'kontak' as AdminView, label: 'Kontak', icon: Mail, href: '/admin/kontak' },
@@ -337,6 +340,8 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
           {currentView === 'menu' && <MenuManagement />}
 
           {currentView === 'hero' && <HeroSliderManagement />}
+
+          {currentView === 'pejabat' && <PejabatManagement />}
 
           {currentView === 'reports' && <ReportsManagement />}
 

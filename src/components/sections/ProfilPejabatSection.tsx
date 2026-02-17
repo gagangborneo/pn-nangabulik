@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface Pejabat {
@@ -10,42 +10,13 @@ interface Pejabat {
   title: string;
   imageUrl: string | null;
   order: number;
+  isActive: boolean;
 }
 
-const defaultPejabat: Pejabat[] = [
-  {
-    id: '1',
-    name: 'Evan Setiawan Dese, S.H., M.H.',
-    title: 'Ketua Pengadilan Negeri Nanga Bulik',
-    imageUrl: null,
-    order: 0,
-  },
-  {
-    id: '2',
-    name: 'Aang Sutopo, S.H.',
-    title: 'Sekretaris Pengadilan Negeri Nanga Bulik',
-    imageUrl: null,
-    order: 1,
-  },
-  {
-    id: '3',
-    name: 'H. Ahmad Fauzi, S.H., M.H.',
-    title: 'Hakim Pengadilan Negeri Nanga Bulik',
-    imageUrl: null,
-    order: 2,
-  },
-  {
-    id: '4',
-    name: 'Dewi Kartika, S.H.',
-    title: 'Panitera Pengadilan Negeri Nanga Bulik',
-    imageUrl: null,
-    order: 3,
-  },
-];
-
 export default function ProfilPejabatSection() {
-  const [pejabat, setPejabat] = useState<Pejabat[]>(defaultPejabat);
+  const [pejabat, setPejabat] = useState<Pejabat[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPejabat = async () => {
@@ -57,6 +28,8 @@ export default function ProfilPejabatSection() {
         }
       } catch (error) {
         console.error('Error fetching pejabat:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -76,9 +49,9 @@ export default function ProfilPejabatSection() {
   };
 
   // Get current visible items
-  const getVisibleItems = () => {
+  const getVisibleItems = (): Pejabat[] => {
     const startIndex = currentIndex * itemsPerSlide;
-    const items = [];
+    const items: Pejabat[] = [];
     for (let i = 0; i < itemsPerSlide; i++) {
       const index = startIndex + i;
       if (index < pejabat.length) {
@@ -102,8 +75,24 @@ export default function ProfilPejabatSection() {
           </p>
         </div>
 
-        {/* Carousel Container */}
-        <div className="relative max-w-4xl mx-auto">
+        {/* Loading State */}
+        {loading && (
+          <div className="flex justify-center items-center py-12">
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#8B0000] border-t-transparent" />
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && pejabat.length === 0 && (
+          <div className="text-center py-12">
+            <User className="h-16 w-16 mx-auto text-gray-300 mb-4" />
+            <p className="text-gray-500">Belum ada data pejabat</p>
+          </div>
+        )}
+
+        {/* Content - Only show if not loading and has data */}
+        {!loading && pejabat.length > 0 && (
+          <div className="relative max-w-4xl mx-auto">
           {/* Navigation Buttons */}
           <button
             onClick={prevSlide}
@@ -176,6 +165,7 @@ export default function ProfilPejabatSection() {
             ))}
           </div>
         </div>
+        )}
       </div>
     </section>
   );
