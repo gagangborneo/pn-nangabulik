@@ -1,0 +1,196 @@
+Beranda
+| Beranda (https://pn-nangabulik.go.id/)
+
+Tentang Pengadilan (parent)
+| Pengantar dari Ketua Pengadilan (https://pn-nangabulik.go.id/tentang-pengadilan/pengantar-dari-ketua-pengadilan)
+| Visi dan Misi (https://pn-nangabulik.go.id/tentang-pengadilan/visi-dan-misi)
+|
+| Profil Pengadilan (child)
+|   | Sejarah Pengadilan (https://pn-nangabulik.go.id/tentang-pengadilan/profil-pengadilan/sejarah-pengadilan)
+|   | Struktur Organisasi (https://pn-nangabulik.go.id/tentang-pengadilan/profil-pengadilan/struktur-organisasi)
+|   | Wilayah Yuridiksi (https://pn-nangabulik.go.id/tentang-pengadilan/profil-pengadilan/wilayah-yuridiksi)
+|
+| Tugas Pokok dan Fungsi (https://pn-nangabulik.go.id/tentang-pengadilan/tugas-pokok-dan-fungsi)
+|
+| Profil Hakim dan Pegawai (child)
+|   |
+|   | Profil Hakim (sub child)
+|   |   | Ketua (https://pn-nangabulik.go.id/tentang-pengadilan/profil-hakim-dan-pegawai/profil-hakim/ketua)
+|   |   | Wakil Ketua (https://pn-nangabulik.go.id/tentang-pengadilan/profil-hakim-dan-pegawai/profil-hakim/wakil-ketua)
+|   |   | Hakim (https://pn-nangabulik.go.id/tentang-pengadilan/profil-hakim-dan-pegawai/profil-hakim/hakim)
+|   |
+|   | Profil Pejabat (sub child)
+|   |   | Panitera (https://pn-nangabulik.go.id/tentang-pengadilan/profil-hakim-dan-pegawai/profil-pejabat/panitera)
+|   |   | Sekretaris (https://pn-nangabulik.go.id/tentang-pengadilan/profil-hakim-dan-pegawai/profil-pejabat/sekretaris)
+|   |   | Panitera Muda (https://pn-nangabulik.go.id/tentang-pengadilan/profil-hakim-dan-pegawai/profil-pejabat/panitera-muda)
+|   |   | Kepala Sub Bagian (https://pn-nangabulik.go.id/tentang-pengadilan/profil-hakim-dan-pegawai/profil-pejabat/kepala-sub-bagian)
+|   |   | Panitera Pengganti (https://pn-nangabulik.go.id/tentang-pengadilan/profil-hakim-dan-pegawai/profil-pejabat/panitera-pengganti)
+|   |   | Juru Sita / Juru Sita Pengganti (https://pn-nangabulik.go.id/tentang-pengadilan/profil-hakim-dan-pegawai/profil-pejabat/juru-sita-juru-sita-pengganti)
+|   |
+|   | Profil Pegawai (https://pn-nangabulik.go.id/tentang-pengadilan/profil-hakim-dan-pegawai/profil-pegawai)
+|   | Profil PPPK (https://pn-nangabulik.go.id/tentang-pengadilan/profil-hakim-dan-pegawai/profil-pppk)
+|   | Profil PPNPN (https://pn-nangabulik.go.id/tentang-pengadilan/profil-hakim-dan-pegawai/profil-ppnpn)
+|
+| Profil Role Model dan Agen Perubahan (child)
+|   | Profil Role Model (https://pn-nangabulik.go.id/tentang-pengadilan/profil-role-model-dan-agen-perubahan/profil-role-model)
+|   | Profil Agen Perubahan (https://pn-nangabulik.go.id/tentang-pengadilan/profil-role-model-dan-agen-perubahan/profil-agen-perubahan)
+|
+| Kepaniteraan (child)
+|   |
+|   | Kepaniteraan Pidana (sub child)
+|   |   | Uraian Tugas Pidana (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-pidana/uraian-tugas-pidana)
+|   |   | Proses Persidangan Perkara Pidana (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-pidana/proses-persidangan-perkara-pidana)
+|   |   | Alur DIVERSI Perkara Pidana Anak (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-pidana/alur-diversi-perkara-pidana-anak)
+|   |   | Alur Pidana Banding (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-pidana/alur-pidana-banding)
+|   |   | Alur Pidana Kasasi (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-pidana/alur-pidana-kasasi)
+|   |   | Alur Pidana Biasa (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-pidana/alur-pidana-biasa)
+|   |   | Alur Pidana Singkat (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-pidana/alur-pidana-singkat)
+|   |   | Alur Pidana Cepat (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-pidana/alur-pidana-cepat)
+|   |   | Alur Pidana Lalu Lintas (Tilang) (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-pidana/alur-pidana-lalu-lintas-tilang)
+|   |   | Upaya Hukum Pidana Banding (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-pidana/upaya-hukum-pidana-banding)
+|   |   | Upaya Hukum Pidana Kasasi (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-pidana/upaya-hukum-pidana-kasasi)
+|   |   | Upaya Hukum Pidana Peninjauan Kembali (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-pidana/upaya-hukum-pidana-peninjauan-kembali)
+|   |   | Upaya Hukum Pidana Grasi (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-pidana/upaya-hukum-pidana-grasi)
+|   |
+|   | Kepaniteraan Perdata (sub child)
+|   |   | Uraian Tugas Perdata (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-perdata/uraian-tugas-perdata)
+|   |   | Alur Mediasi (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-perdata/alur-mediasi)
+|   |   | Alur Gugatan Sederhana (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-perdata/alur-gugatan-sederhana)
+|   |   | Formulir Gugatan Sederhana (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-perdata/formulir-gugatan-sederhana)
+|   |
+|   | Kepaniteraan Hukum (sub child)
+|   |   | Uraian Tugas Hukum (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-hukum/uraian-tugas-hukum)
+|   |   | Alur Pelayanan Meja Pengaduan (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-hukum/alur-pelayanan-meja-pengaduan)
+|   |   | Alur Pelayanan Meja POSBAKUM (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-hukum/alur-pelayanan-meja-posbakum)
+|   |   | Alur Pendaftaran Akte CV (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-hukum/alur-pendaftaran-akte-cv)
+|   |   | Alur Pendaftaran Akte Koperasi/Yayasan/Usaha Dagang/Lembaga/LSM (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-hukum/alur-pendaftaran-akte-koperasi-yayasan-usaha-dagang-lembaga-lsm)
+|   |   | Alur Pendaftaran Surat Keterangan E-raterang (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-hukum/alur-pendaftaran-surat-keterangan-e-raterang)
+|   |   | Alur Pendaftaran Surat Kuasa Insidentil (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-hukum/alur-pendaftaran-surat-kuasa-insidentil)
+|   |   | Alur Pendaftaran Surat Kuasa Khusus (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-hukum/alur-pendaftaran-surat-kuasa-khusus)
+|   |   | Alur Permintaan Informasi Kepada Petugas Informasi (https://pn-nangabulik.go.id/tentang-pengadilan/kepaniteraan/kepaniteraan-hukum/alur-permintaan-informasi-kepada-petugas-informasi)
+|
+| Sistem Pengelolaan Pengadilan (child)
+|   | E-Learning (https://elearning.mahkamahagung.go.id/)
+|   | Kebijakan / Yurisprudensi (https://jdih.mahkamahagung.go.id/)
+|   | Rencana Strategis (https://silapor.pn-nangabulik.go.id/laporan-sakip/renstra)
+|   | Manajemen Resiko (https://pn-nangabulik.go.id/images/dokumen/Dokumen%20Manajemen%20Resiko.pdf)
+|   |
+|   | Rencana Kerja dan Anggaran (sub child)
+|   |   | RKAKL (https://silapor.pn-nangabulik.go.id/rkakl)
+|   |   | DIPA (https://silapor.pn-nangabulik.go.id/dipa)
+|   |
+|   | Pengawasan dan Kode Etik Hakim (https://pn-nangabulik.go.id/tentang-pengadilan/sistem-pengelolaan-pengadilan/pengawasan-dan-kode-etik-hakim)
+|
+| PTSP (child)
+|   | Jenis Layanan (https://pn-nangabulik.go.id/tentang-pengadilan/ptsp/jenis-layanan)
+|   | Standar Pelayanan (https://pn-nangabulik.go.id/tentang-pengadilan/ptsp/standar-pelayanan)
+|   | Maklumat Pelayanan (https://pn-nangabulik.go.id/tentang-pengadilan/ptsp/maklumat-pelayanan)
+|   | Kompensasi Pelayanan (https://pn-nangabulik.go.id/tentang-pengadilan/ptsp/kompensasi-pelayanan)
+|
+| Layanan Disabilitas (child)
+|   | Prosedur Pelayanan Bagi Penyandang Disabilitas (https://pn-nangabulik.go.id/tentang-pengadilan/layanan-disabilitas/prosedur-pelayanan-bagi-penyandang-disabilitas)
+|   | Sarana & Prasarana Bagi Penyandang Disabilitas (https://pn-nangabulik.go.id/tentang-pengadilan/layanan-disabilitas/sarana-prasarana-bagi-penyandang-disabilitas)
+|
+| Tata Tertib di Pengadilan (https://pn-nangabulik.go.id/tentang-pengadilan/tata-tertib-di-pengadilan)
+|
+| Informasi Perkara (child)
+|   | Delegasi (https://pn-nangabulik.go.id/tentang-pengadilan/informasi-perkara/delegasi)
+|   | Statistik Perkara (http://sipp.pn-nangabulik.go.id/statistik_perkara)
+
+Layanan Publik (parent)
+| Cetak Biru MA 2010-2035 (https://pn-nangabulik.go.id/images/dokumen/Cetak%20Biru%20Pembaruan%20Peradilan%202010-2035.pdf)
+|
+| Laporan (child)
+|   | Hasil Penelitian (https://pn-nangabulik.go.id/layanan-publik/laporan/hasil-penelitian)
+|   | Laporan Akuntabilitas Kinerja Instansi Pemerintah (LKjIP) (https://silapor.pn-nangabulik.go.id/sakip/lkjip)
+|   | Daftar Aset dan Inventaris (https://silapor.pn-nangabulik.go.id/aset-inventaris)
+|   | Laporan Tahunan (https://silapor.pn-nangabulik.go.id/laporan-tahunan)
+|   | Laporan Realisasi Anggaran (https://silapor.pn-nangabulik.go.id/lra)
+|   | Laporan Keuangan (CALK) (https://silapor.pn-nangabulik.go.id/laporan-keuangan)
+|   | SAKIP (https://silapor.pn-nangabulik.go.id/sakip/iku)
+|   | Rencana Kerja Anggaran Kementrian/Lembaga (RKAKL) (https://silapor.pn-nangabulik.go.id/rkakl)
+|   | Laporan Pelayanan Informasi Publik (https://pn-nangabulik.go.id/layanan-publik/laporan/laporan-pelayanan-informasi-publik)
+|   | LHKPN (https://silapor.pn-nangabulik.go.id/lhkpn)
+|   | LHKAN (https://silapor.pn-nangabulik.go.id/lhkan)
+|   | Laporan SKM (https://silapor.pn-nangabulik.go.id/survei)
+|   | Laporan SPAK (https://silapor.pn-nangabulik.go.id/survei)
+|   | Laporan Survei Harian (https://silapor.pn-nangabulik.go.id/survei-harian)
+|
+| Pengumuman (child)
+|   | Denda Tilang (http://sipp.pn-nangabulik.go.id/list_perkara/type/aHJpaGNZdmxYTzNSRGYyVlZxOWhnRVA5eWZBVm93enZwTDN5anVBWSswV2g5OUVQVmVIQkZrNmdxRDdLcGYyU2dzUWo2T216c0NGdEptQzVpQUc3cUE9PQ==)
+|   | Lelang Barang dan Jasa (https://pn-nangabulik.go.id/layanan-publik/pengumuman/lelang-barang-dan-jasa)
+|   | Pemberitahuan/Panggilan kepada Pihak yang tidak diketahui alamatnya (https://pn-nangabulik.go.id/layanan-publik/pengumuman/pemberitahuan-panggilan-kepada-pihak-yang-tidak-diketahui-alamatnya)
+|   | Penerimaan Pegawai (https://pn-nangabulik.go.id/layanan-publik/pengumuman/penerimaan-pegawai)
+|   | Pengumuman Lainnya (https://pn-nangabulik.go.id/layanan-publik/pengumuman/pengumuman-lainnya)
+|
+| Prosedur Permohonan Informasi (child)
+|   | Tentang PPID (https://eppid.pn-nangabulik.go.id/profil/profil-ppid)
+|   | Daftar Informasi Publik (https://pn-nangabulik.go.id/images/dokumen/InformasiPublik/SK_KPN_168_2025.pdf)
+|   | Prosedur Permohonan Informasi (https://pn-nangabulik.go.id/layanan-publik/prosedur-permohonan-informasi/permohonan-informasi)
+|   | Prosedur Pengajuan Keberatan Informasi (https://pn-nangabulik.go.id/layanan-publik/prosedur-permohonan-informasi/prosedur-pengajuan-keberatan-informasi)
+|
+| Pengaduan (child)
+|   | Alur Pengaduan (https://pn-nangabulik.go.id/layanan-publik/pengaduan/alur-pengaduan)
+|   | Prosedur Pengaduan (https://pn-nangabulik.go.id/layanan-publik/pengaduan/prosedur-pengaduan)
+|   | Formulir Pengaduan Tertulis (https://pn-nangabulik.go.id/layanan-publik/pengaduan/formulir-pengaduan-tertulis)
+|   | Pedoman dan Dasar Hukum (https://pn-nangabulik.go.id/layanan-publik/pengaduan/pedoman-dan-dasar-hukum)
+|
+| Prosedur Eksekusi (https://pn-nangabulik.go.id/layanan-publik/prosedur-eksekusi)
+| E-BROSUR (https://pn-nangabulik.go.id/layanan-publik/e-brosur)
+
+Layanan Hukum (parent)
+|
+| Layanan Hukum Bagi Masyarakat Kurang Mampu (child)
+|   | Peraturan dan Kebijakan (https://pn-nangabulik.go.id/layanan-hukum/layanan-hukum-bagi-masyarakat-kurang-mampu/peraturan-dan-kebijakan)
+|   | Prosedur Pembebasan Biaya Perkara (Prodeo) (https://pn-nangabulik.go.id/layanan-hukum/layanan-hukum-bagi-masyarakat-kurang-mampu/prosedur-pembebasan-biaya-perkara-prodeo)
+|   | Posbakum (https://pn-nangabulik.go.id/layanan-hukum/layanan-hukum-bagi-masyarakat-kurang-mampu/posbakum)
+|
+| Prosedur Pengajuan dan Biaya Perkara (child)
+|   | Prosedur Pengajuan Perkara (https://pn-nangabulik.go.id/layanan-hukum/prosedur-pengajuan-dan-biaya-perkara/prosedur-pengajuan-perkara)
+|   | Panjar Biaya Perkara (https://pn-nangabulik.go.id/layanan-hukum/prosedur-pengajuan-dan-biaya-perkara/panjar-biaya-perkara)
+|   | Keputusan Bersama Panjar Biaya Perkara (https://pn-nangabulik.go.id/layanan-hukum/prosedur-pengajuan-dan-biaya-perkara/keputusan-bersama-panjar-biaya-perkara)
+|
+| Pengembalian Sisa Panjar (https://pn-nangabulik.go.id/layanan-hukum/pengembalian-sisa-panjar)
+
+Berita (parent)
+| Berita Terkini (https://pn-nangabulik.go.id/berita/berita-terkini)
+| Artikel (https://pn-nangabulik.go.id/berita/artikel)
+|
+| Photo Gallery (child)
+|   | Kegiatan Pengadilan (https://pn-nangabulik.go.id/berita/photo-gallery/kegiatan-pengadilan)
+|   | Fasilitas dan Ruangan untuk Publik (https://pn-nangabulik.go.id/berita/photo-gallery/fasilitas-dan-ruangan-untuk-publik)
+|   | Sarana Persidangan Anak (https://pn-nangabulik.go.id/berita/photo-gallery/sarana-persidangan-anak)
+|
+| Video Gallery (https://pn-nangabulik.go.id/berita/video-gallery)
+
+Hubungi Kami (parent)
+| Alamat (https://pn-nangabulik.go.id/hubungi/alamat)
+|
+| Sosial Media (child)
+|   | Instagram (https://www.instagram.com/pn_nangabulik/)
+|   | Facebook (https://www.facebook.com/profile.php?id=100076065040996)
+|   | Youtube (https://www.youtube.com/channel/UCEviJswA-z7MZ1lze_ZXHsw)
+|
+| Assisten Virtual ABA PENDI (https://api.whatsapp.com/send/?phone=6282350442244&text=Hai+boleh+saya+bertanya+&app_absent=0)
+
+Reformasi Birokrasi (parent)
+|
+| Zona Integritas (child)
+|   | Area I (https://zi.pn-nangabulik.go.id/)
+|   | Area II (https://zi.pn-nangabulik.go.id/)
+|   | Area III (https://zi.pn-nangabulik.go.id/)
+|   | Area IV (https://zi.pn-nangabulik.go.id/)
+|   | Area V (https://zi.pn-nangabulik.go.id/)
+|   | Area VI (https://zi.pn-nangabulik.go.id/)
+|   | LKE ZI (https://docs.google.com/spreadsheets/d/16K9lYkvRE3Z6_Kw2DtuDgp1opi8F6JBz/edit?usp=sharing&ouid=112288044665780299948&rtpof=true&sd=true)
+|   | Inovasi Pengadilan (https://pn-nangabulik.go.id/reformasi-birokrasi/zona-integritas/inovasi-pengadilan)
+|
+| sertifikAsi Mutu Peradilan Unggul dan tangguH (child)
+|   | SK Tim AMPUH PN Nanga Bulik (https://pn-nangabulik.go.id/images/dokumen/101-KPN-SK%202024-SK%20PENUNJUKAN%20TIM%20AMPUH.pdf)
+|   | Manual Mutu (https://pn-nangabulik.go.id/images/dokumen/Manual%20Mutu%20Pengadilan%20Negeri%20Nanga%20Bulik%202021.pdf)
+|   | Sertifikat Akreditasi (https://pn-nangabulik.go.id/images/dokumen/Akreditasi/Sertifikat%20Nilai%20Ampuh%20PN%20Nanga%20Bulik%202024.pdf)
+|
+| e-Court (https://ecourt.mahkamahagung.go.id)
+| SIPP Banding (https://banding.mahkamahagung.go.id/)
+| Eraterang (https://eraterang.badilum.mahkamahagung.go.id/masuk)
+| E-Pustaka (https://pn-nangabulik.go.id/reformasi-birokrasi/e-pustaka)

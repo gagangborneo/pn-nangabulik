@@ -1,0 +1,169 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String?
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MenuItem {
+  id           String     @id @default(cuid())
+  label        String
+  url          String
+  parentId     String?
+  order        Int        @default(0)
+  isActive     Boolean    @default(true)
+  openInNewTab Boolean    @default(false)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  parent       MenuItem?  @relation("SubMenus", fields: [parentId], references: [id], onDelete: Cascade)
+  children     MenuItem[] @relation("SubMenus")
+}
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model HeroSlide {
+  id           String   @id @default(cuid())
+  title        String
+  subtitle     String?
+  description  String?  @db.Text
+  tag          String?
+  imageUrl     String
+  overlayColor String?
+  buttonText   String?
+  buttonUrl    String?
+  order        Int      @default(0)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Pejabat {
+  id        String   @id @default(cuid())
+  name      String
+  title     String
+  imageUrl  String?
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FAQ {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Partner {
+  id         String   @id @default(cuid())
+  name       String
+  logoUrl    String
+  websiteUrl String?
+  order      Int      @default(0)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Layanan {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  icon        String
+  url         String?
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Survey {
+  id         String   @id @default(cuid())
+  year       Int
+  category   String
+  quarter    Int
+  percentage Float?
+  reportUrl  String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([year, category, quarter])
+}
+
+model SurveyLink {
+  id        String   @id @default(cuid())
+  title     String
+  url       String
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ReportCategory {
+  id          String       @id @default(cuid())
+  title       String
+  slug        String       @unique
+  description String?
+  icon        String
+  order       Int          @default(0)
+  isActive    Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  links       ReportLink[]
+  views       ReportView[]
+}
+
+model ReportLink {
+  id          String         @id @default(cuid())
+  categoryId  String
+  title       String
+  url         String
+  description String?
+  order       Int            @default(0)
+  isActive    Boolean        @default(true)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  category    ReportCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  views       ReportLinkView[]
+}
+
+model ReportView {
+  id         String   @id @default(cuid())
+  categoryId String
+  ipAddress  String
+  userAgent  String?
+  createdAt  DateTime @default(now())
+  category   ReportCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}
+
+model ReportLinkView {
+  id         String   @id @default(cuid())
+  linkId     String
+  ipAddress  String
+  userAgent  String?
+  createdAt  DateTime @default(now())
+  link       ReportLink @relation(fields: [linkId], references: [id], onDelete: Cascade)
+}
