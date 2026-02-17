@@ -2,8 +2,6 @@
 
 // Landing page for PN Nanga Bulik website
 import { useRouter } from 'next/navigation';
-import { Settings } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 // Layout
 import Header from '@/components/layout/Header';
@@ -28,13 +26,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      {/* Admin Toggle Button */}
-      <Button
-        className="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-gray-800 hover:bg-gray-700 shadow-lg z-50"
-        onClick={() => router.push('/login')}
-      >
-        <Settings className="h-5 w-5" />
-      </Button>
 
       <Header />
       <main className="flex-1">
