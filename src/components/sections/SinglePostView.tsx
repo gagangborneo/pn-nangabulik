@@ -2,14 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Calendar, User, Tag } from 'lucide-react';
+import { ArrowLeft, Calendar, User, Tag, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface Post {
   id: number;
   title: string;
   slug: string;
   content: string;
+  excerpt?: string;
   date: string;
   featuredImage: {
     url: string;
@@ -31,14 +33,48 @@ interface SinglePostViewProps {
 export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
+  const [prevPost, setPrevPost] = useState<Post | null>(null);
+  const [nextPost, setNextPost] = useState<Post | null>(null);
+  const [latestPosts, setLatestPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    const fetchPost = async () => {
+    const fetchData = async () => {
       try {
+        // Fetch current post
         const response = await fetch(`/api/posts?slug=${slug}`);
         const data = await response.json();
+        
         if (data.posts && data.posts.length > 0) {
-          setPost(data.posts[0]);
+          const currentPost = data.posts[0];
+          setPost(currentPost);
+
+          // Fetch all posts to find prev/next
+          const allPostsResponse = await fetch('/api/posts?per_page=100');
+          const allPostsData = await allPostsResponse.json();
+          
+          if (allPostsData.posts) {
+            const currentIndex = allPostsData.posts.findIndex(
+              (p: Post) => p.id === currentPost.id
+            );
+            
+            if (currentIndex > 0) {
+              setNextPost(allPostsData.posts[currentIndex - 1]);
+            }
+            if (currentIndex < allPostsData.posts.length - 1) {
+              setPrevPost(allPostsData.posts[currentIndex + 1]);
+            }
+          }
+
+          // Fetch latest 3 posts (excluding current)
+          const latestResponse = await fetch('/api/posts?per_page=4');
+          const latestData = await latestResponse.json();
+          
+          if (latestData.posts) {
+            const filteredLatest = latestData.posts
+              .filter((p: Post) => p.id !== currentPost.id)
+              .slice(0, 3);
+            setLatestPosts(filteredLatest);
+          }
         }
       } catch (error) {
         console.error('Error fetching post:', error);
@@ -47,7 +83,7 @@ export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
       }
     };
 
-    fetchPost();
+    fetchData();
   }, [slug]);
 
   const formatDate = (dateString: string) => {
@@ -155,7 +191,7 @@ export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
           <img
             src={getImageUrl(post)}
             alt={post.title}
-            className="w-full max-h-[500px] object-cover rounded-xl"
+            className="w-full max-h-125 object-cover rounded-xl"
           />
         </div>
 
@@ -164,6 +200,92 @@ export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
           className="prose prose-lg max-w-none article-content"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
+
+        {/* Navigation: Previous & Next Posts */}
+        <div className="border-t border-b border-gray-200 py-6 my-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-4">
+            {/* Previous Post */}
+            <div className="flex-1">
+              {prevPost ? (
+                <Link href={`/berita/${prevPost.slug}`} className="group block">
+                  <div className="flex items-start gap-3 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                    <ChevronLeft className="h-5 w-5 text-gray-400 group-hover:text-[#8B0000] mt-1 shrink-0" />
+                    <div>
+                      <p className="text-xs text-gray-500 mb-1">Berita Sebelumnya</p>
+                      <h3 
+                        className="text-sm font-semibold text-gray-800 group-hover:text-[#8B0000] line-clamp-2"
+                        dangerouslySetInnerHTML={{ __html: prevPost.title }}
+                      />
+                    </div>
+                  </div>
+                </Link>
+              ) : (
+                <div className="p-4 text-gray-400 text-sm">Tidak ada berita sebelumnya</div>
+              )}
+            </div>
+
+            {/* Divider */}
+            <div className="hidden sm:block w-px bg-gray-200"></div>
+
+            {/* Next Post */}
+            <div className="flex-1">
+              {nextPost ? (
+                <Link href={`/berita/${nextPost.slug}`} className="group block">
+                  <div className="flex items-start gap-3 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                    <div className="flex-1 text-right">
+                      <p className="text-xs text-gray-500 mb-1">Berita Selanjutnya</p>
+                      <h3 
+                        className="text-sm font-semibold text-gray-800 group-hover:text-[#8B0000] line-clamp-2"
+                        dangerouslySetInnerHTML={{ __html: nextPost.title }}
+                      />
+                    </div>
+                    <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-[#8B0000] mt-1 shrink-0" />
+                  </div>
+                </Link>
+              ) : (
+                <div className="p-4 text-gray-400 text-sm text-right">Tidak ada berita selanjutnya</div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Latest Posts Section */}
+        {latestPosts.length > 0 && (
+          <div className="mt-12 mb-8">
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">Berita Terbaru Lainnya</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {latestPosts.map((latestPost) => (
+                <Link key={latestPost.id} href={`/berita/${latestPost.slug}`}>
+                  <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
+                    <CardHeader className="p-0">
+                      <div className="relative h-48 overflow-hidden rounded-t-lg">
+                        <img
+                          src={getImageUrl(latestPost)}
+                          alt={latestPost.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    </CardHeader>
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                        <Calendar className="h-3 w-3" />
+                        <span>{formatDate(latestPost.date)}</span>
+                      </div>
+                      <CardTitle className="text-base font-semibold text-gray-800 group-hover:text-[#8B0000] line-clamp-2 mb-2">
+                        <span dangerouslySetInnerHTML={{ __html: latestPost.title }} />
+                      </CardTitle>
+                      {latestPost.excerpt && (
+                        <CardDescription className="text-sm text-gray-600 line-clamp-2">
+                          <span dangerouslySetInnerHTML={{ __html: latestPost.excerpt }} />
+                        </CardDescription>
+                      )}
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </article>
 
       <style jsx global>{`
