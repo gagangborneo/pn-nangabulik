@@ -113,7 +113,7 @@ export default function ProfilPejabatSection() {
           {/* Cards Container */}
           <div className="overflow-hidden px-2">
             <div
-              className="grid grid-cols-2 gap-4 md:gap-6 transition-transform duration-500 my-6"
+              className="grid grid-cols-2 gap-4 md:gap-6 transition-transform duration-500 my-8"
             >
               {getVisibleItems().map((person, index) => (
                 <div
@@ -121,16 +121,16 @@ export default function ProfilPejabatSection() {
                   className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300"
                 >
                   {/* Profile Image */}
-                  <div className="bg-gradient-to-br from-red-100 to-red-50 p-6 md:p-8">
+                  <div className="bg-gradient-to-br from-red-100 to-red-50 p-4 md:p-6">
                     {person.imageUrl ? (
                       <img
                         src={person.imageUrl}
                         alt={person.name}
-                        className="w-24 h-24 md:w-32 md:h-32 rounded-full mx-auto object-cover border-4 border-white shadow-lg"
+                        className="w-32 h-32 md:w-48 md:h-48 rounded-lg mx-auto object-cover border-4 border-white shadow-lg"
                       />
                     ) : (
-                      <div className="w-24 h-24 md:w-32 md:h-32 rounded-full mx-auto bg-gradient-to-br from-red-900 to-red-700 flex items-center justify-center border-4 border-white shadow-lg">
-                        <span className="text-3xl md:text-4xl font-bold text-white">
+                      <div className="w-32 h-32 md:w-48 md:h-48 rounded-full mx-auto bg-gradient-to-br from-red-900 to-red-700 flex items-center justify-center border-4 border-white shadow-lg">
+                        <span className="text-4xl md:text-6xl font-bold text-white">
                           {person.name.charAt(0)}
                         </span>
                       </div>
