@@ -80,7 +80,7 @@ export default function PageManagement() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive'>('all');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 20;
   
   // Sorting state
   const [sortColumn, setSortColumn] = useState<'url' | null>('url');
