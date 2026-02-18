@@ -112,26 +112,28 @@ export default function LayananPublikSection() {
                 rel="noopener noreferrer"
                 className={`group bg-gradient-to-br ${service.gradient} rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-gray-200 hover:-translate-y-1`}
               >
-                <div className="flex flex-col items-center text-center">
+                <div className="flex flex-row sm:flex-col items-start sm:items-center text-left sm:text-center gap-4 sm:gap-0">
                   {/* Icon */}
-                  <div className={`w-14 h-14 ${service.iconBg} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                    <IconComponent className="h-7 w-7 text-white" />
+                  <div className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 ${service.iconBg} rounded-xl flex items-center justify-center sm:mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                    <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
                   </div>
 
-                  {/* Title */}
-                  <h3 className="font-semibold text-gray-800 mb-2 group-hover:text-red-900 transition-colors">
-                    {service.title}
-                  </h3>
+                  <div className="flex-1 sm:flex-none">
+                    {/* Title */}
+                    <h3 className="font-semibold text-gray-800 mb-2 group-hover:text-red-900 transition-colors">
+                      {service.title}
+                    </h3>
 
-                  {/* Description */}
-                  <p className="text-sm text-gray-500 mb-3 leading-relaxed">
-                    {service.description}
-                  </p>
+                    {/* Description */}
+                    <p className="text-sm text-gray-500 mb-3 leading-relaxed">
+                      {service.description}
+                    </p>
 
-                  {/* Link Indicator */}
-                  <div className="flex items-center gap-1 text-xs text-red-900 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span>Akses Layanan</span>
-                    <ExternalLink className="h-3 w-3" />
+                    {/* Link Indicator */}
+                    <div className="flex items-center gap-1 text-xs text-red-900 font-medium opacity-50 group-hover:opacity-500 transition-opacity">
+                      <span>Akses Layanan</span>
+                      <ExternalLink className="h-3 w-3" />
+                    </div>
                   </div>
                 </div>
               </a>
