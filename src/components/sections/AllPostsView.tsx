@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Search, X, Calendar, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import BlogSidebar from './BlogSidebar';
 
 interface Post {
   id: number;
@@ -170,6 +171,9 @@ export default function AllPostsView({ onClose }: AllPostsViewProps) {
       </div>
 
       <div className="container mx-auto px-4 py-8">
+        <div className="grid lg:grid-cols-[1fr_320px] gap-8">
+          {/* Main Content */}
+          <div>
         {/* Filters */}
         <div className="mb-6">
           <div className="flex flex-wrap items-center gap-3">
@@ -385,6 +389,18 @@ export default function AllPostsView({ onClose }: AllPostsViewProps) {
             )}
           </>
         )}
+          </div>
+          
+          {/* Sidebar */}
+          <div className="hidden lg:block">
+            <div className="sticky top-8">
+              <BlogSidebar 
+                selectedCategory={selectedCategory}
+                onCategorySelect={setSelectedCategory}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

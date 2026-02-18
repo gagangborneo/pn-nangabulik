@@ -29,6 +29,7 @@ import HeroSliderManagement from './HeroSliderManagement';
 import PejabatManagement from './PejabatManagement';
 import FAQManagement from './FAQManagement';
 import VisitorDashboard from './VisitorDashboard';
+import SettingsManagement from './SettingsManagement';
 
 interface User {
   id: string;
@@ -37,7 +38,7 @@ interface User {
   role: string;
 }
 
-type AdminView = 'dashboard' | 'menu' | 'hero' | 'pejabat' | 'kontak' | 'survey' | 'reports' | 'faq' | 'statistics';
+type AdminView = 'dashboard' | 'menu' | 'hero' | 'pejabat' | 'kontak' | 'survey' | 'reports' | 'faq' | 'statistics' | 'settings';
 
 interface AdminDashboardProps {
   initialView?: AdminView;
@@ -60,6 +61,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     if (pathname === '/admin/faq') return 'faq';
     if (pathname.startsWith('/admin/reports')) return 'reports';
     if (pathname === '/admin/statistics') return 'statistics';
+    if (pathname === '/admin/settings') return 'settings';
     return 'dashboard';
   };
 
@@ -130,6 +132,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     { id: 'faq' as AdminView, label: 'FAQ', icon: HelpCircle, href: '/admin/faq' },
     { id: 'kontak' as AdminView, label: 'Kontak', icon: Mail, href: '/admin/kontak' },
     { id: 'survey' as AdminView, label: 'Survey Kepuasan', icon: Users, href: '/admin/survey' },
+    { id: 'settings' as AdminView, label: 'Pengaturan', icon: Settings, href: '/admin/settings' },
   ];
 
   return (
@@ -214,6 +217,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
             {currentView === 'faq' && 'Manajemen FAQ'}
             {currentView === 'kontak' && 'Manajemen Kontak'}
             {currentView === 'survey' && 'Manajemen Survey'}
+            {currentView === 'settings' && 'Pengaturan Sistem'}
           </h2>
         </header>
 
@@ -361,6 +365,8 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
           {currentView === 'survey' && <SurveyManagement />}
 
           {currentView === 'statistics' && <VisitorDashboard />}
+
+          {currentView === 'settings' && <SettingsManagement />}
         </div>
       </main>
     </div>

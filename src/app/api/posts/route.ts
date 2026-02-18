@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-const WP_API_URL = 'https://web.pn-nangabulik.go.id/wp-json/wp/v2';
+import { getWordPressUrl } from '@/lib/wordpress';
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -13,6 +12,7 @@ export async function GET(request: NextRequest) {
   const categoryId = searchParams.get('category');
 
   try {
+    const WP_API_URL = await getWordPressUrl();
     let url = `${WP_API_URL}/posts?per_page=${perPage}&page=${page}&_embed`;
 
     if (postId) {

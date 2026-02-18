@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowLeft, Calendar, User, Tag, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import BlogSidebar from './BlogSidebar';
 
 interface Post {
   id: number;
@@ -159,7 +160,11 @@ export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
         </div>
       </div>
 
-      <article className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid lg:grid-cols-[1fr_320px] gap-8">
+          {/* Main Content */}
+          <div>
+            <article>
         {/* Meta Info */}
         <div className="flex flex-wrap items-center gap-4 mb-6 text-sm text-gray-500">
           <div className="flex items-center gap-2">
@@ -287,6 +292,16 @@ export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
           </div>
         )}
       </article>
+          </div>
+          
+          {/* Sidebar */}
+          <div className="hidden lg:block">
+            <div className="sticky top-8">
+              <BlogSidebar currentPostId={post?.id} />
+            </div>
+          </div>
+        </div>
+      </div>
 
       <style jsx global>{`
         .article-content {

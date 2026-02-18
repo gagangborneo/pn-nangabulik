@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-
-const WP_API_URL = 'https://web.pn-nangabulik.go.id/wp-json/wp/v2';
+import { getWordPressUrl } from '@/lib/wordpress';
 
 export async function GET() {
   try {
+    const WP_API_URL = await getWordPressUrl();
     const response = await fetch(`${WP_API_URL}/categories?per_page=50`, {
       headers: {
         'Accept': 'application/json',
