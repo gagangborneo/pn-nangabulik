@@ -167,3 +167,17 @@ model ReportLinkView {
   createdAt  DateTime @default(now())
   link       ReportLink @relation(fields: [linkId], references: [id], onDelete: Cascade)
 }
+
+model Visitor {
+  id          BigInt   @id @default(autoincrement())
+  ipAddress   String   @db.VarChar(45)
+  userAgent   String   @db.Text
+  path        String   @db.VarChar(255)
+  visitedDate DateTime @db.Date
+  createdAt   DateTime @default(now())
+
+  @@unique([ipAddress, path, visitedDate], name: "unique_daily_ip_path")
+  @@index([visitedDate], name: "idx_visited_date")
+  @@index([path], name: "idx_path")
+  @@index([createdAt], name: "idx_created_at")
+}

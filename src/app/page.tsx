@@ -20,6 +20,7 @@ import BlogSection from '@/components/sections/BlogSection';
 import FAQSection from '@/components/sections/FAQSection';
 import PartnersSection from '@/components/sections/PartnersSection';
 import ContactSection from '@/components/sections/ContactSection';
+import VisitorCounterSection from '@/components/sections/VisitorCounterSection';
 
 // TTS Components
 import { AutoTTSWrapper } from '@/components/ui/auto-tts-wrapper';
@@ -45,6 +46,7 @@ export default function Home() {
           <FAQSection />
           <PartnersSection />
           <ContactSection />
+          <VisitorCounterSection />
         </main>
       </AutoTTSWrapper>
       <Footer />

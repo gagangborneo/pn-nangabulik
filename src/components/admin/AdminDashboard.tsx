@@ -28,6 +28,7 @@ import ReportsManagement from './ReportsManagement';
 import HeroSliderManagement from './HeroSliderManagement';
 import PejabatManagement from './PejabatManagement';
 import FAQManagement from './FAQManagement';
+import VisitorDashboard from './VisitorDashboard';
 
 interface User {
   id: string;
@@ -36,7 +37,7 @@ interface User {
   role: string;
 }
 
-type AdminView = 'dashboard' | 'menu' | 'hero' | 'pejabat' | 'kontak' | 'survey' | 'reports' | 'faq';
+type AdminView = 'dashboard' | 'menu' | 'hero' | 'pejabat' | 'kontak' | 'survey' | 'reports' | 'faq' | 'statistics';
 
 interface AdminDashboardProps {
   initialView?: AdminView;
@@ -58,6 +59,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     if (pathname === '/admin/survey') return 'survey';
     if (pathname === '/admin/faq') return 'faq';
     if (pathname.startsWith('/admin/reports')) return 'reports';
+    if (pathname === '/admin/statistics') return 'statistics';
     return 'dashboard';
   };
 
@@ -120,13 +122,14 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
 
   const menuItems = [
     { id: 'dashboard' as AdminView, label: 'Dashboard', icon: LayoutDashboard, href: '/admin' },
+    { id: 'statistics' as AdminView, label: 'Statistik Pengunjung', icon: BarChart3, href: '/admin/statistics' },
     { id: 'hero' as AdminView, label: 'Hero Slider', icon: Image, href: '/admin/hero' },
     { id: 'pejabat' as AdminView, label: 'Profil Pejabat', icon: Users, href: '/admin/pejabat' },
     { id: 'menu' as AdminView, label: 'Menu', icon: MenuIcon, href: '/admin/menu' },
     { id: 'reports' as AdminView, label: 'Data Laporan', icon: FolderOpen, href: '/admin/reports' },
     { id: 'faq' as AdminView, label: 'FAQ', icon: HelpCircle, href: '/admin/faq' },
     { id: 'kontak' as AdminView, label: 'Kontak', icon: Mail, href: '/admin/kontak' },
-    { id: 'survey' as AdminView, label: 'Survey', icon: BarChart3, href: '/admin/survey' },
+    { id: 'survey' as AdminView, label: 'Survey Kepuasan', icon: Users, href: '/admin/survey' },
   ];
 
   return (
@@ -205,6 +208,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
         <header className="bg-white border-b border-gray-200 px-8 py-4 sticky top-0 z-10">
           <h2 className="text-xl font-semibold text-gray-800">
             {currentView === 'dashboard' && 'Dashboard'}
+            {currentView === 'statistics' && 'Statistik Pengunjung'}
             {currentView === 'menu' && 'Manajemen Menu'}
             {currentView === 'reports' && 'Manajemen Data Laporan'}
             {currentView === 'faq' && 'Manajemen FAQ'}
@@ -355,6 +359,8 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
           {currentView === 'kontak' && <ContactManagement />}
 
           {currentView === 'survey' && <SurveyManagement />}
+
+          {currentView === 'statistics' && <VisitorDashboard />}
         </div>
       </main>
     </div>
