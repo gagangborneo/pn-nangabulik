@@ -30,6 +30,7 @@ import PejabatManagement from './PejabatManagement';
 import FAQManagement from './FAQManagement';
 import VisitorDashboard from './VisitorDashboard';
 import SettingsManagement from './SettingsManagement';
+import PageManagement from './PageManagement';
 
 interface User {
   id: string;
@@ -38,7 +39,7 @@ interface User {
   role: string;
 }
 
-type AdminView = 'dashboard' | 'menu' | 'hero' | 'pejabat' | 'kontak' | 'survey' | 'reports' | 'faq' | 'statistics' | 'settings';
+type AdminView = 'dashboard' | 'menu' | 'hero' | 'pejabat' | 'kontak' | 'survey' | 'reports' | 'faq' | 'statistics' | 'settings' | 'pages';
 
 interface AdminDashboardProps {
   initialView?: AdminView;
@@ -59,6 +60,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     if (pathname === '/admin/kontak') return 'kontak';
     if (pathname === '/admin/survey') return 'survey';
     if (pathname === '/admin/faq') return 'faq';
+    if (pathname === '/admin/pages') return 'pages';
     if (pathname.startsWith('/admin/reports')) return 'reports';
     if (pathname === '/admin/statistics') return 'statistics';
     if (pathname === '/admin/settings') return 'settings';
@@ -128,6 +130,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     { id: 'hero' as AdminView, label: 'Hero Slider', icon: Image, href: '/admin/hero' },
     { id: 'pejabat' as AdminView, label: 'Profil Pejabat', icon: Users, href: '/admin/pejabat' },
     { id: 'menu' as AdminView, label: 'Menu', icon: MenuIcon, href: '/admin/menu' },
+    { id: 'pages' as AdminView, label: 'Halaman', icon: FileText, href: '/admin/pages' },
     { id: 'reports' as AdminView, label: 'Data Laporan', icon: FolderOpen, href: '/admin/reports' },
     { id: 'faq' as AdminView, label: 'FAQ', icon: HelpCircle, href: '/admin/faq' },
     { id: 'kontak' as AdminView, label: 'Kontak', icon: Mail, href: '/admin/kontak' },
@@ -355,6 +358,8 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
           {currentView === 'hero' && <HeroSliderManagement />}
 
           {currentView === 'pejabat' && <PejabatManagement />}
+
+          {currentView === 'pages' && <PageManagement />}
 
           {currentView === 'reports' && <ReportsManagement />}
 

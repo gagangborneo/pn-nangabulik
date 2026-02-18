@@ -181,3 +181,18 @@ model Visitor {
   @@index([path], name: "idx_path")
   @@index([createdAt], name: "idx_created_at")
 }
+
+model Page {
+  id              String   @id @default(cuid())
+  url             String   @unique
+  title           String
+  seoTitle        String?
+  seoDescription  String?  @db.Text
+  wordpressSlug   String
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([url])
+  @@index([isActive])
+}
