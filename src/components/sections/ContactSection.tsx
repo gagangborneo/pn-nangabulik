@@ -1,23 +1,67 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { MapPin, Clock, Phone, Mail } from 'lucide-react';
 
+interface ContactSettings {
+  address: string;
+  phone: string;
+  email: string;
+  hours: string;
+}
+
+const defaultSettings: ContactSettings = {
+  address: 'Jalan Pendidikan No. 123, Nanga Bulik, Kabupaten Lamandau, Kalimantan Tengah 74511',
+  phone: '+62 852 525 2555',
+  email: 'info@pn-nangabulik.go.id',
+  hours: 'Senin - Jumat: 08:00 - 16:00 WIB',
+};
+
 export default function ContactSection() {
+  const [settings, setSettings] = useState<ContactSettings>(defaultSettings);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await fetch('/api/settings');
+        const data = await response.json();
+
+        if (data.settings) {
+          const settingsMap = data.settings as Record<string, string>;
+
+          setSettings({
+            address: settingsMap['address'] || defaultSettings.address,
+            phone: settingsMap['phone'] || defaultSettings.phone,
+            email: settingsMap['email'] || defaultSettings.email,
+            hours: settingsMap['hours'] || defaultSettings.hours,
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching settings:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSettings();
+  }, []);
+
   const contactInfo = [
     {
       icon: MapPin,
       title: 'Alamat',
-      content: 'Jalan Pendidikan No. 123, Nanga Bulik, Kabupaten Lamandau, Kalimantan Tengah 74511',
+      content: settings.address,
     },
     {
       icon: Clock,
       title: 'Jam Operasional',
-      content: 'Senin - Jumat: 08:00 - 16:00 WIB\nSabtu - Minggu: Tutup',
+      content: settings.hours,
     },
     {
       icon: Phone,
       title: 'Kontak',
-      content: 'Telepon: +62 852 525 2555\nEmail: info@pn-nangabulik.go.id',
+      content: `Telepon: ${settings.phone}\nEmail: ${settings.email}`,
     },
   ];
 
