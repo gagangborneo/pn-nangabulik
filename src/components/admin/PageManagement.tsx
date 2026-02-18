@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -33,7 +33,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Pencil, Trash2, Plus, CheckCircle2, XCircle } from 'lucide-react';
+import { Pencil, Trash2, Plus, CheckCircle2, XCircle, Search, ChevronLeft, ChevronRight, ArrowUp, ArrowDown } from 'lucide-react';
 
 interface Page {
   id: string;
@@ -75,6 +75,16 @@ export default function PageManagement() {
   const [success, setSuccess] = useState('');
   const [urlError, setUrlError] = useState('');
   const [checkingUrl, setCheckingUrl] = useState(false);
+  
+  // Search, Filter, and Pagination states
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive'>('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  
+  // Sorting state
+  const [sortColumn, setSortColumn] = useState<'url' | null>('url');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
   useEffect(() => {
     fetchPages();
@@ -87,6 +97,7 @@ export default function PageManagement() {
       if (response.ok) {
         const data = await response.json();
         setPages(data);
+        setCurrentPage(1); // Reset to first page when data changes
       }
     } catch (error) {
       console.error('Error fetching pages:', error);
@@ -95,6 +106,69 @@ export default function PageManagement() {
       setLoading(false);
     }
   };
+
+  // Filter and paginate data
+  const filteredPages = useMemo(() => {
+    let result = pages;
+
+    // Apply search filter
+    if (searchTerm) {
+      const searchLower = searchTerm.toLowerCase();
+      result = result.filter((page) =>
+        page.title.toLowerCase().includes(searchLower) ||
+        page.url.toLowerCase().includes(searchLower) ||
+        page.wordpressSlug.toLowerCase().includes(searchLower)
+      );
+    }
+
+    // Apply status filter
+    if (statusFilter === 'active') {
+      result = result.filter((page) => page.isActive);
+    } else if (statusFilter === 'inactive') {
+      result = result.filter((page) => !page.isActive);
+    }
+
+    // Apply sorting
+    if (sortColumn === 'url') {
+      result.sort((a, b) => {
+        const aValue = a.url.toLowerCase();
+        const bValue = b.url.toLowerCase();
+        
+        if (sortOrder === 'asc') {
+          return aValue.localeCompare(bValue);
+        } else {
+          return bValue.localeCompare(aValue);
+        }
+      });
+    }
+
+    return result;
+  }, [pages, searchTerm, statusFilter, sortColumn, sortOrder]);
+
+  const handleSortUrl = () => {
+    if (sortColumn === 'url') {
+      // Toggle sort order if already sorting by url
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      // Set to sort by url with asc order
+      setSortColumn('url');
+      setSortOrder('asc');
+    }
+    setCurrentPage(1); // Reset pagination on sort
+  };
+
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredPages.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedPages = filteredPages.slice(startIndex, endIndex);
+
+  // Reset to first page if current page is out of range
+  useEffect(() => {
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(1);
+    }
+  }, [totalPages, currentPage]);
 
   const checkUrlAvailability = async (url: string) => {
     if (!url || url === editingPage?.url) {
@@ -279,11 +353,66 @@ export default function PageManagement() {
         </Alert>
       )}
 
+      {/* Search and Filter Section */}
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Search Input */}
+          <div className="relative md:col-span-2">
+            <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+            <Input
+              placeholder="Cari berdasarkan judul, URL, atau WordPress slug..."
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1); // Reset pagination on search
+              }}
+              className="pl-10"
+            />
+          </div>
+
+          {/* Status Filter */}
+          <div className="flex gap-2">
+            <select
+              value={statusFilter}
+              onChange={(e) => {
+                setStatusFilter(e.target.value as 'all' | 'active' | 'inactive');
+                setCurrentPage(1); // Reset pagination on filter
+              }}
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="all">Semua Status</option>
+              <option value="active">Aktif</option>
+              <option value="inactive">Nonaktif</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Results Count */}
+        <div className="text-sm text-gray-600">
+          Menampilkan {filteredPages.length === 0 ? 0 : startIndex + 1}-{Math.min(endIndex, filteredPages.length)} dari {filteredPages.length} halaman
+        </div>
+      </div>
+
+      {/* Table */}
       <div className="border rounded-lg">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>URL</TableHead>
+              <TableHead 
+                className="cursor-pointer select-none hover:bg-gray-100 transition-colors"
+                onClick={handleSortUrl}
+              >
+                <div className="flex items-center gap-2">
+                  URL
+                  {sortColumn === 'url' && (
+                    sortOrder === 'asc' ? (
+                      <ArrowUp className="h-4 w-4 text-blue-600" />
+                    ) : (
+                      <ArrowDown className="h-4 w-4 text-blue-600" />
+                    )
+                  )}
+                </div>
+              </TableHead>
               <TableHead>Title</TableHead>
               <TableHead>WordPress Slug</TableHead>
               <TableHead>Status</TableHead>
@@ -291,14 +420,16 @@ export default function PageManagement() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {pages.length === 0 ? (
+            {paginatedPages.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-gray-500">
-                  Belum ada halaman
+                <TableCell colSpan={5} className="text-center text-gray-500 py-8">
+                  {filteredPages.length === 0 && searchTerm
+                    ? 'Tidak ada hasil pencarian'
+                    : 'Belum ada halaman'}
                 </TableCell>
               </TableRow>
             ) : (
-              pages.map((page) => (
+              paginatedPages.map((page) => (
                 <TableRow key={page.id}>
                   <TableCell className="font-mono text-sm">
                     {page.url}
@@ -344,6 +475,35 @@ export default function PageManagement() {
           </TableBody>
         </Table>
       </div>
+
+      {/* Pagination Controls */}
+      {filteredPages.length > itemsPerPage && (
+        <div className="flex items-center justify-between">
+          <div className="text-sm text-gray-600">
+            Halaman {currentPage} dari {totalPages}
+          </div>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+              disabled={currentPage === 1}
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Sebelumnya
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+              disabled={currentPage === totalPages}
+            >
+              Selanjutnya
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      )}
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
