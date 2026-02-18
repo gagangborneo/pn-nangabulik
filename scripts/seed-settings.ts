@@ -19,6 +19,14 @@ async function main() {
       value: 'Website resmi Pengadilan Negeri Nanga Bulik',
     },
     {
+      key: 'logo_url',
+      value: '',
+    },
+    {
+      key: 'favicon_url',
+      value: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Lambang_Mahkamah_Agung.svg/32px-Lambang_Mahkamah_Agung.svg.png',
+    },
+    {
       key: 'contact_email',
       value: 'info@pn-nangabulik.go.id',
     },

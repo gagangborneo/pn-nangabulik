@@ -192,13 +192,13 @@ export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
         />
 
         {/* Featured Image */}
-        <div className="mb-8">
+        {/* <div className="mb-8">
           <img
             src={getImageUrl(post)}
             alt={post.title}
             className="w-full max-h-125 object-cover rounded-xl"
           />
-        </div>
+        </div> */}
 
         {/* Content */}
         <div

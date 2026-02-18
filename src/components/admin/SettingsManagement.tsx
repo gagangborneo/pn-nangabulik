@@ -17,6 +17,8 @@ export default function SettingsManagement() {
     wordpress_url: '',
     site_name: '',
     site_description: '',
+    logo_url: '',
+    favicon_url: '',
   });
 
   useEffect(() => {
@@ -33,6 +35,8 @@ export default function SettingsManagement() {
           wordpress_url: data.settings.wordpress_url || 'https://web.pn-nangabulik.go.id/wp-json/wp/v2',
           site_name: data.settings.site_name || '',
           site_description: data.settings.site_description || '',
+          logo_url: data.settings.logo_url || '',
+          favicon_url: data.settings.favicon_url || '',
         });
       }
     } catch (error) {
@@ -145,6 +149,44 @@ export default function SettingsManagement() {
                 onChange={(e) => handleChange('site_description', e.target.value)}
                 placeholder="Website resmi Pengadilan Negeri Nanga Bulik"
               />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Branding */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Branding</CardTitle>
+            <CardDescription>
+              Konfigurasi logo dan favicon website
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="logo_url">URL Logo</Label>
+              <Input
+                id="logo_url"
+                type="url"
+                value={settings.logo_url}
+                onChange={(e) => handleChange('logo_url', e.target.value)}
+                placeholder="https://contoh.com/logo.png"
+              />
+              <p className="text-sm text-gray-500">
+                URL logo yang akan ditampilkan di header website
+              </p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="favicon_url">URL Favicon</Label>
+              <Input
+                id="favicon_url"
+                type="url"
+                value={settings.favicon_url}
+                onChange={(e) => handleChange('favicon_url', e.target.value)}
+                placeholder="https://contoh.com/favicon.ico"
+              />
+              <p className="text-sm text-gray-500">
+                URL favicon yang akan ditampilkan di browser tab (format: .ico, .png, .svg)
+              </p>
             </div>
           </CardContent>
         </Card>

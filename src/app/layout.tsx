@@ -5,6 +5,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { TTSProvider } from "@/components/ui/tts-provider";
 import VisitorTracker from "@/components/VisitorTracker";
+import { getSetting } from "@/lib/wordpress";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,20 +17,26 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Pengadilan Negeri Nanga Bulik - Melayani Dengan Integritas dan Profesionalisme",
-  description: "Website resmi Pengadilan Negeri Nanga Bulik. Melayani masyarakat dengan integritas dan profesionalisme dalam penegakan hukum.",
-  keywords: ["Pengadilan Negeri", "Nanga Bulik", "Lamandau", "Kalimantan Tengah", "Pengadilan", "Hukum", "Peradilan"],
-  authors: [{ name: "Pengadilan Negeri Nanga Bulik" }],
-  icons: {
-    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Lambang_Mahkamah_Agung.svg/32px-Lambang_Mahkamah_Agung.svg.png",
-  },
-  openGraph: {
-    title: "Pengadilan Negeri Nanga Bulik",
-    description: "Melayani Dengan Integritas dan Profesionalisme",
-    type: "website",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const faviconUrl = await getSetting('favicon_url');
+  const siteName = await getSetting('site_name');
+  const siteDescription = await getSetting('site_description');
+
+  return {
+    title: siteName || "Pengadilan Negeri Nanga Bulik - Melayani Dengan Integritas dan Profesionalisme",
+    description: siteDescription || "Website resmi Pengadilan Negeri Nanga Bulik. Melayani masyarakat dengan integritas dan profesionalisme dalam penegakan hukum.",
+    keywords: ["Pengadilan Negeri", "Nanga Bulik", "Lamandau", "Kalimantan Tengah", "Pengadilan", "Hukum", "Peradilan"],
+    authors: [{ name: "Pengadilan Negeri Nanga Bulik" }],
+    icons: {
+      icon: faviconUrl || "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Lambang_Mahkamah_Agung.svg/32px-Lambang_Mahkamah_Agung.svg.png",
+    },
+    openGraph: {
+      title: siteName || "Pengadilan Negeri Nanga Bulik",
+      description: siteDescription || "Melayani Dengan Integritas dan Profesionalisme",
+      type: "website",
+    },
+  };
+}
 
 export default function RootLayout({
   children,
