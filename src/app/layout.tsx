@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { TTSProvider } from "@/components/ui/tts-provider";
@@ -45,6 +46,23 @@ export default function RootLayout({
           {children}
           <Toaster />
         </TTSProvider>
+        
+        {/* All-in-One Accessibility Widget */}
+        <Script
+          id="aioa-accessibility-widget"
+          strategy="lazyOnload"
+          dangerouslySetInnerHTML={{
+            __html: `
+              setTimeout(() => {
+                let aioa_script_tag = document.createElement("script");
+                aioa_script_tag.src = "https://www.skynettechnologies.com/accessibility/js/all-in-one-accessibility-js-widget-minify.js?colorcode=#420083&token=null&position=bottom_right";
+                aioa_script_tag.id = "aioa-adawidget";
+                aioa_script_tag.defer = "true";
+                document.getElementsByTagName("body")[0].appendChild(aioa_script_tag);
+              }, 3000);
+            `,
+          }}
+        />
       </body>
     </html>
   );
