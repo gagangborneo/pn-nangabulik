@@ -19,7 +19,8 @@ import {
   BarChart3,
   FolderOpen,
   Image,
-  HelpCircle
+  HelpCircle,
+  X
 } from 'lucide-react';
 import MenuManagement from './MenuManagement';
 import ContactManagement from './ContactManagement';
@@ -50,6 +51,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
   const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Determine current view from pathname
   const getCurrentView = (): AdminView => {
@@ -140,8 +142,18 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
 
   return (
     <div className="min-h-screen flex bg-white">
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-30 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
       {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full">
+      <aside
+        className={`fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 flex flex-col transform transition-transform duration-200 ease-out lg:translate-x-0 ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
         {/* Logo */}
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center gap-3">
@@ -152,6 +164,14 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
               <h1 className="font-bold text-gray-800 text-sm">Admin Panel</h1>
               <p className="text-xs text-gray-500">PN Nanga Bulik</p>
             </div>
+            <button
+              type="button"
+              className="ml-auto rounded-md p-2 text-gray-500 hover:bg-gray-100 lg:hidden"
+              onClick={() => setIsSidebarOpen(false)}
+              aria-label="Tutup menu"
+            >
+              <X className="h-5 w-5" />
+            </button>
           </div>
         </div>
 
@@ -165,6 +185,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
                 <li key={item.id}>
                   <Link
                     href={item.href}
+                    onClick={() => setIsSidebarOpen(false)}
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
                       isActive
                         ? 'bg-[#8B0000] text-white'
@@ -209,10 +230,19 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 ml-64">
+      <main className="flex-1 ml-0 lg:ml-64">
         {/* Header */}
-        <header className="bg-white border-b border-gray-200 px-8 py-4 sticky top-0 z-10">
-          <h2 className="text-xl font-semibold text-gray-800">
+        <header className="bg-white border-b border-gray-200 px-4 sm:px-8 py-4 sticky top-0 z-20">
+          <div className="flex items-center gap-4">
+            <button
+              type="button"
+              className="rounded-md p-2 text-gray-600 hover:bg-gray-100 lg:hidden"
+              onClick={() => setIsSidebarOpen(true)}
+              aria-label="Buka menu"
+            >
+              <MenuIcon className="h-5 w-5" />
+            </button>
+            <h2 className="text-xl font-semibold text-gray-800">
             {currentView === 'dashboard' && 'Dashboard'}
             {currentView === 'statistics' && 'Statistik Pengunjung'}
             {currentView === 'menu' && 'Manajemen Menu'}
@@ -221,11 +251,12 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
             {currentView === 'kontak' && 'Manajemen Kontak'}
             {currentView === 'survey' && 'Manajemen Survey'}
             {currentView === 'settings' && 'Pengaturan Sistem'}
-          </h2>
+            </h2>
+          </div>
         </header>
 
         {/* Content */}
-        <div className="p-8">
+        <div className="p-4 sm:p-8">
           {currentView === 'dashboard' && (
             <div className="space-y-6">
               {/* Stats Cards */}
