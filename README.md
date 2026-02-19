@@ -1,6 +1,10 @@
-# 🚀 Welcome to Z.ai Code Scaffold
+# 🚀 Welcome to PN Nangabulik
 
-A modern, production-ready web application scaffold powered by cutting-edge technologies, designed to accelerate your development with [Z.ai](https://chat.z.ai)'s AI-powered coding assistance.
+A modern, production-ready web application built with cutting-edge technologies for rapid and efficient development.
+
+## 📖 About
+
+PN Nangabulik adalah sebuah platform web yang menyediakan informasi dan layanan publik dengan antarmuka yang modern, responsif, dan mudah digunakan. Dibangun untuk melayani masyarakat dengan teknologi terkini dan infrastruktur yang kokoh.
 
 ## ✨ Technology Stack
 
@@ -41,7 +45,7 @@ This scaffold provides a robust foundation built with:
 - **📅 Date-fns** - Modern JavaScript date utility library
 - **🪝 ReactUse** - Collection of essential React hooks for modern development
 
-## 🎯 Why This Scaffold?
+## 🎯 Features
 
 - **🏎️ Fast Development** - Pre-configured tooling and best practices
 - **🎨 Beautiful UI** - Complete shadcn/ui component library with advanced interactions
@@ -52,9 +56,35 @@ This scaffold provides a robust foundation built with:
 - **📊 Data Visualization** - Charts, tables, and drag-and-drop functionality
 - **🌍 i18n Ready** - Multi-language support with Next Intl
 - **🚀 Production Ready** - Optimized build and deployment settings
-- **🤖 AI-Friendly** - Structured codebase perfect for AI assistance
 
-## 🚀 Quick Start
+## �️ Admin System & Backend Integration
+
+### Admin Dashboard
+Sistem ini dilengkapi dengan **dashboard admin yang komprehensif** untuk mengelola:
+- **Manajemen Konten** - Halaman, berita, FAQ, dan menu navigasi
+- **Manajemen Pengguna** - Data pejabat, kontak, dan statistik pengunjung
+- **Laporan & Analytics** - Data laporan komprehensif dan statistik kunjungan
+- **Pengaturan Sistem** - Konfigurasi umum dan maintenance mode
+- **Survei & Feedback** - Kelola survei kepuasan dan respons pengguna
+
+### WordPress API Integration
+Data diambil dari sumber eksternal menggunakan **WordPress REST API** untuk:
+- **Sinkronisasi Konten** - Mengambil berita dan artikel terbaru dari WordPress
+- **Manajemen Media** - Integrasi gambar dan aset dari lingkungan WordPress
+- **Fleksibilitas Data** - Memungkinkan konten diupdate dari multiple sources
+- **Real-time Updates** - Data dapat diperbarui secara berkala dari WordPress
+
+## 💻 Tech Implementation
+
+Integrasi sistem ini menggunakan:
+- **API Routes** di Next.js untuk endpoint backend
+- **Prisma Client** untuk manajemen database
+- **WordPress Adapter** untuk pulling data dari WordPress REST API
+- **Authentication** NextAuth.js untuk keamanan admin panel
+- **Real-time Updates** menggunakan TanStack Query untuk data synchronization
+- **Multi Language** Memungkinkan translate bahasa menggunakan Google Translate
+
+## �🚀 Quick Start
 
 ```bash
 # Install dependencies
@@ -72,19 +102,13 @@ bun start
 
 Open [http://localhost:3000](http://localhost:3000) to see your application running.
 
-## 🤖 Powered by Z.ai
 
-This scaffold is optimized for use with [Z.ai](https://chat.z.ai) - your AI assistant for:
 
-- **💻 Code Generation** - Generate components, pages, and features instantly
-- **🎨 UI Development** - Create beautiful interfaces with AI assistance  
-- **🔧 Bug Fixing** - Identify and resolve issues with intelligent suggestions
-- **📝 Documentation** - Auto-generate comprehensive documentation
-- **🚀 Optimization** - Performance improvements and best practices
+## � Development
 
-Ready to build something amazing? Start chatting with Z.ai at [chat.z.ai](https://chat.z.ai) and experience the future of AI-powered development!
+The application is built with a clean architecture that separates concerns into distinct layers:
 
-## 📁 Project Structure
+## �📁 Project Structure
 
 ```
 src/
@@ -112,11 +136,6 @@ This scaffold includes a comprehensive set of modern web development tools:
 - **Charts**: Beautiful visualizations with Recharts
 - **Forms**: Type-safe forms with React Hook Form + Zod validation
 
-### 🎨 Interactive Features
-- **Animations**: Smooth micro-interactions with Framer Motion
-- **Drag & Drop**: Modern drag-and-drop functionality with DND Kit
-- **Theme Switching**: Built-in dark/light mode support
-
 ### 🔐 Backend Integration
 - **Authentication**: Ready-to-use auth flows with NextAuth.js
 - **Database**: Type-safe database operations with Prisma
@@ -129,13 +148,9 @@ This scaffold includes a comprehensive set of modern web development tools:
 - **Type Safety**: End-to-end TypeScript with Zod validation
 - **Essential Hooks**: 100+ useful React hooks with ReactUse for common patterns
 
-## 🤝 Get Started with Z.ai
-
-1. **Clone this scaffold** to jumpstart your project
-2. **Visit [chat.z.ai](https://chat.z.ai)** to access your AI coding assistant
-3. **Start building** with intelligent code generation and assistance
-4. **Deploy with confidence** using the production-ready setup
 
 ---
 
-Built with ❤️ for the developer community. Supercharged by [Z.ai](https://chat.z.ai) 🚀
+Developed by [@gagangborneo](https://github.com/gagangborneo)
+
+Built with ❤️ for modern web development.
