@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Menu, Phone, Mail, MapPin, ChevronDown, ChevronRight } from 'lucide-react';
+import { Menu, Phone, Mail, MapPin, ChevronDown, ChevronRight, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { TTSToggle } from '@/components/ui/tts-toggle';
 import { TTSText } from '@/components/ui/tts-text';
@@ -14,6 +14,12 @@ import {
   SheetTitle,
   SheetHeader,
 } from '@/components/ui/sheet';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 interface MenuItem {
   id: string;
@@ -24,7 +30,54 @@ interface MenuItem {
   children?: MenuItem[];
 }
 
-// Menu Skeleton Component
+interface ContactSettings {
+  phone: string;
+  hours: string;
+}
+
+interface Language {
+  code: string;
+  name: string;
+  flag: string;
+}
+
+// Supported languages (Indonesian + ASEAN countries + common foreign languages)
+const languages: Language[] = [
+  { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩' },
+  { code: 'en', name: 'English', flag: '🇬🇧' },
+  { code: 'ms', name: 'Bahasa Melayu', flag: '🇲🇾' },
+  { code: 'th', name: 'ภาษาไทย (Thai)', flag: '🇹🇭' },
+  { code: 'vi', name: 'Tiếng Việt (Vietnamese)', flag: '🇻🇳' },
+  { code: 'tl', name: 'Filipino', flag: '🇵🇭' },
+  { code: 'my', name: 'မြန်မာ (Burmese)', flag: '🇲🇲' },
+  { code: 'zh-CN', name: '中文 (Chinese)', flag: '🇨🇳' },
+  { code: 'ja', name: '日本語 (Japanese)', flag: '🇯🇵' },
+  { code: 'ko', name: '한국어 (Korean)', flag: '🇰🇷' },
+  { code: 'ar', name: 'العربية (Arabic)', flag: '🇸🇦' },
+];
+
+// Skeleton Components
+function TopBarSkeleton() {
+  return (
+    <>
+      {/* Left skeleton */}
+      <div className="flex items-center gap-1.5">
+        <div className="h-3.5 w-3.5 bg-white/30 rounded animate-pulse" />
+        <div className="h-3 w-32 bg-white/30 rounded animate-pulse" />
+      </div>
+      {/* Center skeleton */}
+      <div className="text-center flex-1 md:flex-none">
+        <div className="h-3 w-48 bg-white/30 rounded animate-pulse mx-auto" />
+      </div>
+      {/* Right skeleton */}
+      <div className="hidden md:flex items-center">
+        <div className="h-3.5 w-3.5 bg-white/30 rounded animate-pulse mr-2" />
+        <div className="h-3 w-40 bg-white/30 rounded animate-pulse" />
+      </div>
+    </>
+  );
+}
+
 function MenuSkeleton() {
   return (
     <div className="flex items-center gap-1">
@@ -54,10 +107,16 @@ function MobileMenuSkeleton() {
 export default function Header() {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [contactLoading, setContactLoading] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [expandedMobileMenus, setExpandedMobileMenus] = useState<Set<string>>(new Set());
   const [expandedDesktopMenus, setExpandedDesktopMenus] = useState<Set<string>>(new Set());
   const desktopMenuRef = useRef<HTMLDivElement>(null);
+  const [contactSettings, setContactSettings] = useState<ContactSettings>({
+    phone: '+62 852 525 2555',
+    hours: 'Senin - Jumat: 08:00 - 16:00 WIB',
+  });
+  const [currentLanguage, setCurrentLanguage] = useState<Language>(languages[0]); // Default to Indonesian
 
   useEffect(() => {
     const fetchMenus = async () => {
@@ -72,7 +131,26 @@ export default function Header() {
       }
     };
 
+    const fetchContactSettings = async () => {
+      try {
+        const response = await fetch('/api/settings');
+        const data = await response.json();
+        if (data.settings) {
+          const settingsMap = data.settings as Record<string, string>;
+          setContactSettings({
+            phone: settingsMap['phone'] || '+62 852 525 2555',
+            hours: settingsMap['hours'] || 'Senin - Jumat: 08:00 - 16:00 WIB',
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching contact settings:', error);
+      } finally {
+        setContactLoading(false);
+      }
+    };
+
     fetchMenus();
+    fetchContactSettings();
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -81,6 +159,24 @@ export default function Header() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Function to change language using Google Translate
+  const changeLanguage = (lang: Language) => {
+    setCurrentLanguage(lang);
+    
+    // Google Translate implementation
+    const googleTranslateElement = document.querySelector('.goog-te-combo') as HTMLSelectElement;
+    
+    if (googleTranslateElement) {
+      googleTranslateElement.value = lang.code;
+      googleTranslateElement.dispatchEvent(new Event('change'));
+    } else {
+      // If Google Translate widget not initialized, redirect to Google Translate
+      const currentUrl = window.location.href;
+      const translateUrl = `https://translate.google.com/translate?sl=id&tl=${lang.code}&u=${encodeURIComponent(currentUrl)}`;
+      window.location.href = translateUrl;
+    }
+  };
 
   // Toggle mobile menu expansion
   const toggleMobileMenu = (id: string) => {
@@ -259,41 +355,55 @@ export default function Header() {
       <div className="bg-gradient-to-r from-red-900 to-red-800 text-white py-2">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between gap-2 md:gap-4 text-xs md:text-sm">
-            {/* Left: Email & Phone */}
-            <div className="hidden md:flex items-center gap-3 md:gap-4">
-              <a
-                href="mailto:info@pn-nangabulik.go.id"
-                className="flex items-center gap-1.5 hover:text-red-200 transition-colors"
-              >
-                <Mail className="h-3.5 w-3.5" />
-                <TTSText as="span" hoverEffect={false}>info@pn-nangabulik.go.id</TTSText>
-              </a>
-              <a
-                href="tel:+6285252555"
-                className="flex items-center gap-1.5 hover:text-red-200 transition-colors"
-              >
-                <Phone className="h-3.5 w-3.5" />
-                <TTSText as="span" hoverEffect={false}>+62 8525 2555</TTSText>
-              </a>
-            </div>
+            {contactLoading ? (
+              <TopBarSkeleton />
+            ) : (
+              <>
+                {/* Left: Phone Number */}
+                <div className="flex items-center gap-1.5">
+                  <a
+                    href={`tel:${contactSettings.phone.replace(/\s/g, '')}`}
+                    className="flex items-center gap-1.5 hover:text-red-200 transition-colors"
+                  >
+                    <Phone className="h-3.5 w-3.5" />
+                    <TTSText as="span" hoverEffect={false}>{contactSettings.phone}</TTSText>
+                  </a>
+                </div>
 
-            {/* Center: Operating Hours */}
-            <div className="text-center flex-1 md:flex-none">
-              <TTSText as="span" className="text-red-200" hoverEffect={false}>
-                Senin - Jumat: 08:00 - 16:00 WIB
-              </TTSText>
-            </div>
+                {/* Center: Operating Hours */}
+                <div className="text-center flex-1 md:flex-none">
+                  <TTSText as="span" className="text-red-200" hoverEffect={false}>
+                    {contactSettings.hours}
+                  </TTSText>
+                </div>
 
-            {/* Right: Address */}
-            <div className="hidden md:flex items-center gap-3 md:gap-4">
-              <a
-                href="#kontak"
-                className="flex items-center gap-1.5 hover:text-red-200 transition-colors"
-              >
-                <MapPin className="h-3.5 w-3.5" />
-                <TTSText as="span" hoverEffect={false}>Jalan Pendidikan No. 123, Nanga Bulik</TTSText>
-              </a>
-            </div>
+                {/* Right: Language Selector */}
+                <div className="hidden md:flex items-center">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className="flex items-center gap-1.5 hover:text-red-200 transition-colors px-2 py-1 rounded">
+                        <Globe className="h-3.5 w-3.5" />
+                        <span className="hidden lg:inline">{currentLanguage.flag} {currentLanguage.name}</span>
+                        <span className="lg:hidden">{currentLanguage.flag}</span>
+                        <ChevronDown className="h-3 w-3" />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-48 max-h-96 overflow-y-auto">
+                      {languages.map((lang) => (
+                        <DropdownMenuItem
+                          key={lang.code}
+                          onClick={() => changeLanguage(lang)}
+                          className={`cursor-pointer ${currentLanguage.code === lang.code ? 'bg-red-50' : ''}`}
+                        >
+                          <span className="mr-2">{lang.flag}</span>
+                          <span>{lang.name}</span>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -371,24 +481,51 @@ export default function Header() {
 
                 {/* Mobile Contact Info */}
                 <div className="bg-red-900 text-white rounded-lg p-3 space-y-2 text-sm">
-                  <a
-                    href="mailto:info@pn-nangabulik.go.id"
-                    className="flex items-center gap-2 hover:text-red-200"
-                  >
-                    <Mail className="h-4 w-4" />
-                    <TTSText as="span" hoverEffect={false}>info@pn-nangabulik.go.id</TTSText>
-                  </a>
-                  <a
-                    href="tel:+6285252555"
-                    className="flex items-center gap-2 hover:text-red-200"
-                  >
-                    <Phone className="h-4 w-4" />
-                    <TTSText as="span" hoverEffect={false}>+62 8525 2555</TTSText>
-                  </a>
-                  <div className="flex items-center gap-2 text-red-200">
-                    <MapPin className="h-4 w-4" />
-                    <TTSText as="span" hoverEffect={false}>Jl. Pendidikan No. 123, Nanga Bulik</TTSText>
-                  </div>
+                  {contactLoading ? (
+                    <>
+                      <div className="flex items-center gap-2">
+                        <div className="h-4 w-4 bg-white/30 rounded animate-pulse" />
+                        <div className="h-3 w-32 bg-white/30 rounded animate-pulse" />
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="h-4 w-4 bg-white/30 rounded animate-pulse" />
+                        <div className="h-3 w-40 bg-white/30 rounded animate-pulse" />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <a
+                        href={`tel:${contactSettings.phone.replace(/\s/g, '')}`}
+                        className="flex items-center gap-2 hover:text-red-200"
+                      >
+                        <Phone className="h-4 w-4" />
+                        <TTSText as="span" hoverEffect={false}>{contactSettings.phone}</TTSText>
+                      </a>
+                      <div className="flex items-center gap-2 text-red-200">
+                        <Globe className="h-4 w-4" />
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <button className="flex items-center gap-1.5 hover:text-white transition-colors text-left">
+                              <span>{currentLanguage.flag} {currentLanguage.name}</span>
+                              <ChevronDown className="h-3 w-3" />
+                            </button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="start" className="w-48 max-h-96 overflow-y-auto">
+                            {languages.map((lang) => (
+                              <DropdownMenuItem
+                                key={lang.code}
+                                onClick={() => changeLanguage(lang)}
+                                className={`cursor-pointer ${currentLanguage.code === lang.code ? 'bg-red-50' : ''}`}
+                              >
+                                <span className="mr-2">{lang.flag}</span>
+                                <span>{lang.name}</span>
+                              </DropdownMenuItem>
+                            ))}
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+                    </>
+                  )}
                 </div>
 
                 {/* Mobile Menu Items */}
