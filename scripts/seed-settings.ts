@@ -38,6 +38,14 @@ async function main() {
       key: 'contact_address',
       value: '',
     },
+    {
+      key: 'maintenance_mode',
+      value: 'false',
+    },
+    {
+      key: 'maintenance_title',
+      value: 'Website Sedang Dalam Perbaikan',
+    },
   ];
 
   for (const setting of defaultSettings) {

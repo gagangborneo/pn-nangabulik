@@ -1,7 +1,7 @@
-'use client';
-
 // Landing page for PN Nanga Bulik website
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
+import { shouldRedirectToMaintenance } from '@/lib/maintenance';
 
 // Layout
 import Header from '@/components/layout/Header';
@@ -25,8 +25,12 @@ import VisitorCounterSection from '@/components/sections/VisitorCounterSection';
 // TTS Components
 import { AutoTTSWrapper } from '@/components/ui/auto-tts-wrapper';
 
-export default function Home() {
-  const router = useRouter();
+export default async function Home() {
+  // Check maintenance mode
+  const shouldRedirect = await shouldRedirectToMaintenance();
+  if (shouldRedirect) {
+    redirect('/maintenance');
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-white">

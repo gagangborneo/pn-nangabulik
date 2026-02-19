@@ -18,6 +18,7 @@ import {
 // Layout
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import { MaintenanceCheck } from '@/components/MaintenanceCheck';
 
 // TTS
 import { AutoTTSWrapper } from '@/components/ui/auto-tts-wrapper';
@@ -86,7 +87,9 @@ export default function DataLaporanPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <>
+      <MaintenanceCheck />
+      <div className="min-h-screen flex flex-col bg-white">
       <Header />
       <AutoTTSWrapper>
         <main className="flex-1">
@@ -159,5 +162,4 @@ export default function DataLaporanPage() {
       </AutoTTSWrapper>
       <Footer />
     </div>
-  );
-}
+    </>

@@ -5,6 +5,7 @@ import { useParams, notFound } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { AutoTTSWrapper } from '@/components/ui/auto-tts-wrapper';
+import { MaintenanceCheck } from '@/components/MaintenanceCheck';
 import { Loader2 } from 'lucide-react';
 
 interface PageData {
@@ -104,7 +105,9 @@ export default function DynamicPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-white">
+      <>
+        <MaintenanceCheck />
+        <div className="min-h-screen flex flex-col bg-white">
         <Header />
         <main className="flex-1 flex items-center justify-center py-20">
           <div className="flex flex-col items-center gap-4">
@@ -114,11 +117,14 @@ export default function DynamicPage() {
         </main>
         <Footer />
       </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <>
+      <MaintenanceCheck />
+      <div className="min-h-screen flex flex-col bg-gray-50">
       <Header />
       <AutoTTSWrapper>
         <main className="flex-1 py-8 md:py-12">
@@ -180,5 +186,6 @@ export default function DynamicPage() {
       </AutoTTSWrapper>
       <Footer />
     </div>
+    </>
   );
 }

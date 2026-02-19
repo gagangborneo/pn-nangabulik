@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 import { Save, Loader2 } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
@@ -19,6 +20,8 @@ export default function SettingsManagement() {
     site_description: '',
     logo_url: '',
     favicon_url: '',
+    maintenance_mode: 'false',
+    maintenance_title: '',
   });
 
   useEffect(() => {
@@ -37,6 +40,8 @@ export default function SettingsManagement() {
           site_description: data.settings.site_description || '',
           logo_url: data.settings.logo_url || '',
           favicon_url: data.settings.favicon_url || '',
+          maintenance_mode: data.settings.maintenance_mode || 'false',
+          maintenance_title: data.settings.maintenance_title || 'Website Sedang Dalam Perbaikan',
         });
       }
     } catch (error) {
@@ -191,7 +196,45 @@ export default function SettingsManagement() {
           </CardContent>
         </Card>
 
-        <div className="flex justify-end">
+        {/* Maintenance Mode */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Mode Maintenance</CardTitle>
+            <CardDescription>
+              Aktifkan mode maintenance untuk menonaktifkan sementara website untuk user publik
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <Label htmlFor="maintenance_mode">Mode Maintenance</Label>
+                <p className="text-sm text-gray-500">
+                  Tampilkan halaman maintenance untuk semua pengunjung (kecuali admin)
+                </p>
+              </div>
+              <Switch
+                id="maintenance_mode"
+                checked={settings.maintenance_mode === 'true'}
+                onCheckedChange={(checked) => handleChange('maintenance_mode', checked ? 'true' : 'false')}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="maintenance_title">Judul Halaman Maintenance</Label>
+              <Input
+                id="maintenance_title"
+                value={settings.maintenance_title}
+                onChange={(e) => handleChange('maintenance_title', e.target.value)}
+                placeholder="Website Sedang Dalam Perbaikan"
+              />
+              <p className="text-sm text-gray-500">
+                Judul yang akan ditampilkan di halaman maintenance
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="flex justify-end"
+>
           <Button type="submit" disabled={saving} className="bg-red-900 hover:bg-red-800">
             {saving ? (
               <>
