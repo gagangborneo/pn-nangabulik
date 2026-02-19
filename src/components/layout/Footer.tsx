@@ -1,8 +1,45 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Facebook, Instagram, Youtube } from 'lucide-react';
 
+interface ContactSettings {
+  address: string;
+  phone: string;
+  email: string;
+}
+
 export default function Footer() {
+  const [contactSettings, setContactSettings] = useState<ContactSettings>({
+    address: 'Jl. Pendidikan No. 123, Nanga Bulik, Kab. Lamandau, Kalimantan Tengah',
+    phone: '+62 852 525 2555',
+    email: 'info@pn-nangabulik.go.id',
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchContactSettings = async () => {
+      try {
+        const response = await fetch('/api/settings');
+        const data = await response.json();
+        if (data.settings) {
+          const settingsMap = data.settings as Record<string, string>;
+          setContactSettings({
+            address: settingsMap['address'] || 'Jl. Pendidikan No. 123, Nanga Bulik, Kab. Lamandau, Kalimantan Tengah',
+            phone: settingsMap['phone'] || '+62 852 525 2555',
+            email: settingsMap['email'] || 'info@pn-nangabulik.go.id',
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching contact settings:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchContactSettings();
+  }, []);
+
   const serviceLinks = [
     { label: 'SIPP', href: 'https://sipp.pn-nangabulik.go.id/' },
     { label: 'E-Court', href: 'https://ecourt.mahkamahagung.go.id/' },
@@ -84,22 +121,52 @@ export default function Footer() {
           {/* Contact Info */}
           <div>
             <h3 className="font-semibold text-white mb-4">Kontak</h3>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-3">
-                <MapPin className="h-4 w-4 text-gray-400 mt-1 flex-shrink-0" />
-                <span className="text-gray-400 text-sm">
-                  Jl. Pendidikan No. 123, Nanga Bulik, Kab. Lamandau, Kalimantan Tengah
-                </span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone className="h-4 w-4 text-gray-400 flex-shrink-0" />
-                <span className="text-gray-400 text-sm">+62 852 525 2555</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Mail className="h-4 w-4 text-gray-400 flex-shrink-0" />
-                <span className="text-gray-400 text-sm">info@pn-nangabulik.go.id</span>
-              </li>
-            </ul>
+            {loading ? (
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3">
+                  <div className="h-4 w-4 bg-gray-700 rounded animate-pulse mt-1 flex-shrink-0" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-3 bg-gray-700 rounded animate-pulse w-full" />
+                    <div className="h-3 bg-gray-700 rounded animate-pulse w-3/4" />
+                  </div>
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="h-4 w-4 bg-gray-700 rounded animate-pulse flex-shrink-0" />
+                  <div className="h-3 bg-gray-700 rounded animate-pulse w-32" />
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="h-4 w-4 bg-gray-700 rounded animate-pulse flex-shrink-0" />
+                  <div className="h-3 bg-gray-700 rounded animate-pulse w-40" />
+                </li>
+              </ul>
+            ) : (
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3">
+                  <MapPin className="h-4 w-4 text-gray-400 mt-1 flex-shrink-0" />
+                  <span className="text-gray-400 text-sm">
+                    {contactSettings.address}
+                  </span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Phone className="h-4 w-4 text-gray-400 flex-shrink-0" />
+                  <a
+                    href={`tel:${contactSettings.phone.replace(/\s/g, '')}`}
+                    className="text-gray-400 text-sm hover:text-white transition-colors"
+                  >
+                    {contactSettings.phone}
+                  </a>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Mail className="h-4 w-4 text-gray-400 flex-shrink-0" />
+                  <a
+                    href={`mailto:${contactSettings.email}`}
+                    className="text-gray-400 text-sm hover:text-white transition-colors"
+                  >
+                    {contactSettings.email}
+                  </a>
+                </li>
+              </ul>
+            )}
           </div>
         </div>
       </div>
