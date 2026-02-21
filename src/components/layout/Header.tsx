@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, Phone, Mail, MapPin, ChevronDown, ChevronRight, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -110,8 +110,6 @@ export default function Header() {
   const [contactLoading, setContactLoading] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [expandedMobileMenus, setExpandedMobileMenus] = useState<Set<string>>(new Set());
-  const [expandedDesktopMenus, setExpandedDesktopMenus] = useState<Set<string>>(new Set());
-  const desktopMenuRef = useRef<HTMLDivElement>(null);
   const [contactSettings, setContactSettings] = useState<ContactSettings>({
     phone: '+62 852 525 2555',
     hours: 'Senin - Jumat: 08:00 - 16:00 WIB',
@@ -191,32 +189,7 @@ export default function Header() {
     });
   };
 
-  // Toggle desktop menu expansion
-  const toggleDesktopMenu = (id: string, event: React.MouseEvent) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setExpandedDesktopMenus((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(id)) {
-        newSet.delete(id);
-      } else {
-        newSet.add(id);
-      }
-      return newSet;
-    });
-  };
 
-  // Close all desktop menus when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (desktopMenuRef.current && !desktopMenuRef.current.contains(event.target as Node)) {
-        setExpandedDesktopMenus(new Set());
-      }
-    };
-    
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   // Render mobile menu item recursively
   const renderMobileMenuItem = (item: MenuItem, level: number = 0) => {
@@ -278,33 +251,23 @@ export default function Header() {
   // Render desktop menu item (level 0 - horizontal)
   const renderDesktopMenuItem = (item: MenuItem) => {
     const hasChildren = item.children && item.children.length > 0;
-    const isExpanded = expandedDesktopMenus.has(item.id);
 
     return (
-      <div key={item.id} className="relative">
-        {hasChildren ? (
-          <button
-            onClick={(e) => toggleDesktopMenu(item.id, e)}
-            className="text-sm font-medium text-gray-600 hover:text-red-800 transition-colors px-3 py-2 inline-flex items-center cursor-pointer"
-          >
-            <TTSText as="span" hoverEffect={false}>
-              {item.label}
-            </TTSText>
-            <ChevronDown className={`ml-1 h-3 w-3 text-gray-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-          </button>
-        ) : (
-          <Link
-            href={item.url}
-            className="text-sm font-medium text-gray-600 hover:text-red-800 transition-colors px-3 py-2 inline-flex items-center"
-          >
-            <TTSText as="span" hoverEffect={false}>
-              {item.label}
-            </TTSText>
-          </Link>
-        )}
+      <div key={item.id} className="relative group">
+        <Link
+          href={item.url}
+          className="text-sm font-medium text-gray-600 hover:text-red-800 transition-colors px-3 py-2 inline-flex items-center"
+        >
+          <TTSText as="span" hoverEffect={false}>
+            {item.label}
+          </TTSText>
+          {hasChildren && (
+            <ChevronDown className="ml-1 h-3 w-3 text-gray-400 group-hover:text-red-800 transition-colors" />
+          )}
+        </Link>
 
-        {hasChildren && isExpanded && (
-          <div className="absolute top-full left-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg z-[9999] mt-1">
+        {hasChildren && (
+          <div className="absolute top-full left-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg opacity-0 invisible pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition-all duration-200 z-[9999] mt-1">
             <div className="py-2">
               {item.children!.map((child) => renderDesktopSubMenuItem(child, 1))}
             </div>
@@ -314,21 +277,20 @@ export default function Header() {
     );
   };
 
-  // Render desktop submenu item recursively (level 1+ - dropdown)
-  const renderDesktopSubMenuItem = (item: MenuItem, level: number) => {
+  // Render nested submenu items recursively
+  const renderDesktopSubMenuItem = (item: MenuItem, level: number = 1) => {
     const hasChildren = item.children && item.children.length > 0;
-    const isExpanded = expandedDesktopMenus.has(item.id);
 
     return (
-      <div key={item.id} className="relative">
+      <div key={item.id} className="relative group/submenu space-y-1">
         {hasChildren ? (
-          <button
-            onClick={(e) => toggleDesktopMenu(item.id, e)}
-            className="w-full flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-800 transition-colors whitespace-nowrap text-left"
+          <Link
+            href={item.url}
+            className="w-full flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-800 transition-colors whitespace-nowrap text-left group-hover/submenu:bg-red-50 group-hover/submenu:text-red-800"
           >
             <TTSText as="span" hoverEffect={false}>{item.label}</TTSText>
-            <ChevronRight className={`ml-2 h-3 w-3 text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
-          </button>
+            <ChevronRight className="h-3 w-3 text-gray-400 group-hover/submenu:text-red-800 transition-colors" />
+          </Link>
         ) : (
           <Link
             href={item.url}
@@ -338,8 +300,8 @@ export default function Header() {
           </Link>
         )}
 
-        {hasChildren && isExpanded && (
-          <div className="absolute left-full top-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg z-[9999] -ml-1">
+        {hasChildren && (
+          <div className="absolute left-full top-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg opacity-0 invisible pointer-events-none group-hover/submenu:opacity-100 group-hover/submenu:visible group-hover/submenu:pointer-events-auto transition-all duration-200 z-[9999] -ml-1" style={{ top: '50%', transform: 'translateY(-50%)' }}>
             <div className="py-2">
               {item.children!.map((child) => renderDesktopSubMenuItem(child, level + 1))}
             </div>
@@ -561,7 +523,7 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <div className="relative flex justify-center border-t border-gray-100 hidden md:flex">
-          <nav ref={desktopMenuRef} className="flex items-center">
+          <nav className="flex items-center">
             {loading ? (
               <MenuSkeleton />
             ) : menuItems.length === 0 ? (
