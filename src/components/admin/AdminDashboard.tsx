@@ -20,7 +20,8 @@ import {
   FolderOpen,
   Image,
   HelpCircle,
-  X
+  X,
+  Lock,
 } from 'lucide-react';
 import MenuManagement from './MenuManagement';
 import ContactManagement from './ContactManagement';
@@ -32,6 +33,7 @@ import FAQManagement from './FAQManagement';
 import VisitorDashboard from './VisitorDashboard';
 import SettingsManagement from './SettingsManagement';
 import PageManagement from './PageManagement';
+import AccountManagement from './AccountManagement';
 
 interface User {
   id: string;
@@ -40,7 +42,7 @@ interface User {
   role: string;
 }
 
-type AdminView = 'dashboard' | 'menu' | 'hero' | 'pejabat' | 'kontak' | 'survey' | 'reports' | 'faq' | 'statistics' | 'settings' | 'pages';
+type AdminView = 'dashboard' | 'menu' | 'hero' | 'pejabat' | 'kontak' | 'survey' | 'reports' | 'faq' | 'statistics' | 'settings' | 'pages' | 'account';
 
 interface AdminDashboardProps {
   initialView?: AdminView;
@@ -63,6 +65,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     if (pathname === '/admin/survey') return 'survey';
     if (pathname === '/admin/faq') return 'faq';
     if (pathname === '/admin/pages') return 'pages';
+    if (pathname === '/admin/account') return 'account';
     if (pathname.startsWith('/admin/reports')) return 'reports';
     if (pathname === '/admin/statistics') return 'statistics';
     if (pathname === '/admin/settings') return 'settings';
@@ -138,6 +141,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     { id: 'kontak' as AdminView, label: 'Kontak', icon: Mail, href: '/admin/kontak' },
     { id: 'survey' as AdminView, label: 'Survey Kepuasan', icon: Users, href: '/admin/survey' },
     { id: 'settings' as AdminView, label: 'Pengaturan', icon: Settings, href: '/admin/settings' },
+    { id: 'account' as AdminView, label: 'Akun', icon: Lock, href: '/admin/account' },
   ];
 
   return (
@@ -251,6 +255,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
             {currentView === 'kontak' && 'Manajemen Kontak'}
             {currentView === 'survey' && 'Manajemen Survey'}
             {currentView === 'settings' && 'Pengaturan Sistem'}
+            {currentView === 'account' && 'Manajemen Akun'}
             </h2>
           </div>
         </header>
@@ -403,6 +408,8 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
           {currentView === 'statistics' && <VisitorDashboard />}
 
           {currentView === 'settings' && <SettingsManagement />}
+
+          {currentView === 'account' && <AccountManagement />}
         </div>
       </main>
     </div>
