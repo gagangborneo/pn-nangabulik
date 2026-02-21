@@ -282,14 +282,18 @@ export default function Header() {
     const hasChildren = item.children && item.children.length > 0;
 
     return (
-      <div key={item.id} className="relative group/submenu space-y-1">
+      <div 
+        key={item.id} 
+        className="relative space-y-1 group/item"
+        data-item-id={item.id}
+      >
         {hasChildren ? (
           <Link
             href={item.url}
-            className="w-full flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-800 transition-colors whitespace-nowrap text-left group-hover/submenu:bg-red-50 group-hover/submenu:text-red-800"
+            className="w-full flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-800 transition-colors whitespace-nowrap text-left"
           >
             <TTSText as="span" hoverEffect={false}>{item.label}</TTSText>
-            <ChevronRight className="h-3 w-3 text-gray-400 group-hover/submenu:text-red-800 transition-colors" />
+            <ChevronRight className="h-3 w-3 text-gray-400 transition-colors" />
           </Link>
         ) : (
           <Link
@@ -301,7 +305,10 @@ export default function Header() {
         )}
 
         {hasChildren && (
-          <div className="absolute left-full top-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg opacity-0 invisible pointer-events-none group-hover/submenu:opacity-100 group-hover/submenu:visible group-hover/submenu:pointer-events-auto transition-all duration-200 z-[9999] -ml-1" style={{ top: '50%', transform: 'translateY(-50%)' }}>
+          <div 
+            className="absolute left-full top-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg opacity-0 invisible pointer-events-none group-hover/item:opacity-100 group-hover/item:visible group-hover/item:pointer-events-auto transition-all duration-200 z-[9999] -ml-1" 
+            style={{ top: '50%', transform: 'translateY(-50%)' }}
+          >
             <div className="py-2">
               {item.children!.map((child) => renderDesktopSubMenuItem(child, level + 1))}
             </div>
