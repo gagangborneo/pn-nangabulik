@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type MouseEvent } from 'react';
 import Link from 'next/link';
 import { Menu, Phone, Mail, MapPin, ChevronDown, ChevronRight, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -110,6 +110,7 @@ export default function Header() {
   const [contactLoading, setContactLoading] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [expandedMobileMenus, setExpandedMobileMenus] = useState<Set<string>>(new Set());
+  const [expandedSubMenus, setExpandedSubMenus] = useState<Set<string>>(new Set());
   const [contactSettings, setContactSettings] = useState<ContactSettings>({
     phone: '+62 852 525 2555',
     hours: 'Senin - Jumat: 08:00 - 16:00 WIB',
@@ -179,6 +180,18 @@ export default function Header() {
   // Toggle mobile menu expansion
   const toggleMobileMenu = (id: string) => {
     setExpandedMobileMenus((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
+  };
+
+  const toggleSubMenu = (id: string) => {
+    setExpandedSubMenus((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(id)) {
         newSet.delete(id);
@@ -280,16 +293,26 @@ export default function Header() {
   // Render nested submenu items recursively
   const renderDesktopSubMenuItem = (item: MenuItem, level: number = 1) => {
     const hasChildren = item.children && item.children.length > 0;
+    const isClickToggle = level >= 2;
+    const isOpen = expandedSubMenus.has(item.id);
+
+    const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+      if (hasChildren && isClickToggle) {
+        event.preventDefault();
+        toggleSubMenu(item.id);
+      }
+    };
 
     return (
       <div 
         key={item.id} 
-        className="relative space-y-1 group/item"
+        className={`relative space-y-1${isClickToggle ? '' : ' group/item'}`}
         data-item-id={item.id}
       >
         {hasChildren ? (
           <Link
             href={item.url}
+            onClick={handleClick}
             className="w-full flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-800 transition-colors whitespace-nowrap text-left"
           >
             <TTSText as="span" hoverEffect={false}>{item.label}</TTSText>
@@ -306,7 +329,13 @@ export default function Header() {
 
         {hasChildren && (
           <div 
-            className="absolute left-full top-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg opacity-0 invisible pointer-events-none group-hover/item:opacity-100 group-hover/item:visible group-hover/item:pointer-events-auto transition-all duration-200 z-[9999] -ml-1" 
+            className={`absolute left-full top-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg transition-all duration-200 z-[9999] -ml-1 ${
+              isClickToggle
+                ? isOpen
+                  ? 'opacity-100 visible pointer-events-auto'
+                  : 'opacity-0 invisible pointer-events-none'
+                : 'opacity-0 invisible pointer-events-none group-hover/item:opacity-100 group-hover/item:visible group-hover/item:pointer-events-auto'
+            }`} 
             style={{ top: '50%', transform: 'translateY(-50%)' }}
           >
             <div className="py-2">
