@@ -115,8 +115,8 @@ export default function PartnersSection() {
         </div>
 
         {/* Partners Carousel */}
-        <div className="max-w-4xl mx-auto relative">
-          <div className="flex absolute -left-6 top-1/2 -translate-y-1/2">
+        <div className="max-w-4xl mx-auto relative px-8">
+          <div className="flex absolute left-0 top-1/2 -translate-y-1/2 z-10">
             <button
               type="button"
               onClick={() => handleScroll('left')}
@@ -126,7 +126,7 @@ export default function PartnersSection() {
               <ChevronLeft className="h-5 w-5 mx-auto" />
             </button>
           </div>
-          <div className="flex absolute -right-6 top-1/2 -translate-y-1/2">
+          <div className="flex absolute right-0 top-1/2 -translate-y-1/2 z-10">
             <button
               type="button"
               onClick={() => handleScroll('right')}
@@ -138,18 +138,18 @@ export default function PartnersSection() {
           </div>
           <div
             ref={carouselRef}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-2 px-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           >
             {partners.map((partner) => (
               <div
                 key={partner.id}
-                className="snap-start shrink-0 basis-1/2 md:basis-1/3 lg:basis-1/4"
+                className="snap-start shrink-0 w-[calc(50%-12px)] md:w-[calc(33.333%-16px)] lg:w-[calc(25%-18px)]"
               >
                 <a
                   href={partner.websiteUrl || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white/95 rounded-xl p-6 shadow-lg hover:shadow-xl hover:bg-white transition-all duration-300 flex items-center justify-center group backdrop-blur-sm h-full"
+                  className="block bg-white/95 rounded-xl p-6 shadow-lg hover:shadow-xl hover:bg-white transition-all duration-300 group backdrop-blur-sm h-full"
                 >
                   <div className="text-center">
                     <div className="w-20 h-20 mx-auto mb-3 flex items-center justify-center">
