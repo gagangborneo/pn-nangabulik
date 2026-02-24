@@ -208,3 +208,14 @@ model InformationSlide {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model PengumumanSidang {
+  id        String   @id @default(cuid())
+  title     String
+  url       String   @db.Text
+  description String? @db.Text
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

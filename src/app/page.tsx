@@ -17,6 +17,7 @@ import ProfilPejabatSection from '@/components/sections/ProfilPejabatSection';
 import SMAPBannerSection from '@/components/sections/SMAPBannerSection';
 import LayananPublikSection from '@/components/sections/LayananPublikSection';
 import JadwalSidangSection from '@/components/sections/JadwalSidangSection';
+import PengumumanSidangSection from '@/components/sections/PengumumanSidangSection';
 import WadahKeadilanSection from '@/components/sections/WadahKeadilanSection';
 import SurveySection from '@/components/sections/SurveySection';
 import BlogSection from '@/components/sections/BlogSection';
@@ -46,6 +47,7 @@ export default async function Home() {
           <InformationSlidesSection />
           <LayananPublikSection />
           <JadwalSidangSection />
+          <PengumumanSidangSection />
           <ProfilPejabatSection />
           <SMAPBannerSection />
           {/* <WadahKeadilanSection /> */}

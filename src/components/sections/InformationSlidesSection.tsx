@@ -70,7 +70,7 @@ export default function InformationSlidesSection() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
-        <div className="text-center mb-12">
+        {/* <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3">
             Informasi Penting
           </h2>
@@ -78,7 +78,7 @@ export default function InformationSlidesSection() {
           <p className="text-gray-600 max-w-2xl mx-auto">
             Kumpulan informasi penting dan terbaru dari Pengadilan Negeri Nanga Bulik
           </p>
-        </div>
+        </div> */}
 
         {/* Slider Container */}
         <div className="relative">
@@ -87,10 +87,10 @@ export default function InformationSlidesSection() {
             {visibleSlides.map((slide) => (
               <div
                 key={slide.id}
-                className="group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 h-80 flex flex-col bg-white border border-gray-200"
+                className="group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 h-56 flex flex-col bg-white border border-gray-200"
               >
                 {/* Image Container */}
-                <div className="relative h-48 overflow-hidden bg-gray-200">
+                <div className="relative overflow-hidden bg-gray-200">
                   <img
                     src={slide.imageUrl}
                     alt={slide.title}
@@ -102,7 +102,7 @@ export default function InformationSlidesSection() {
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 p-5 flex flex-col justify-between">
+                {/* <div className="flex-1 p-5 flex flex-col justify-between">
                   <div>
                     <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-red-900 transition-colors">
                       {slide.title}
@@ -113,7 +113,7 @@ export default function InformationSlidesSection() {
                       </p>
                     )}
                   </div>
-                </div>
+                </div> */}
               </div>
             ))}
           </div>
