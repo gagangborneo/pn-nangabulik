@@ -186,10 +186,9 @@ export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
         </div>
 
         {/* Title */}
-        <h1
-          className="text-3xl md:text-4xl font-bold text-gray-800 mb-6"
-          dangerouslySetInnerHTML={{ __html: post.title }}
-        />
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+          {post.title}
+        </h1>
 
         {/* Featured Image */}
         {/* <div className="mb-8">
@@ -217,10 +216,9 @@ export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
                     <ChevronLeft className="h-5 w-5 text-gray-400 group-hover:text-[#8B0000] mt-1 shrink-0" />
                     <div>
                       <p className="text-xs text-gray-500 mb-1">Berita Sebelumnya</p>
-                      <h3 
-                        className="text-sm font-semibold text-gray-800 group-hover:text-[#8B0000] line-clamp-2"
-                        dangerouslySetInnerHTML={{ __html: prevPost.title }}
-                      />
+                      <h3 className="text-sm font-semibold text-gray-800 group-hover:text-[#8B0000] line-clamp-2">
+                        {prevPost.title}
+                      </h3>
                     </div>
                   </div>
                 </Link>
@@ -239,10 +237,9 @@ export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
                   <div className="flex items-start gap-3 p-4 rounded-lg hover:bg-gray-50 transition-colors">
                     <div className="flex-1 text-right">
                       <p className="text-xs text-gray-500 mb-1">Berita Selanjutnya</p>
-                      <h3 
-                        className="text-sm font-semibold text-gray-800 group-hover:text-[#8B0000] line-clamp-2"
-                        dangerouslySetInnerHTML={{ __html: nextPost.title }}
-                      />
+                      <h3 className="text-sm font-semibold text-gray-800 group-hover:text-[#8B0000] line-clamp-2">
+                        {nextPost.title}
+                      </h3>
                     </div>
                     <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-[#8B0000] mt-1 shrink-0" />
                   </div>
@@ -277,11 +274,11 @@ export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
                         <span>{formatDate(latestPost.date)}</span>
                       </div>
                       <CardTitle className="text-base font-semibold text-gray-800 group-hover:text-[#8B0000] line-clamp-2 mb-2">
-                        <span dangerouslySetInnerHTML={{ __html: latestPost.title }} />
+                        {latestPost.title}
                       </CardTitle>
                       {latestPost.excerpt && (
                         <CardDescription className="text-sm text-gray-600 line-clamp-2">
-                          <span dangerouslySetInnerHTML={{ __html: latestPost.excerpt }} />
+                          {latestPost.excerpt}
                         </CardDescription>
                       )}
                     </CardContent>

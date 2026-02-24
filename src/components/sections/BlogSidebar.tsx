@@ -131,9 +131,9 @@ export default function BlogSidebar({
   return (
     <aside className="space-y-6">
       {/* Categories */}
-      <Card className="shadow-md hover:shadow-lg transition-shadow">
-        <CardHeader className="bg-gradient-to-r from-red-900 to-red-800 text-white rounded-t-lg">
-          <CardTitle className="flex items-center gap-2 text-lg">
+      <Card className="shadow-md hover:shadow-lg transition-shadow overflow-hidden">
+        <CardHeader className="bg-gradient-to-r from-red-900 to-red-800 text-white rounded-t-lg p-0">
+          <CardTitle className="flex items-center gap-2 text-lg px-6 py-3">
             <Tag className="h-5 w-5" />
             Kategori
           </CardTitle>
@@ -180,9 +180,9 @@ export default function BlogSidebar({
       </Card>
 
       {/* Recent Posts */}
-      <Card className="shadow-md hover:shadow-lg transition-shadow">
-        <CardHeader className="bg-gradient-to-r from-red-900 to-red-800 text-white rounded-t-lg">
-          <CardTitle className="flex items-center gap-2 text-lg">
+      <Card className="shadow-md hover:shadow-lg transition-shadow overflow-hidden">
+        <CardHeader className="bg-gradient-to-r from-red-900 to-red-800 text-white rounded-t-lg p-0">
+          <CardTitle className="flex items-center gap-2 text-lg px-6 py-3">
             <TrendingUp className="h-5 w-5" />
             Berita Terbaru
           </CardTitle>
@@ -221,9 +221,9 @@ export default function BlogSidebar({
       </Card>
 
       {/* Archive by Year */}
-      <Card className="shadow-md hover:shadow-lg transition-shadow">
-        <CardHeader className="bg-gradient-to-r from-red-900 to-red-800 text-white rounded-t-lg">
-          <CardTitle className="flex items-center gap-2 text-lg">
+      <Card className="shadow-md hover:shadow-lg transition-shadow overflow-hidden">
+        <CardHeader className="bg-gradient-to-r from-red-900 to-red-800 text-white rounded-t-lg p-0">
+          <CardTitle className="flex items-center gap-2 text-lg px-6 py-3">
             <Calendar className="h-5 w-5" />
             Arsip
           </CardTitle>
