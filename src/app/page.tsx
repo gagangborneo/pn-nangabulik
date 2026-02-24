@@ -19,6 +19,7 @@ import LayananPublikSection from '@/components/sections/LayananPublikSection';
 import JadwalSidangSection from '@/components/sections/JadwalSidangSection';
 import PengumumanSidangSection from '@/components/sections/PengumumanSidangSection';
 import WadahKeadilanSection from '@/components/sections/WadahKeadilanSection';
+import MaklumatPojokInfoSection from '@/components/sections/MaklumatPojokInfoSection';
 import SurveySection from '@/components/sections/SurveySection';
 import BlogSection from '@/components/sections/BlogSection';
 import FAQSection from '@/components/sections/FAQSection';
@@ -51,6 +52,7 @@ export default async function Home() {
           <ProfilPejabatSection />
           <SMAPBannerSection />
           {/* <WadahKeadilanSection /> */}
+          <MaklumatPojokInfoSection />
           <SurveySection />
           <BlogSection />
           <FAQSection />

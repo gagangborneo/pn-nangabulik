@@ -29,6 +29,8 @@ import SurveyManagement from './SurveyManagement';
 import ReportsManagement from './ReportsManagement';
 import HeroSliderManagement from './HeroSliderManagement';
 import InformationSlidesManagement from './InformationSlidesManagement';
+import MaklumatSlidesManagement from './MaklumatSlidesManagement';
+import PojokInfoSlidesManagement from './PojokInfoSlidesManagement';
 import PengumumanSidangManagement from './PengumumanSidangManagement';
 import PejabatManagement from './PejabatManagement';
 import FAQManagement from './FAQManagement';
@@ -44,7 +46,7 @@ interface User {
   role: string;
 }
 
-type AdminView = 'dashboard' | 'menu' | 'hero' | 'information-slides' | 'pengumuman-sidang' | 'pejabat' | 'kontak' | 'survey' | 'reports' | 'faq' | 'statistics' | 'settings' | 'pages' | 'account';
+type AdminView = 'dashboard' | 'menu' | 'hero' | 'information-slides' | 'maklumat' | 'pojok-info' | 'pengumuman-sidang' | 'pejabat' | 'kontak' | 'survey' | 'reports' | 'faq' | 'statistics' | 'settings' | 'pages' | 'account';
 
 interface AdminDashboardProps {
   initialView?: AdminView;
@@ -63,6 +65,8 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     if (pathname === '/admin/menu') return 'menu';
     if (pathname === '/admin/hero') return 'hero';
     if (pathname === '/admin/information-slides') return 'information-slides';
+    if (pathname === '/admin/maklumat') return 'maklumat';
+    if (pathname === '/admin/pojok-info') return 'pojok-info';
     if (pathname === '/admin/pengumuman-sidang') return 'pengumuman-sidang';
     if (pathname === '/admin/pejabat') return 'pejabat';
     if (pathname === '/admin/kontak') return 'kontak';
@@ -138,6 +142,8 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     { id: 'statistics' as AdminView, label: 'Statistik Pengunjung', icon: BarChart3, href: '/admin/statistics' },
     { id: 'hero' as AdminView, label: 'Hero Slider', icon: Image, href: '/admin/hero' },
     { id: 'information-slides' as AdminView, label: 'Information Slides', icon: Image, href: '/admin/information-slides' },
+    { id: 'maklumat' as AdminView, label: 'Maklumat', icon: Image, href: '/admin/maklumat' },
+    { id: 'pojok-info' as AdminView, label: 'Pojok Info', icon: Image, href: '/admin/pojok-info' },
     { id: 'pengumuman-sidang' as AdminView, label: 'Pengumuman Sidang', icon: FileText, href: '/admin/pengumuman-sidang' },
     { id: 'pejabat' as AdminView, label: 'Profil Pejabat', icon: Users, href: '/admin/pejabat' },
     { id: 'menu' as AdminView, label: 'Menu', icon: MenuIcon, href: '/admin/menu' },
@@ -258,6 +264,8 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
             {currentView === 'menu' && 'Manajemen Menu'}
             {currentView === 'hero' && 'Manajemen Hero Slider'}
             {currentView === 'information-slides' && 'Manajemen Information Slides'}
+            {currentView === 'maklumat' && 'Manajemen Maklumat'}
+            {currentView === 'pojok-info' && 'Manajemen Pojok Info'}
             {currentView === 'pengumuman-sidang' && 'Manajemen Pengumuman Sidang'}
             {currentView === 'reports' && 'Manajemen Data Laporan'}
             {currentView === 'faq' && 'Manajemen FAQ'}
@@ -403,6 +411,10 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
           {currentView === 'hero' && <HeroSliderManagement />}
 
           {currentView === 'information-slides' && <InformationSlidesManagement />}
+
+          {currentView === 'maklumat' && <MaklumatSlidesManagement />}
+
+          {currentView === 'pojok-info' && <PojokInfoSlidesManagement />}
 
           {currentView === 'pengumuman-sidang' && <PengumumanSidangManagement />}
 

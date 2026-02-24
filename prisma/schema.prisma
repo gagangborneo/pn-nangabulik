@@ -209,6 +209,24 @@ model InformationSlide {
   updatedAt DateTime @updatedAt
 }
 
+model MaklumatSlide {
+  id        String   @id @default(cuid())
+  imageUrl  String
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PojokInfoSlide {
+  id        String   @id @default(cuid())
+  imageUrl  String
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model PengumumanSidang {
   id        String   @id @default(cuid())
   title     String

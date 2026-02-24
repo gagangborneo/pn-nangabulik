@@ -59,7 +59,7 @@ export default function PengumumanSidangSection() {
         </div>
 
         {/* Grid Items */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 max-w-4xl mx-auto gap-6 mb-8">
           {items.map((item) => (
             <div
               key={item.id}
