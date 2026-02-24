@@ -82,7 +82,7 @@ export default async function DynamicPage({
           <Header />
           <AutoTTSWrapper>
             <main className="flex-1 py-8 md:py-12">
-              <div className="container mx-auto px-4 max-w-4xl">
+              <div className="container mx-auto px-4 max-w-6xl">
                 {/* Breadcrumb */}
                 <nav className="text-sm text-gray-500 mb-8">
                   <ol className="flex items-center gap-2 flex-wrap">
