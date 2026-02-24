@@ -386,7 +386,7 @@ export default function Header() {
                         <ChevronDown className="h-3 w-3" />
                       </button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-48 max-h-96 overflow-y-auto">
+                    <DropdownMenuContent align="end" sideOffset={0} className="w-48 max-h-96 overflow-y-auto p-0">
                       {languages.map((lang) => (
                         <DropdownMenuItem
                           key={lang.code}
@@ -511,7 +511,7 @@ export default function Header() {
                               <ChevronDown className="h-3 w-3" />
                             </button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="start" className="w-48 max-h-96 overflow-y-auto">
+                          <DropdownMenuContent align="start" sideOffset={0} className="w-48 max-h-96 overflow-y-auto p-0">
                             {languages.map((lang) => (
                               <DropdownMenuItem
                                 key={lang.code}

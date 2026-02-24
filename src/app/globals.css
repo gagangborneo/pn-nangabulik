@@ -119,6 +119,12 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Remove margin when scroll is locked */
+  body[data-scroll-locked] {
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+  }
 }
 
 /* Dropdown menu styles */
