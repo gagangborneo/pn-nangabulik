@@ -290,29 +290,19 @@ export default function Header() {
     );
   };
 
-  // Render nested submenu items recursively
-  const renderDesktopSubMenuItem = (item: MenuItem, level: number = 1) => {
+  // Render first level submenu items
+  const renderDesktopSubMenuItem = (item: MenuItem) => {
     const hasChildren = item.children && item.children.length > 0;
-    const isClickToggle = level >= 2;
-    const isOpen = expandedSubMenus.has(item.id);
-
-    const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
-      if (hasChildren && isClickToggle) {
-        event.preventDefault();
-        toggleSubMenu(item.id);
-      }
-    };
 
     return (
       <div 
         key={item.id} 
-        className={`relative space-y-1${isClickToggle ? '' : ' group/item'}`}
+        className="relative group/submenu"
         data-item-id={item.id}
       >
         {hasChildren ? (
           <Link
             href={item.url}
-            onClick={handleClick}
             className="w-full flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-800 transition-colors whitespace-nowrap text-left"
           >
             <TTSText as="span" hoverEffect={false}>{item.label}</TTSText>
@@ -329,17 +319,93 @@ export default function Header() {
 
         {hasChildren && (
           <div 
-            className={`absolute left-full top-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg transition-all duration-200 delay-100 group-hover/item:delay-0 z-[9999] -ml-1 before:content-[''] before:block before:absolute before:-left-2 before:top-0 before:w-2 before:h-full ${
-              isClickToggle
-                ? isOpen
-                  ? 'opacity-100 visible pointer-events-auto'
-                  : 'opacity-0 invisible pointer-events-none'
-                : 'opacity-0 invisible pointer-events-none group-hover/item:opacity-100 group-hover/item:visible group-hover/item:pointer-events-auto'
-            }`} 
+            className="absolute left-full top-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg transition-all duration-200 delay-100 group-hover/submenu:delay-0 z-[9999] -ml-1 opacity-0 invisible pointer-events-none group-hover/submenu:opacity-100 group-hover/submenu:visible group-hover/submenu:pointer-events-auto before:content-[''] before:block before:absolute before:-left-2 before:top-0 before:w-2 before:h-full" 
             style={{ top: '50%', transform: 'translateY(-50%)' }}
           >
             <div className="py-2">
-              {item.children!.map((child) => renderDesktopSubMenuItem(child, level + 1))}
+              {item.children!.map((child) => renderDesktopDoubleSubMenuItem(child))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // Render second level submenu items
+  const renderDesktopDoubleSubMenuItem = (item: MenuItem) => {
+    const hasChildren = item.children && item.children.length > 0;
+
+    return (
+      <div 
+        key={item.id} 
+        className="relative group/double-submenu"
+        data-item-id={item.id}
+      >
+        {hasChildren ? (
+          <Link
+            href={item.url}
+            className="w-full flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-800 transition-colors whitespace-nowrap text-left"
+          >
+            <TTSText as="span" hoverEffect={false}>{item.label}</TTSText>
+            <ChevronRight className="h-3 w-3 text-gray-400 transition-colors" />
+          </Link>
+        ) : (
+          <Link
+            href={item.url}
+            className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-800 transition-colors whitespace-nowrap"
+          >
+            <TTSText as="span" hoverEffect={false}>{item.label}</TTSText>
+          </Link>
+        )}
+
+        {hasChildren && (
+          <div 
+            className="absolute left-full top-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg transition-all duration-200 delay-100 group-hover/double-submenu:delay-0 z-[9999] -ml-1 opacity-0 invisible pointer-events-none group-hover/double-submenu:opacity-100 group-hover/double-submenu:visible group-hover/double-submenu:pointer-events-auto before:content-[''] before:block before:absolute before:-left-2 before:top-0 before:w-2 before:h-full" 
+            style={{ top: '50%', transform: 'translateY(-50%)' }}
+          >
+            <div className="py-2">
+              {item.children!.map((child) => renderDesktopTripleSubMenuItem(child))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // Render third level and deeper submenu items
+  const renderDesktopTripleSubMenuItem = (item: MenuItem) => {
+    const hasChildren = item.children && item.children.length > 0;
+
+    return (
+      <div 
+        key={item.id} 
+        className="relative group/triple-submenu"
+        data-item-id={item.id}
+      >
+        {hasChildren ? (
+          <Link
+            href={item.url}
+            className="w-full flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-800 transition-colors whitespace-nowrap text-left"
+          >
+            <TTSText as="span" hoverEffect={false}>{item.label}</TTSText>
+            <ChevronRight className="h-3 w-3 text-gray-400 transition-colors" />
+          </Link>
+        ) : (
+          <Link
+            href={item.url}
+            className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-800 transition-colors whitespace-nowrap"
+          >
+            <TTSText as="span" hoverEffect={false}>{item.label}</TTSText>
+          </Link>
+        )}
+
+        {hasChildren && (
+          <div 
+            className="absolute left-full top-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg transition-all duration-200 delay-100 group-hover/triple-submenu:delay-0 z-[9999] -ml-1 opacity-0 invisible pointer-events-none group-hover/triple-submenu:opacity-100 group-hover/triple-submenu:visible group-hover/triple-submenu:pointer-events-auto before:content-[''] before:block before:absolute before:-left-2 before:top-0 before:w-2 before:h-full" 
+            style={{ top: '50%', transform: 'translateY(-50%)' }}
+          >
+            <div className="py-2">
+              {item.children!.map((child) => renderDesktopTripleSubMenuItem(child))}
             </div>
           </div>
         )}
