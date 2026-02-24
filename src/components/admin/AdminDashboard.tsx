@@ -28,6 +28,7 @@ import ContactManagement from './ContactManagement';
 import SurveyManagement from './SurveyManagement';
 import ReportsManagement from './ReportsManagement';
 import HeroSliderManagement from './HeroSliderManagement';
+import InformationSlidesManagement from './InformationSlidesManagement';
 import PejabatManagement from './PejabatManagement';
 import FAQManagement from './FAQManagement';
 import VisitorDashboard from './VisitorDashboard';
@@ -42,7 +43,7 @@ interface User {
   role: string;
 }
 
-type AdminView = 'dashboard' | 'menu' | 'hero' | 'pejabat' | 'kontak' | 'survey' | 'reports' | 'faq' | 'statistics' | 'settings' | 'pages' | 'account';
+type AdminView = 'dashboard' | 'menu' | 'hero' | 'information-slides' | 'pejabat' | 'kontak' | 'survey' | 'reports' | 'faq' | 'statistics' | 'settings' | 'pages' | 'account';
 
 interface AdminDashboardProps {
   initialView?: AdminView;
@@ -60,6 +61,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     if (initialView) return initialView;
     if (pathname === '/admin/menu') return 'menu';
     if (pathname === '/admin/hero') return 'hero';
+    if (pathname === '/admin/information-slides') return 'information-slides';
     if (pathname === '/admin/pejabat') return 'pejabat';
     if (pathname === '/admin/kontak') return 'kontak';
     if (pathname === '/admin/survey') return 'survey';
@@ -133,6 +135,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     { id: 'dashboard' as AdminView, label: 'Dashboard', icon: LayoutDashboard, href: '/admin' },
     { id: 'statistics' as AdminView, label: 'Statistik Pengunjung', icon: BarChart3, href: '/admin/statistics' },
     { id: 'hero' as AdminView, label: 'Hero Slider', icon: Image, href: '/admin/hero' },
+    { id: 'information-slides' as AdminView, label: 'Information Slides', icon: Image, href: '/admin/information-slides' },
     { id: 'pejabat' as AdminView, label: 'Profil Pejabat', icon: Users, href: '/admin/pejabat' },
     { id: 'menu' as AdminView, label: 'Menu', icon: MenuIcon, href: '/admin/menu' },
     { id: 'pages' as AdminView, label: 'Halaman', icon: FileText, href: '/admin/pages' },
@@ -250,6 +253,8 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
             {currentView === 'dashboard' && 'Dashboard'}
             {currentView === 'statistics' && 'Statistik Pengunjung'}
             {currentView === 'menu' && 'Manajemen Menu'}
+            {currentView === 'hero' && 'Manajemen Hero Slider'}
+            {currentView === 'information-slides' && 'Manajemen Information Slides'}
             {currentView === 'reports' && 'Manajemen Data Laporan'}
             {currentView === 'faq' && 'Manajemen FAQ'}
             {currentView === 'kontak' && 'Manajemen Kontak'}
@@ -392,6 +397,8 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
           {currentView === 'menu' && <MenuManagement />}
 
           {currentView === 'hero' && <HeroSliderManagement />}
+
+          {currentView === 'information-slides' && <InformationSlidesManagement />}
 
           {currentView === 'pejabat' && <PejabatManagement />}
 

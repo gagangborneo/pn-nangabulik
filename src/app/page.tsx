@@ -12,9 +12,11 @@ import Footer from '@/components/layout/Footer';
 // Sections
 import HeroSection from '@/components/sections/HeroSection';
 import ZonaIntegritasSection from '@/components/sections/ZonaIntegritasSection';
+import InformationSlidesSection from '@/components/sections/InformationSlidesSection';
 import ProfilPejabatSection from '@/components/sections/ProfilPejabatSection';
 import SMAPBannerSection from '@/components/sections/SMAPBannerSection';
 import LayananPublikSection from '@/components/sections/LayananPublikSection';
+import JadwalSidangSection from '@/components/sections/JadwalSidangSection';
 import WadahKeadilanSection from '@/components/sections/WadahKeadilanSection';
 import SurveySection from '@/components/sections/SurveySection';
 import BlogSection from '@/components/sections/BlogSection';
@@ -41,9 +43,11 @@ export default async function Home() {
         <main className="flex-1">
           <HeroSection />
           <ZonaIntegritasSection />
+          <InformationSlidesSection />
+          <LayananPublikSection />
+          <JadwalSidangSection />
           <ProfilPejabatSection />
           <SMAPBannerSection />
-          <LayananPublikSection />
           {/* <WadahKeadilanSection /> */}
           <SurveySection />
           <BlogSection />
