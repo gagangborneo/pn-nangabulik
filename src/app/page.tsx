@@ -9,7 +9,6 @@ import Footer from '@/components/layout/Footer';
 
 // Sections
 import HeroSection from '@/components/sections/HeroSection';
-import LogoBannerSection from '@/components/sections/LogoBannerSection';
 import ZonaIntegritasSection from '@/components/sections/ZonaIntegritasSection';
 import ProfilPejabatSection from '@/components/sections/ProfilPejabatSection';
 import SMAPBannerSection from '@/components/sections/SMAPBannerSection';
@@ -39,7 +38,6 @@ export default async function Home() {
       <AutoTTSWrapper>
         <main className="flex-1">
           <HeroSection />
-          <LogoBannerSection />
           <ZonaIntegritasSection />
           <ProfilPejabatSection />
           <SMAPBannerSection />

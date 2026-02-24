@@ -280,7 +280,7 @@ export default function Header() {
         </Link>
 
         {hasChildren && (
-          <div className="absolute top-full left-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg opacity-0 invisible pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition-all duration-200 z-[9999] mt-1">
+          <div className="absolute top-full left-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg opacity-0 invisible pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition-all duration-200 delay-100 group-hover:delay-0 z-[9999] mt-1 before:content-[''] before:block before:absolute before:-top-2 before:left-0 before:right-0 before:h-2">
             <div className="py-2">
               {item.children!.map((child) => renderDesktopSubMenuItem(child, 1))}
             </div>
@@ -329,7 +329,7 @@ export default function Header() {
 
         {hasChildren && (
           <div 
-            className={`absolute left-full top-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg transition-all duration-200 z-[9999] -ml-1 ${
+            className={`absolute left-full top-0 min-w-[220px] bg-white border border-gray-100 rounded-lg shadow-lg transition-all duration-200 delay-100 group-hover/item:delay-0 z-[9999] -ml-1 before:content-[''] before:block before:absolute before:-left-2 before:top-0 before:w-2 before:h-full ${
               isClickToggle
                 ? isOpen
                   ? 'opacity-100 visible pointer-events-auto'
@@ -434,18 +434,21 @@ export default function Header() {
             </div>
           </Link>
 
-          {/* WhatsApp Contact Button */}
+          {/* Right Top Logos */}
           <div className="hidden md:flex items-center gap-3">
             <TTSToggle variant="outline" size="icon" />
-            <a
-              href="https://wa.me/6282350442244"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-red-900 text-white hover:bg-red-800 transition-colors px-6 py-2.5 rounded-lg font-medium"
-            >
-              <Phone className="h-4 w-4" />
-              <span>Hubungi Kami</span>
-            </a>
+            <div className="flex items-center gap-2">
+              <img
+                src="https://djpb.kemenkeu.go.id/kppn/barabai/images/Logo_BerAKHLAK.png"
+                alt="BerAKHLAK"
+                className="w-20 h-20 object-contain"
+              />
+              <img
+                src="https://djpb.kemenkeu.go.id/kppn/barabai/images/Logo_EVP.png"
+                alt="EVP"
+                className="w-20 h-20 object-contain"
+              />
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -539,18 +542,21 @@ export default function Header() {
                   )}
                 </nav>
 
-                {/* WhatsApp Button in Mobile */}
-                <div className="flex gap-2 mt-4">
+                {/* Logos in Mobile */}
+                <div className="flex items-center justify-between gap-3 mt-4">
                   <TTSToggle variant="outline" size="default" showLabel />
-                  <a
-                    href="https://wa.me/6282350442244"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center gap-2 bg-red-900 text-white hover:bg-red-800 transition-colors px-6 py-2.5 rounded-lg font-medium"
-                  >
-                    <Phone className="h-4 w-4" />
-                    <span>Hubungi Kami</span>
-                  </a>
+                  <div className="flex items-center gap-2">
+                    <img
+                      src="https://djpb.kemenkeu.go.id/kppn/barabai/images/Logo_BerAKHLAK.png"
+                      alt="BerAKHLAK"
+                      className="w-9 h-9 object-contain"
+                    />
+                    <img
+                      src="https://djpb.kemenkeu.go.id/kppn/barabai/images/Logo_EVP.png"
+                      alt="EVP"
+                      className="w-9 h-9 object-contain"
+                    />
+                  </div>
                 </div>
               </div>
             </SheetContent>

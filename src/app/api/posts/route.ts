@@ -1,6 +1,67 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getWordPressUrl } from '@/lib/wordpress';
 
+/**
+ * Decode HTML entities to natural text
+ * Handles both numeric and named entities
+ */
+function decodeHtmlEntities(text: string): string {
+  if (!text) return text;
+  
+  // Map of common named HTML entities
+  const namedEntities: Record<string, string> = {
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&apos;': "'",
+    '&rsquo;': "'",
+    '&lsquo;': "'",
+    '&rdquo;': '"',
+    '&ldquo;': '"',
+    '&nbsp;': ' ',
+    '&ndash;': '–',
+    '&mdash;': '—',
+    '&hellip;': '…',
+    '&bull;': '•',
+    '&copy;': '©',
+    '&reg;': '®',
+    '&trade;': '™',
+  };
+
+  let decoded = text;
+  
+  // First decode NUMERIC entities (both decimal and hexadecimal)
+  // This must be done BEFORE named entities to avoid double-decoding
+  
+  // Decode hexadecimal entities (&#x1F44D;)
+  decoded = decoded.replace(/&#x([a-f0-9]+);/gi, (_match, hex) => {
+    try {
+      const code = parseInt(hex, 16);
+      return code > 0 ? String.fromCharCode(code) : '';
+    } catch {
+      return _match;
+    }
+  });
+
+  // Decode decimal entities (&#038; or &#8217; etc)
+  decoded = decoded.replace(/&#(\d+);/g, (_match, dec) => {
+    try {
+      const code = parseInt(dec, 10);
+      return code > 0 ? String.fromCharCode(code) : '';
+    } catch {
+      return _match;
+    }
+  });
+
+  // Then decode named entities
+  Object.entries(namedEntities).forEach(([entity, char]) => {
+    decoded = decoded.replace(new RegExp(entity.replace(/&/g, '\\&').replace(/;/g, '\\;'), 'g'), char);
+  });
+
+  return decoded;
+}
+
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const perPage = searchParams.get('per_page') || '9';
@@ -61,14 +122,14 @@ export async function GET(request: NextRequest) {
 
       return {
         id: post.id,
-        title: post.title.rendered,
+        title: decodeHtmlEntities(post.title.rendered),
         slug: post.slug,
-        excerpt: post.excerpt.rendered.replace(/<[^>]*>/g, '').substring(0, 150) + '...',
+        excerpt: decodeHtmlEntities(post.excerpt.rendered.replace(/<[^>]*>/g, '')).substring(0, 150) + '...',
         content: post.content.rendered,
         date: post.date,
         featuredImage: featuredImage ? {
           url: featuredImage.source_url,
-          alt: featuredImage.alt_text || post.title.rendered,
+          alt: decodeHtmlEntities(featuredImage.alt_text || post.title.rendered),
           sizes: featuredImage.media_details?.sizes || {},
         } : null,
         author: author ? {
