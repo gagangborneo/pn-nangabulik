@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { shouldRedirectToMaintenance } from '@/lib/maintenance';
 
+export const dynamic = 'force-dynamic';
+
 // Layout
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';

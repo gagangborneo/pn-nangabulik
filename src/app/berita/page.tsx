@@ -6,7 +6,7 @@ import { MaintenanceCheck } from '@/components/MaintenanceCheck';
 import { redirect } from 'next/navigation';
 import { shouldRedirectToMaintenance } from '@/lib/maintenance';
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export const dynamic = 'force-dynamic';
 
 export default async function BeritaPage() {
   // Check maintenance mode

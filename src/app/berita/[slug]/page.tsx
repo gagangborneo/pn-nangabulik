@@ -7,7 +7,7 @@ import { shouldRedirectToMaintenance } from '@/lib/maintenance';
 import { redirect } from 'next/navigation';
 import { getWordPressUrl } from '@/lib/wordpress';
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export const dynamic = 'force-dynamic';
 
 export default async function BeritaDetailPage({
   params,

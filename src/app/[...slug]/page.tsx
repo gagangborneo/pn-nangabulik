@@ -6,7 +6,7 @@ import { MaintenanceCheck } from '@/components/MaintenanceCheck';
 import { shouldRedirectToMaintenance } from '@/lib/maintenance';
 import { redirect } from 'next/navigation';
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export const dynamic = 'force-dynamic';
 
 interface PageData {
   id: string;
