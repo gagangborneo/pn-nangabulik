@@ -29,10 +29,10 @@ interface Category {
 }
 
 interface AllPostsViewProps {
-  onClose: () => void;
+  // No props needed
 }
 
-export default function AllPostsView({ onClose }: AllPostsViewProps) {
+export default function AllPostsView() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);

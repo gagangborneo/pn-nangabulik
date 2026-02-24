@@ -16,17 +16,23 @@ export async function GET(request: Request) {
       
       // Jika hanya cek ketersediaan
       if (checkOnly) {
-        return NextResponse.json({ exists: !!page });
+        const response = NextResponse.json({ exists: !!page });
+        response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+        return response;
       }
       
       // Return page data jika ada
       if (page) {
-        return NextResponse.json(page);
+        const response = NextResponse.json(page);
+        response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+        return response;
       } else {
-        return NextResponse.json(
+        const response = NextResponse.json(
           { error: 'Page not found' },
           { status: 404 }
         );
+        response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+        return response;
       }
     }
 
@@ -35,7 +41,9 @@ export async function GET(request: Request) {
       orderBy: { createdAt: 'desc' }
     });
 
-    return NextResponse.json(pages);
+    const response = NextResponse.json(pages);
+    response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+    return response;
   } catch (error) {
     console.error('Error fetching pages:', error);
     return NextResponse.json(

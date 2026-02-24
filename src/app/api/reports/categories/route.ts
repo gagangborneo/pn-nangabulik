@@ -17,7 +17,9 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    return NextResponse.json({ categories });
+    const response = NextResponse.json({ categories });
+    response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+    return response;
   } catch (error: any) {
     console.error('Error fetching report categories:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });

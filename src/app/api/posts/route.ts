@@ -145,7 +145,7 @@ export async function GET(request: NextRequest) {
       };
     });
 
-    return NextResponse.json({
+    const jsonResponse = NextResponse.json({
       posts: transformedPosts,
       pagination: {
         page: parseInt(page),
@@ -154,6 +154,12 @@ export async function GET(request: NextRequest) {
         total: parseInt(total),
       },
     });
+
+    // Add cache control headers
+    // Cache for 1 minute, then revalidate in background
+    jsonResponse.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+    
+    return jsonResponse;
   } catch (error: any) {
     console.error('Error fetching posts:', error);
     return NextResponse.json(

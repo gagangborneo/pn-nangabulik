@@ -86,11 +86,13 @@ export async function GET(request: NextRequest) {
         take: 10,
       });
 
-      return NextResponse.json({
+      const response = NextResponse.json({
         totalViews,
         uniqueVisitors: uniqueVisitors.length,
         recentViews,
       });
+      response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+      return response;
     }
 
     if (linkId) {
@@ -105,10 +107,12 @@ export async function GET(request: NextRequest) {
         _count: true,
       });
 
-      return NextResponse.json({
+      const response = NextResponse.json({
         totalViews,
         uniqueVisitors: uniqueVisitors.length,
       });
+      response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+      return response;
     }
 
     // Get all stats
@@ -131,10 +135,12 @@ export async function GET(request: NextRequest) {
       orderBy: [{ category: { order: 'asc' } }, { order: 'asc' }],
     });
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       categories: categoriesWithStats,
       links: linksWithStats,
     });
+    response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+    return response;
   } catch (error: any) {
     console.error('Error getting stats:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });

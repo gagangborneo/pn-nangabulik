@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, User, Tag, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -28,10 +29,10 @@ interface Post {
 
 interface SinglePostViewProps {
   slug: string;
-  onClose: () => void;
 }
 
-export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
+export default function SinglePostView({ slug }: SinglePostViewProps) {
+  const router = useRouter();
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const [prevPost, setPrevPost] = useState<Post | null>(null);
@@ -134,7 +135,7 @@ export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
               Artikel Tidak Ditemukan
             </h2>
-            <Button onClick={onClose} variant="outline">
+            <Button onClick={() => router.push('/berita')} variant="outline">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Kembali ke Beranda
             </Button>
@@ -150,7 +151,7 @@ export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
       <div className="bg-gray-50 py-4 border-b">
         <div className="container mx-auto px-4">
           <Button
-            onClick={onClose}
+            onClick={() => router.push('/berita')}
             variant="ghost"
             className="text-gray-600 hover:text-gray-800"
           >
