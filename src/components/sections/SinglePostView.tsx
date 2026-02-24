@@ -163,8 +163,8 @@ export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
       <div className="container mx-auto px-4 py-8">
         <div className="grid lg:grid-cols-[1fr_320px] gap-8">
           {/* Main Content */}
-          <div>
-            <article>
+          <div className="min-w-0">
+            <article className="min-w-0">
         {/* Meta Info */}
         <div className="flex flex-wrap items-center gap-4 mb-6 text-sm text-gray-500">
           <div className="flex items-center gap-2">
@@ -209,14 +209,14 @@ export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
         <div className="border-t border-b border-gray-200 py-6 my-12">
           <div className="flex flex-col sm:flex-row justify-between gap-4">
             {/* Previous Post */}
-            <div className="flex-1">
+            <div className="flex-1 min-w-0">
               {prevPost ? (
                 <Link href={`/berita/${prevPost.slug}`} className="group block">
-                  <div className="flex items-start gap-3 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                  <div className="flex items-start gap-3 p-4 rounded-lg hover:bg-gray-50 transition-colors min-w-0">
                     <ChevronLeft className="h-5 w-5 text-gray-400 group-hover:text-[#8B0000] mt-1 shrink-0" />
-                    <div>
+                    <div className="min-w-0 flex-1">
                       <p className="text-xs text-gray-500 mb-1">Berita Sebelumnya</p>
-                      <h3 className="text-sm font-semibold text-gray-800 group-hover:text-[#8B0000] line-clamp-2">
+                      <h3 className="text-sm font-semibold text-gray-800 group-hover:text-[#8B0000] line-clamp-2 break-words">
                         {prevPost.title}
                       </h3>
                     </div>
@@ -228,16 +228,16 @@ export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
             </div>
 
             {/* Divider */}
-            <div className="hidden sm:block w-px bg-gray-200"></div>
+            <div className="hidden sm:block w-px bg-gray-200 shrink-0"></div>
 
             {/* Next Post */}
-            <div className="flex-1">
+            <div className="flex-1 min-w-0">
               {nextPost ? (
                 <Link href={`/berita/${nextPost.slug}`} className="group block">
-                  <div className="flex items-start gap-3 p-4 rounded-lg hover:bg-gray-50 transition-colors">
-                    <div className="flex-1 text-right">
+                  <div className="flex items-start gap-3 p-4 rounded-lg hover:bg-gray-50 transition-colors min-w-0">
+                    <div className="flex-1 text-right min-w-0">
                       <p className="text-xs text-gray-500 mb-1">Berita Selanjutnya</p>
-                      <h3 className="text-sm font-semibold text-gray-800 group-hover:text-[#8B0000] line-clamp-2">
+                      <h3 className="text-sm font-semibold text-gray-800 group-hover:text-[#8B0000] line-clamp-2 break-words">
                         {nextPost.title}
                       </h3>
                     </div>
@@ -255,12 +255,12 @@ export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
         {latestPosts.length > 0 && (
           <div className="mt-12 mb-8">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Berita Terbaru Lainnya</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
               {latestPosts.map((latestPost) => (
-                <Link key={latestPost.id} href={`/berita/${latestPost.slug}`}>
-                  <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
+                <Link key={latestPost.id} href={`/berita/${latestPost.slug}`} className="w-full min-w-0">
+                  <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group overflow-hidden">
                     <CardHeader className="p-0">
-                      <div className="relative h-48 overflow-hidden rounded-t-lg">
+                      <div className="relative h-48 overflow-hidden rounded-t-lg w-full">
                         <img
                           src={getImageUrl(latestPost)}
                           alt={latestPost.title}
@@ -268,16 +268,16 @@ export default function SinglePostView({ slug, onClose }: SinglePostViewProps) {
                         />
                       </div>
                     </CardHeader>
-                    <CardContent className="p-4">
+                    <CardContent className="p-4 min-w-0">
                       <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                        <Calendar className="h-3 w-3" />
-                        <span>{formatDate(latestPost.date)}</span>
+                        <Calendar className="h-3 w-3 shrink-0" />
+                        <span className="truncate">{formatDate(latestPost.date)}</span>
                       </div>
-                      <CardTitle className="text-base font-semibold text-gray-800 group-hover:text-[#8B0000] line-clamp-2 mb-2">
+                      <CardTitle className="text-base font-semibold text-gray-800 group-hover:text-[#8B0000] line-clamp-2 mb-2 break-words">
                         {latestPost.title}
                       </CardTitle>
                       {latestPost.excerpt && (
-                        <CardDescription className="text-sm text-gray-600 line-clamp-2">
+                        <CardDescription className="text-sm text-gray-600 line-clamp-2 break-words">
                           {latestPost.excerpt}
                         </CardDescription>
                       )}

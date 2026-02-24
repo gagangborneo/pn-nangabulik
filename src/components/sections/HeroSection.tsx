@@ -140,8 +140,8 @@ export default function HeroSection() {
             ></div>
 
             {/* Content */}
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-20">
-              <div className="max-w-3xl">
+            <div className="container mx-auto px-6 sm:px-6 lg:px-8 h-full flex items-center relative z-20">
+              <div className="max-w-3xl pb-16 md:pb-0">
                 {/* Tag/Badge */}
                 {slide.tag && (
                   <span className="inline-flex items-center justify-center rounded-md border px-3 py-1 text-xs font-medium w-fit whitespace-nowrap shrink-0 gap-1 mb-4 bg-white/20 text-white border-white/30 backdrop-blur-sm">
@@ -203,32 +203,32 @@ export default function HeroSection() {
       {/* Navigation Controls - Only show if more than 1 slide */}
       {slides.length > 1 && (
         <>
-          {/* Previous/Next Buttons */}
+          {/* Previous/Next Buttons - Hidden on mobile, visible on md screens and up */}
           <button
             onClick={goToPrevious}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all"
+            className="hidden md:flex absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all"
             aria-label="Previous slide"
           >
             <ChevronLeft className="h-6 w-6" />
           </button>
           <button
             onClick={goToNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all"
+            className="hidden md:flex absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all"
             aria-label="Next slide"
           >
             <ChevronRight className="h-6 w-6" />
           </button>
 
-          {/* Indicators */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+          {/* Indicators - More prominent on mobile */}
+          <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-2">
             {slides.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`h-2 rounded-full transition-all ${
+                className={`h-2.5 md:h-2 rounded-full transition-all ${
                   index === currentIndex
-                    ? 'bg-white w-8'
-                    : 'bg-white/50 w-2 hover:bg-white/75'
+                    ? 'bg-white w-8 md:w-8'
+                    : 'bg-white/50 w-2.5 md:w-2 hover:bg-white/75'
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />

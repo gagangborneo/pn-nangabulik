@@ -147,15 +147,15 @@ export default function AllPostsView({ onClose }: AllPostsViewProps) {
           </p>
 
           {/* Search Bar */}
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto px-2">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400\" />
               <input
                 type="text"
                 placeholder="Cari artikel..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-xl bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-300"
+                className="w-full pl-12 pr-12 py-3 rounded-xl bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-300"
               />
               {searchQuery && (
                 <button
@@ -173,7 +173,7 @@ export default function AllPostsView({ onClose }: AllPostsViewProps) {
       <div className="container mx-auto px-4 py-8">
         <div className="grid lg:grid-cols-[1fr_320px] gap-8">
           {/* Main Content */}
-          <div>
+          <div className="min-w-0">
         {/* Filters */}
         <div className="mb-6">
           <div className="flex flex-wrap items-center gap-3">
@@ -274,11 +274,11 @@ export default function AllPostsView({ onClose }: AllPostsViewProps) {
 
         {/* Posts Grid */}
         {loading ? (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {[...Array(9)].map((_, i) => (
-              <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md animate-pulse">
-                <div className="h-48 bg-gray-200"></div>
-                <div className="p-4 space-y-3">
+              <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md animate-pulse w-full min-w-0">
+                <div className="h-48 bg-gray-200 w-full"></div>
+                <div className="p-4 space-y-3 min-w-0">
                   <div className="h-4 bg-gray-200 rounded w-3/4"></div>
                   <div className="h-3 bg-gray-200 rounded w-1/2"></div>
                 </div>
@@ -302,14 +302,14 @@ export default function AllPostsView({ onClose }: AllPostsViewProps) {
           </div>
         ) : (
           <>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {posts.map((post) => (
                 <Link
                   key={post.id}
                   href={`/berita/${post.slug}`}
-                  className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
+                  className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 w-full min-w-0"
                 >
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-48 overflow-hidden w-full">
                     <img
                       src={getImageUrl(post)}
                       alt={post.title}
@@ -317,21 +317,21 @@ export default function AllPostsView({ onClose }: AllPostsViewProps) {
                     />
                     {post.categories.length > 0 && (
                       <div className="absolute top-3 left-3">
-                        <span className="bg-red-900 text-white text-xs px-3 py-1 rounded-full">
+                        <span className="bg-red-900 text-white text-xs px-3 py-1 rounded-full whitespace-nowrap">
                           {post.categories[0].name}
                         </span>
                       </div>
                     )}
                   </div>
-                  <div className="p-4">
+                  <div className="p-4 min-w-0">
                     <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-                      <Calendar className="h-4 w-4" />
-                      <span>{formatDate(post.date)}</span>
+                      <Calendar className="h-4 w-4 shrink-0" />
+                      <span className="truncate">{formatDate(post.date)}</span>
                     </div>
-                    <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-red-900 transition-colors">
+                    <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-red-900 transition-colors break-words">
                       {post.title}
                     </h3>
-                    <p className="text-sm text-gray-500 line-clamp-2">{post.excerpt}</p>
+                    <p className="text-sm text-gray-500 line-clamp-2 break-words">{post.excerpt}</p>
                   </div>
                 </Link>
               ))}

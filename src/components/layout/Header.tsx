@@ -369,7 +369,7 @@ export default function Header() {
                 </div>
 
                 {/* Center: Operating Hours */}
-                <div className="text-center flex-1 md:flex-none">
+                <div className="hidden md:flex text-center flex-1 md:flex-none">
                   <TTSText as="span" className="text-red-200" hoverEffect={false}>
                     {contactSettings.hours}
                   </TTSText>

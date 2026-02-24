@@ -72,11 +72,11 @@ export default function BlogSection() {
               Informasi & Kegiatan Pengadilan
             </h2>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md animate-pulse">
-                <div className="h-48 bg-gray-200"></div>
-                <div className="p-4 space-y-3">
+              <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md animate-pulse w-full min-w-0">
+                <div className="h-48 bg-gray-200 w-full"></div>
+                <div className="p-4 space-y-3 min-w-0">
                   <div className="h-4 bg-gray-200 rounded w-3/4"></div>
                   <div className="h-3 bg-gray-200 rounded w-1/2"></div>
                   <div className="h-3 bg-gray-200 rounded w-full"></div>
@@ -108,15 +108,15 @@ export default function BlogSection() {
         </div>
 
         {/* Blog Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
           {posts.map((post) => (
             <Link
               key={post.id}
               href={`/berita/${post.slug}`}
-              className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100"
+              className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 w-full min-w-0"
             >
               {/* Image */}
-              <div className="relative h-48 overflow-hidden">
+              <div className="relative h-48 overflow-hidden w-full">
                 <img
                   src={getImageUrl(post)}
                   alt={post.title}
@@ -124,7 +124,7 @@ export default function BlogSection() {
                 />
                 {post.categories.length > 0 && (
                   <div className="absolute top-3 left-3">
-                    <span className="bg-red-900 text-white text-xs px-3 py-1 rounded-full">
+                    <span className="bg-red-900 text-white text-xs px-3 py-1 rounded-full whitespace-nowrap">
                       {post.categories[0].name}
                     </span>
                   </div>
@@ -132,15 +132,15 @@ export default function BlogSection() {
               </div>
 
               {/* Content */}
-              <div className="p-4">
+              <div className="p-4 min-w-0">
                 <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-                  <Calendar className="h-4 w-4" />
-                  <span>{formatDate(post.date)}</span>
+                  <Calendar className="h-4 w-4 shrink-0" />
+                  <span className="truncate">{formatDate(post.date)}</span>
                 </div>
-                <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-red-900 transition-colors">
+                <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-red-900 transition-colors break-words">
                   {post.title}
                 </h3>
-                <p className="text-sm text-gray-500 line-clamp-2">{post.excerpt}</p>
+                <p className="text-sm text-gray-500 line-clamp-2 break-words">{post.excerpt}</p>
               </div>
             </Link>
           ))}
