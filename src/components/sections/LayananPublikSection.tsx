@@ -80,21 +80,21 @@ const layananData: LayananItem[] = [
 
 export default function LayananPublikSection() {
   return (
-    <section className="py-16 bg-white relative overflow-hidden">
+    <section className="py-16 bg-gradient-to-r from-red-900 to-red-800 relative overflow-hidden">
        {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-white/5 rounded-full"></div>
+      <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+      <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-white/3 rounded-full"></div>
 
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
             Layanan Publik Pengadilan
           </h2>
-          <div className="w-20 h-1 bg-red-900 mx-auto mb-4"></div>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <div className="w-20 h-1 bg-yellow-400 mx-auto mb-4"></div>
+          <p className="text-red-100 max-w-2xl mx-auto">
             Berbagai layanan digital untuk memudahkan akses informasi dan pelayanan pengadilan
           </p>
         </div>
@@ -110,7 +110,7 @@ export default function LayananPublikSection() {
                 href={service.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`group bg-gradient-to-br ${service.gradient} rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-gray-200 hover:-translate-y-1`}
+                className={`group bg-gradient-to-br ${service.gradient} rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-gray-300 hover:-translate-y-1`}
               >
                 <div className="flex flex-row sm:flex-col items-start sm:items-center text-left sm:text-center gap-4 sm:gap-0">
                   {/* Icon */}

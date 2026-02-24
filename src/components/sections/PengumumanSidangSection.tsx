@@ -38,22 +38,22 @@ export default function PengumumanSidangSection() {
   }
 
   return (
-    <section className="py-16 bg-white relative overflow-hidden">
+    <section className="py-16 bg-gradient-to-r from-red-900 to-red-800 relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+      <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+      <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <FileText className="h-8 w-8 text-red-900" />
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+            <FileText className="h-8 w-8 text-yellow-400" />
+            <h2 className="text-2xl md:text-3xl font-bold text-white">
               Pengumuman & Pemanggilan Sidang
             </h2>
           </div>
-          <div className="w-20 h-1 bg-red-900 mx-auto mb-4"></div>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <div className="w-20 h-1 bg-yellow-400 mx-auto mb-4"></div>
+          <p className="text-red-100 max-w-2xl mx-auto">
             Pengumuman dan pemanggilan sidang terbaru dari Pengadilan Negeri Nanga Bulik
           </p>
         </div>
@@ -63,11 +63,11 @@ export default function PengumumanSidangSection() {
           {items.map((item) => (
             <div
               key={item.id}
-              className="group bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg hover:border-red-900 transition-all duration-300"
+              className="group bg-white/95 backdrop-blur border border-red-200 rounded-xl p-6 hover:shadow-lg hover:border-yellow-400 transition-all duration-300"
             >
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-red-50 group-hover:bg-red-100 transition-colors">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-red-100 group-hover:bg-yellow-50 transition-colors">
                     <FileText className="h-6 w-6 text-red-900" />
                   </div>
                 </div>
@@ -84,7 +84,7 @@ export default function PengumumanSidangSection() {
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 mt-3 text-red-900 hover:text-red-700 font-medium text-sm transition-colors"
+                    className="inline-flex items-center gap-2 mt-3 text-red-900 hover:text-yellow-600 font-medium text-sm transition-colors"
                   >
                     Buka Dokumen
                     <ArrowRight className="h-4 w-4" />
