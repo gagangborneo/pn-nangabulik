@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { categoryId, title, url, description, order } = body;
+    const { categoryId, title, url, description, order, reportDate } = body;
 
     if (!categoryId || !title || !url) {
       return NextResponse.json({ error: 'CategoryId, title, dan url harus diisi' }, { status: 400 });
@@ -49,6 +49,7 @@ export async function POST(request: NextRequest) {
         url,
         description,
         order: order ?? 0,
+        reportDate: reportDate ? new Date(reportDate) : undefined,
       },
     });
 
@@ -63,7 +64,7 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    const { id, categoryId, title, url, description, order, isActive } = body;
+    const { id, categoryId, title, url, description, order, isActive, reportDate } = body;
 
     if (!id) {
       return NextResponse.json({ error: 'ID harus diisi' }, { status: 400 });
@@ -81,6 +82,9 @@ export async function PUT(request: NextRequest) {
     if (description !== undefined) updateData.description = description;
     if (order !== undefined) updateData.order = order;
     if (isActive !== undefined) updateData.isActive = isActive;
+    if (reportDate !== undefined) {
+      updateData.reportDate = reportDate ? new Date(reportDate) : null;
+    }
 
     const link = await db.reportLink.update({
       where: { id },

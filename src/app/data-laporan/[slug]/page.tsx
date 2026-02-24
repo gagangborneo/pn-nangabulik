@@ -38,6 +38,7 @@ interface ReportLink {
   url: string;
   description: string | null;
   createdAt: string;
+  reportDate?: string | null;
   _count?: {
     views: number;
   };
@@ -132,6 +133,16 @@ export default function CategoryDetailPage() {
   const getIcon = (iconName: string) => {
     const IconComponent = iconMap[iconName] || FileText;
     return <IconComponent className="h-5 w-5" />;
+  };
+
+  const formatReportDate = (link: ReportLink) => {
+    const rawDate = link.reportDate || link.createdAt;
+    const date = new Date(rawDate);
+    return date.toLocaleDateString('id-ID', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
   };
 
   if (loading) {
@@ -245,11 +256,7 @@ export default function CategoryDetailPage() {
                       <div className="flex flex-wrap items-center gap-4 text-xs text-gray-400">
                         <span className="flex items-center gap-1">
                           <CalendarDays className="h-3 w-3" />
-                          {new Date(link.createdAt).toLocaleDateString('id-ID', {
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric',
-                          })}
+                          {formatReportDate(link)}
                         </span>
                         <span className="flex items-center gap-1">
                           <Eye className="h-3 w-3" />

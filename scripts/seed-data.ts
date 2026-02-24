@@ -110,58 +110,58 @@ async function main() {
 
   // DIPA Links
   await Promise.all([
-    prisma.reportLink.create({ data: { categoryId: dipa.id, title: 'DIPA PN Nanga Bulik Tahun 2025', url: 'https://silapor.pn-nangabulik.go.id/dipa/2025', order: 0, isActive: true } }),
-    prisma.reportLink.create({ data: { categoryId: dipa.id, title: 'DIPA PN Nanga Bulik Tahun 2024', url: 'https://silapor.pn-nangabulik.go.id/dipa/2024', order: 1, isActive: true } }),
-    prisma.reportLink.create({ data: { categoryId: dipa.id, title: 'DIPA PN Nanga Bulik Tahun 2023', url: 'https://silapor.pn-nangabulik.go.id/dipa/2023', order: 2, isActive: true } }),
-    prisma.reportLink.create({ data: { categoryId: dipa.id, title: 'DIPA PN Nanga Bulik Tahun 2022', url: 'https://silapor.pn-nangabulik.go.id/dipa/2022', order: 3, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: dipa.id, title: 'DIPA PN Nanga Bulik Tahun 2025', url: 'https://silapor.pn-nangabulik.go.id/dipa/2025', reportDate: new Date('2025-01-01'), order: 0, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: dipa.id, title: 'DIPA PN Nanga Bulik Tahun 2024', url: 'https://silapor.pn-nangabulik.go.id/dipa/2024', reportDate: new Date('2024-01-01'), order: 1, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: dipa.id, title: 'DIPA PN Nanga Bulik Tahun 2023', url: 'https://silapor.pn-nangabulik.go.id/dipa/2023', reportDate: new Date('2023-01-01'), order: 2, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: dipa.id, title: 'DIPA PN Nanga Bulik Tahun 2022', url: 'https://silapor.pn-nangabulik.go.id/dipa/2022', reportDate: new Date('2022-01-01'), order: 3, isActive: true } }),
   ]);
 
   // Renstra Links
   await Promise.all([
-    prisma.reportLink.create({ data: { categoryId: renstra.id, title: 'Rencana Strategis 2020-2025', url: 'https://silapor.pn-nangabulik.go.id/laporan-sakip/renstra', order: 0, isActive: true } }),
-    prisma.reportLink.create({ data: { categoryId: renstra.id, title: 'Rencana Strategis 2015-2019', url: 'https://silapor.pn-nangabulik.go.id/laporan-sakip/renstra-old', order: 1, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: renstra.id, title: 'Rencana Strategis 2020-2025', url: 'https://silapor.pn-nangabulik.go.id/laporan-sakip/renstra', reportDate: new Date('2020-01-01'), order: 0, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: renstra.id, title: 'Rencana Strategis 2015-2019', url: 'https://silapor.pn-nangabulik.go.id/laporan-sakip/renstra-old', reportDate: new Date('2015-01-01'), order: 1, isActive: true } }),
   ]);
 
   // IKU Links
   await Promise.all([
-    prisma.reportLink.create({ data: { categoryId: iku.id, title: 'Indikator Kinerja Utama Tahun 2024', url: 'https://silapor.pn-nangabulik.go.id/sakip/iku', order: 0, isActive: true } }),
-    prisma.reportLink.create({ data: { categoryId: iku.id, title: 'Indikator Kinerja Utama Tahun 2023', url: 'https://silapor.pn-nangabulik.go.id/sakip/iku-2023', order: 1, isActive: true } }),
-    prisma.reportLink.create({ data: { categoryId: iku.id, title: 'Indikator Kinerja Utama Tahun 2022', url: 'https://silapor.pn-nangabulik.go.id/sakip/iku-2022', order: 2, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: iku.id, title: 'Indikator Kinerja Utama Tahun 2024', url: 'https://silapor.pn-nangabulik.go.id/sakip/iku', reportDate: new Date('2024-01-01'), order: 0, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: iku.id, title: 'Indikator Kinerja Utama Tahun 2023', url: 'https://silapor.pn-nangabulik.go.id/sakip/iku-2023', reportDate: new Date('2023-01-01'), order: 1, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: iku.id, title: 'Indikator Kinerja Utama Tahun 2022', url: 'https://silapor.pn-nangabulik.go.id/sakip/iku-2022', reportDate: new Date('2022-01-01'), order: 2, isActive: true } }),
   ]);
 
   // RKT Links
   await Promise.all([
-    prisma.reportLink.create({ data: { categoryId: rkt.id, title: 'Rencana Kerja Tahunan 2025', url: 'https://silapor.pn-nangabulik.go.id/rkt/2025', order: 0, isActive: true } }),
-    prisma.reportLink.create({ data: { categoryId: rkt.id, title: 'Rencana Kerja Tahunan 2024', url: 'https://silapor.pn-nangabulik.go.id/rkt/2024', order: 1, isActive: true } }),
-    prisma.reportLink.create({ data: { categoryId: rkt.id, title: 'Rencana Kerja Tahunan 2023', url: 'https://silapor.pn-nangabulik.go.id/rkt/2023', order: 2, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: rkt.id, title: 'Rencana Kerja Tahunan 2025', url: 'https://silapor.pn-nangabulik.go.id/rkt/2025', reportDate: new Date('2025-01-01'), order: 0, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: rkt.id, title: 'Rencana Kerja Tahunan 2024', url: 'https://silapor.pn-nangabulik.go.id/rkt/2024', reportDate: new Date('2024-01-01'), order: 1, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: rkt.id, title: 'Rencana Kerja Tahunan 2023', url: 'https://silapor.pn-nangabulik.go.id/rkt/2023', reportDate: new Date('2023-01-01'), order: 2, isActive: true } }),
   ]);
 
   // PKT Links
   await Promise.all([
-    prisma.reportLink.create({ data: { categoryId: pkt.id, title: 'Perjanjian Kinerja Tahunan 2024', url: 'https://silapor.pn-nangabulik.go.id/pkt/2024', order: 0, isActive: true } }),
-    prisma.reportLink.create({ data: { categoryId: pkt.id, title: 'Perjanjian Kinerja Tahunan 2023', url: 'https://silapor.pn-nangabulik.go.id/pkt/2023', order: 1, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: pkt.id, title: 'Perjanjian Kinerja Tahunan 2024', url: 'https://silapor.pn-nangabulik.go.id/pkt/2024', reportDate: new Date('2024-01-01'), order: 0, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: pkt.id, title: 'Perjanjian Kinerja Tahunan 2023', url: 'https://silapor.pn-nangabulik.go.id/pkt/2023', reportDate: new Date('2023-01-01'), order: 1, isActive: true } }),
   ]);
 
   // LKJIP Links
   await Promise.all([
-    prisma.reportLink.create({ data: { categoryId: lkjip.id, title: 'LKJIP Tahun 2024', url: 'https://silapor.pn-nangabulik.go.id/sakip/lkjip', order: 0, isActive: true } }),
-    prisma.reportLink.create({ data: { categoryId: lkjip.id, title: 'LKJIP Tahun 2023', url: 'https://silapor.pn-nangabulik.go.id/sakip/lkjip-2023', order: 1, isActive: true } }),
-    prisma.reportLink.create({ data: { categoryId: lkjip.id, title: 'LKJIP Tahun 2022', url: 'https://silapor.pn-nangabulik.go.id/sakip/lkjip-2022', order: 2, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: lkjip.id, title: 'LKJIP Tahun 2024', url: 'https://silapor.pn-nangabulik.go.id/sakip/lkjip', reportDate: new Date('2024-01-01'), order: 0, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: lkjip.id, title: 'LKJIP Tahun 2023', url: 'https://silapor.pn-nangabulik.go.id/sakip/lkjip-2023', reportDate: new Date('2023-01-01'), order: 1, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: lkjip.id, title: 'LKJIP Tahun 2022', url: 'https://silapor.pn-nangabulik.go.id/sakip/lkjip-2022', reportDate: new Date('2022-01-01'), order: 2, isActive: true } }),
   ]);
 
   // Laptah Links
   await Promise.all([
-    prisma.reportLink.create({ data: { categoryId: laptah.id, title: 'Laporan Tahunan 2024', url: 'https://silapor.pn-nangabulik.go.id/laporan-tahunan', order: 0, isActive: true } }),
-    prisma.reportLink.create({ data: { categoryId: laptah.id, title: 'Laporan Tahunan 2023', url: 'https://silapor.pn-nangabulik.go.id/laporan-tahunan-2023', order: 1, isActive: true } }),
-    prisma.reportLink.create({ data: { categoryId: laptah.id, title: 'Laporan Tahunan 2022', url: 'https://silapor.pn-nangabulik.go.id/laporan-tahunan-2022', order: 2, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: laptah.id, title: 'Laporan Tahunan 2024', url: 'https://silapor.pn-nangabulik.go.id/laporan-tahunan', reportDate: new Date('2024-01-01'), order: 0, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: laptah.id, title: 'Laporan Tahunan 2023', url: 'https://silapor.pn-nangabulik.go.id/laporan-tahunan-2023', reportDate: new Date('2023-01-01'), order: 1, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: laptah.id, title: 'Laporan Tahunan 2022', url: 'https://silapor.pn-nangabulik.go.id/laporan-tahunan-2022', reportDate: new Date('2022-01-01'), order: 2, isActive: true } }),
   ]);
 
   // Laporan Keuangan Links
   await Promise.all([
-    prisma.reportLink.create({ data: { categoryId: laporanKeuangan.id, title: 'Laporan Keuangan Tahun 2024', url: 'https://silapor.pn-nangabulik.go.id/laporan-keuangan', order: 0, isActive: true } }),
-    prisma.reportLink.create({ data: { categoryId: laporanKeuangan.id, title: 'Laporan Keuangan Tahun 2023', url: 'https://silapor.pn-nangabulik.go.id/laporan-keuangan-2023', order: 1, isActive: true } }),
-    prisma.reportLink.create({ data: { categoryId: laporanKeuangan.id, title: 'Laporan Realisasi Anggaran 2024', url: 'https://silapor.pn-nangabulik.go.id/lra', order: 2, isActive: true } }),
-    prisma.reportLink.create({ data: { categoryId: laporanKeuangan.id, title: 'Laporan Realisasi Anggaran 2023', url: 'https://silapor.pn-nangabulik.go.id/lra-2023', order: 3, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: laporanKeuangan.id, title: 'Laporan Keuangan Tahun 2024', url: 'https://silapor.pn-nangabulik.go.id/laporan-keuangan', reportDate: new Date('2024-01-01'), order: 0, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: laporanKeuangan.id, title: 'Laporan Keuangan Tahun 2023', url: 'https://silapor.pn-nangabulik.go.id/laporan-keuangan-2023', reportDate: new Date('2023-01-01'), order: 1, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: laporanKeuangan.id, title: 'Laporan Realisasi Anggaran 2024', url: 'https://silapor.pn-nangabulik.go.id/lra', reportDate: new Date('2024-01-01'), order: 2, isActive: true } }),
+    prisma.reportLink.create({ data: { categoryId: laporanKeuangan.id, title: 'Laporan Realisasi Anggaran 2023', url: 'https://silapor.pn-nangabulik.go.id/lra-2023', reportDate: new Date('2023-01-01'), order: 3, isActive: true } }),
   ]);
 
   console.log('Created sample links for all categories');

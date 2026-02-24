@@ -60,6 +60,7 @@ interface ReportLink {
   order: number;
   isActive: boolean;
   createdAt: string;
+  reportDate?: string | null;
   category?: {
     id: string;
     title: string;
@@ -107,9 +108,17 @@ export default function ReportsManagement() {
     url: '',
     description: '',
     categoryId: '',
+    reportDate: '',
   });
 
   const { toast } = useToast();
+
+  const toDateInputValue = (value?: string | null) => {
+    if (!value) return '';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '';
+    return date.toISOString().slice(0, 10);
+  };
 
   // Fetch data
   const fetchCategories = async () => {
@@ -234,6 +243,7 @@ export default function ReportsManagement() {
         url: link.url,
         description: link.description || '',
         categoryId: link.categoryId,
+        reportDate: toDateInputValue(link.reportDate),
       });
     } else {
       setEditingLink(null);
@@ -242,6 +252,7 @@ export default function ReportsManagement() {
         url: '',
         description: '',
         categoryId: categoryId || selectedCategory?.id || '',
+        reportDate: '',
       });
     }
     setLinkDialogOpen(true);
@@ -506,6 +517,15 @@ export default function ReportsManagement() {
                           <p className="text-sm text-gray-500 truncate max-w-md">
                             {link.url} • {link._count?.views || 0} klik
                           </p>
+                          {link.reportDate ? (
+                            <p className="text-xs text-gray-400">
+                              Tanggal: {new Date(link.reportDate).toLocaleDateString('id-ID', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                              })}
+                            </p>
+                          ) : null}
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
@@ -670,6 +690,15 @@ export default function ReportsManagement() {
                 value={linkForm.description}
                 onChange={(e) => setLinkForm({ ...linkForm, description: e.target.value })}
                 placeholder="Deskripsi singkat (opsional)"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Tanggal</Label>
+              <Input
+                type="date"
+                value={linkForm.reportDate}
+                onChange={(e) => setLinkForm({ ...linkForm, reportDate: e.target.value })}
               />
             </div>
           </div>
