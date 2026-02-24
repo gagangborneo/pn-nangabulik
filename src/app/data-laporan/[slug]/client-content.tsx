@@ -2,7 +2,21 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, ExternalLink, Eye, CalendarDays, User, FolderOpen } from 'lucide-react';
+import { 
+  ArrowLeft, 
+  ExternalLink, 
+  Eye, 
+  CalendarDays, 
+  User, 
+  FolderOpen,
+  FileText,
+  TrendingUp,
+  Calendar,
+  Users,
+  BookOpen,
+  BarChart3,
+  PieChart,
+} from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
@@ -21,6 +35,7 @@ interface ReportLink {
   description: string | null;
   createdAt: string;
   reportDate?: string | null;
+  icon?: string;
   _count?: {
     views: number;
   };
@@ -36,6 +51,28 @@ interface DataLaporanClientProps {
   links: ReportLink[];
   stats: CategoryStats;
 }
+
+// Icon mapping
+const iconMap: { [key: string]: React.ComponentType<{ className?: string }> } = {
+  FileText,
+  TrendingUp,
+  Calendar,
+  Users,
+  BookOpen,
+  BarChart3,
+  PieChart,
+  FolderOpen,
+};
+
+const getIcon = (iconName: string) => {
+  const IconComponent = iconMap[iconName] || FileText;
+  return <IconComponent className="h-6 w-6 text-white" />;
+};
+
+const getItemIcon = (iconName?: string) => {
+  const IconComponent = iconName ? (iconMap[iconName] || FileText) : FileText;
+  return <IconComponent className="h-5 w-5 text-red-800" />;
+};
 
 export default function DataLaporanClient({ category, links, stats }: DataLaporanClientProps) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -81,9 +118,8 @@ export default function DataLaporanClient({ category, links, stats }: DataLapora
               Kembali ke Data Laporan
             </Link>
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-white/10 rounded-lg">
-                {/* Icon placeholder */}
-                <span className="text-2xl">{category.icon}</span>
+              <div className="p-3 bg-white/20 rounded-lg">
+                {getIcon(category.icon)}
               </div>
               <div>
                 <h1 className="text-2xl md:text-3xl font-bold">{category.title}</h1>
@@ -138,39 +174,44 @@ export default function DataLaporanClient({ category, links, stats }: DataLapora
           {filteredLinks.length > 0 ? (
             <div className="grid gap-4">
               {filteredLinks.map((link) => (
-                <div key={link.id} className="p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{link.title}</h3>
-                      {link.description && (
-                        <p className="text-gray-600 text-sm mb-3">{link.description}</p>
-                      )}
-                      <div className="flex items-center gap-4 text-xs text-gray-500">
-                        {link.reportDate && (
-                          <div className="flex items-center gap-1">
-                            <CalendarDays className="h-4 w-4" />
-                            {new Date(link.reportDate).toLocaleDateString('id-ID')}
-                          </div>
+                <a
+                  key={link.id}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200 hover:border-red-200 block"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-start gap-4 flex-1">
+                      <div className="p-2 bg-red-50 rounded-lg flex-shrink-0 mt-1">
+                        {getItemIcon(link.icon)}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">{link.title}</h3>
+                        {link.description && (
+                          <p className="text-gray-600 text-sm mb-3">{link.description}</p>
                         )}
-                        {link._count && (
-                          <div className="flex items-center gap-1">
-                            <Eye className="h-4 w-4" />
-                            {link._count.views} kali diakses
-                          </div>
-                        )}
+                        <div className="flex items-center gap-4 text-xs text-gray-500 flex-wrap">
+                          {link.reportDate && (
+                            <div className="flex items-center gap-1">
+                              <CalendarDays className="h-4 w-4" />
+                              {new Date(link.reportDate).toLocaleDateString('id-ID')}
+                            </div>
+                          )}
+                          {link._count && (
+                            <div className="flex items-center gap-1">
+                              <Eye className="h-4 w-4" />
+                              {link._count.views} kali diakses
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
-                    <a
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="ml-4 inline-flex items-center gap-2 px-4 py-2 bg-red-900 text-white rounded-lg hover:bg-red-800 transition-colors flex-shrink-0"
-                    >
-                      <span>Buka</span>
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
+                    <div className="flex-shrink-0 pt-1">
+                      <ExternalLink className="h-5 w-5 text-gray-400" />
+                    </div>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
           ) : (
