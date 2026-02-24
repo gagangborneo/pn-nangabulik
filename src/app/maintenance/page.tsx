@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation';
 import Image from 'next/image';
 import { Construction } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function MaintenancePage() {
   // Check if maintenance mode is still active
   const maintenanceSetting = await db.siteSetting.findUnique({
