@@ -66,7 +66,7 @@ export default function BlogSection() {
   if (loading) {
     return (
       <section className="py-16 bg-gray-50 relative overflow-hidden">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3">
               Informasi & Kegiatan Pengadilan
@@ -76,7 +76,7 @@ export default function BlogSection() {
             {[...Array(6)].map((_, i) => (
               <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md animate-pulse w-full min-w-0">
                 <div className="h-48 bg-gray-200 w-full"></div>
-                <div className="p-4 space-y-3 min-w-0">
+                <div className="p-4 space-y-3 min-w-0 overflow-hidden">
                   <div className="h-4 bg-gray-200 rounded w-3/4"></div>
                   <div className="h-3 bg-gray-200 rounded w-1/2"></div>
                   <div className="h-3 bg-gray-200 rounded w-full"></div>
@@ -95,7 +95,7 @@ export default function BlogSection() {
       <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-red-900/5 to-transparent"></div>
       <div className="absolute top-0 right-0 w-64 h-64 bg-red-900/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
 
-      <div className="container mx-auto px-4 relative">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3">
@@ -108,23 +108,23 @@ export default function BlogSection() {
         </div>
 
         {/* Blog Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto overflow-hidden">
           {posts.map((post) => (
             <Link
               key={post.id}
               href={`/berita/${post.slug}`}
-              className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 w-full min-w-0"
+              className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 w-full min-w-0 flex flex-col"
             >
               {/* Image */}
-              <div className="relative h-48 overflow-hidden w-full">
+              <div className="relative h-48 overflow-hidden w-full flex-shrink-0">
                 <img
                   src={getImageUrl(post)}
                   alt={post.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 {post.categories.length > 0 && (
-                  <div className="absolute top-3 left-3">
-                    <span className="bg-red-900 text-white text-xs px-3 py-1 rounded-full whitespace-nowrap">
+                  <div className="absolute top-3 left-3 max-w-[calc(100%-1.5rem)]">
+                    <span className="bg-red-900 text-white text-xs px-3 py-1 rounded-full whitespace-nowrap inline-block truncate max-w-full">
                       {post.categories[0].name}
                     </span>
                   </div>
@@ -132,15 +132,15 @@ export default function BlogSection() {
               </div>
 
               {/* Content */}
-              <div className="p-4 min-w-0">
-                <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
+              <div className="p-4 min-w-0 overflow-hidden flex-1 flex flex-col">
+                <div className="flex items-center gap-2 text-sm text-gray-500 mb-2 min-w-0">
                   <Calendar className="h-4 w-4 shrink-0" />
                   <span className="truncate">{formatDate(post.date)}</span>
                 </div>
-                <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-red-900 transition-colors break-words">
+                <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-red-900 transition-colors break-words overflow-hidden">
                   {post.title}
                 </h3>
-                <p className="text-sm text-gray-500 line-clamp-2 break-words">{post.excerpt}</p>
+                <p className="text-sm text-gray-500 line-clamp-2 break-words overflow-hidden">{post.excerpt}</p>
               </div>
             </Link>
           ))}

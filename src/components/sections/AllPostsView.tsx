@@ -147,7 +147,7 @@ export default function AllPostsView({ onClose }: AllPostsViewProps) {
           </p>
 
           {/* Search Bar */}
-          <div className="max-w-2xl mx-auto px-2">
+          <div className="max-w-2xl mx-auto px-4 sm:px-2">
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400\" />
               <input
@@ -170,17 +170,17 @@ export default function AllPostsView({ onClose }: AllPostsViewProps) {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid lg:grid-cols-[1fr_320px] gap-8">
           {/* Main Content */}
-          <div className="min-w-0">
+          <div className="min-w-0 overflow-hidden">
         {/* Filters */}
-        <div className="mb-6">
+        <div className="mb-6 overflow-hidden">
           <div className="flex flex-wrap items-center gap-3">
             <Button
               variant="outline"
               onClick={() => setShowFilters(!showFilters)}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 flex-shrink-0"
             >
               <Filter className="h-4 w-4" />
               Filter
@@ -195,7 +195,7 @@ export default function AllPostsView({ onClose }: AllPostsViewProps) {
               <Button
                 variant="ghost"
                 onClick={clearFilters}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-500 hover:text-gray-700 flex-shrink-0"
               >
                 <X className="h-4 w-4 mr-1" />
                 Reset Filter
@@ -204,17 +204,17 @@ export default function AllPostsView({ onClose }: AllPostsViewProps) {
 
             {/* Active filter badges */}
             {selectedYear && (
-              <span className="bg-red-100 text-red-800 text-sm px-3 py-1 rounded-full flex items-center gap-1">
-                Tahun: {selectedYear}
-                <button onClick={() => setSelectedYear('')}>
+              <span className="bg-red-100 text-red-800 text-sm px-3 py-1 rounded-full flex items-center gap-1 max-w-full overflow-hidden">
+                <span className="truncate">Tahun: {selectedYear}</span>
+                <button onClick={() => setSelectedYear('')} className="flex-shrink-0">
                   <X className="h-3 w-3" />
                 </button>
               </span>
             )}
             {selectedCategory && (
-              <span className="bg-red-100 text-red-800 text-sm px-3 py-1 rounded-full flex items-center gap-1">
-                Kategori: {categories.find(c => c.id.toString() === selectedCategory)?.name}
-                <button onClick={() => setSelectedCategory('')}>
+              <span className="bg-red-100 text-red-800 text-sm px-3 py-1 rounded-full flex items-center gap-1 max-w-full overflow-hidden">
+                <span className="truncate">Kategori: {categories.find(c => c.id.toString() === selectedCategory)?.name}</span>
+                <button onClick={() => setSelectedCategory('')} className="flex-shrink-0">
                   <X className="h-3 w-3" />
                 </button>
               </span>
@@ -278,7 +278,7 @@ export default function AllPostsView({ onClose }: AllPostsViewProps) {
             {[...Array(9)].map((_, i) => (
               <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md animate-pulse w-full min-w-0">
                 <div className="h-48 bg-gray-200 w-full"></div>
-                <div className="p-4 space-y-3 min-w-0">
+                <div className="p-4 space-y-3 min-w-0 overflow-hidden">
                   <div className="h-4 bg-gray-200 rounded w-3/4"></div>
                   <div className="h-3 bg-gray-200 rounded w-1/2"></div>
                 </div>
@@ -307,31 +307,31 @@ export default function AllPostsView({ onClose }: AllPostsViewProps) {
                 <Link
                   key={post.id}
                   href={`/berita/${post.slug}`}
-                  className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 w-full min-w-0"
+                  className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 w-full min-w-0 flex flex-col"
                 >
-                  <div className="relative h-48 overflow-hidden w-full">
+                  <div className="relative h-48 overflow-hidden w-full flex-shrink-0">
                     <img
                       src={getImageUrl(post)}
                       alt={post.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     {post.categories.length > 0 && (
-                      <div className="absolute top-3 left-3">
-                        <span className="bg-red-900 text-white text-xs px-3 py-1 rounded-full whitespace-nowrap">
+                      <div className="absolute top-3 left-3 max-w-[calc(100%-1.5rem)]">
+                        <span className="bg-red-900 text-white text-xs px-3 py-1 rounded-full whitespace-nowrap inline-block truncate max-w-full">
                           {post.categories[0].name}
                         </span>
                       </div>
                     )}
                   </div>
-                  <div className="p-4 min-w-0">
-                    <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
+                  <div className="p-4 min-w-0 overflow-hidden flex-1 flex flex-col">
+                    <div className="flex items-center gap-2 text-sm text-gray-500 mb-2 min-w-0">
                       <Calendar className="h-4 w-4 shrink-0" />
                       <span className="truncate">{formatDate(post.date)}</span>
                     </div>
-                    <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-red-900 transition-colors break-words">
+                    <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-red-900 transition-colors break-words overflow-hidden">
                       {post.title}
                     </h3>
-                    <p className="text-sm text-gray-500 line-clamp-2 break-words">{post.excerpt}</p>
+                    <p className="text-sm text-gray-500 line-clamp-2 break-words overflow-hidden">{post.excerpt}</p>
                   </div>
                 </Link>
               ))}
@@ -339,17 +339,18 @@ export default function AllPostsView({ onClose }: AllPostsViewProps) {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex justify-center items-center gap-4 mt-10">
+              <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 mt-10">
                 <Button
                   variant="outline"
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page === 1}
-                  className="flex items-center gap-1"
+                  className="flex items-center gap-1 text-sm sm:text-base"
                 >
                   <ChevronLeft className="h-4 w-4" />
-                  Sebelumnya
+                  <span className="hidden sm:inline">Sebelumnya</span>
+                  <span className="sm:hidden">Prev</span>
                 </Button>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto max-w-[calc(100vw-16rem)] sm:max-w-none">
                   {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                     let pageNum;
                     if (totalPages <= 5) {
@@ -365,7 +366,7 @@ export default function AllPostsView({ onClose }: AllPostsViewProps) {
                       <button
                         key={pageNum}
                         onClick={() => setPage(pageNum)}
-                        className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
+                        className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center transition-colors text-sm sm:text-base flex-shrink-0 ${
                           page === pageNum
                             ? 'bg-red-900 text-white'
                             : 'bg-white text-gray-700 hover:bg-gray-100'
@@ -380,9 +381,10 @@ export default function AllPostsView({ onClose }: AllPostsViewProps) {
                   variant="outline"
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                   disabled={page === totalPages}
-                  className="flex items-center gap-1"
+                  className="flex items-center gap-1 text-sm sm:text-base"
                 >
-                  Selanjutnya
+                  <span className="hidden sm:inline">Selanjutnya</span>
+                  <span className="sm:hidden">Next</span>
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
