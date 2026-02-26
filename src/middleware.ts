@@ -8,16 +8,6 @@ export function middleware(request: NextRequest) {
   const sessionCookie = request.cookies.get('admin_session');
   const hasSession = !!sessionCookie?.value;
 
-  let response = NextResponse.next();
-
-  // Add no-cache headers for /berita routes
-  if (pathname.startsWith('/berita')) {
-    response = NextResponse.next();
-    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
-    response.headers.set('Pragma', 'no-cache');
-    response.headers.set('Expires', '0');
-  }
-
   // Protect admin routes
   if (pathname.startsWith('/admin')) {
     if (!hasSession) {
@@ -37,7 +27,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  return response;
+  return NextResponse.next();
 }
 
 // Configure which paths the middleware runs on

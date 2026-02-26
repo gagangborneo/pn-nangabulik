@@ -1,36 +1,4 @@
 :81 {
-	@berita_route {
-		path /berita /berita/*
-	}
-
-	@static_assets {
-		path /_next/static/* /public/*
-	}
-
-	# Cache static assets
-	handle @static_assets {
-		header Cache-Control "public, max-age=31536000, immutable"
-		reverse_proxy localhost:3000 {
-			header_up Host {host}
-			header_up X-Forwarded-For {remote_host}
-			header_up X-Forwarded-Proto {scheme}
-			header_up X-Real-IP {remote_host}
-		}
-	}
-
-	# Dynamic /berita route - no cache
-	handle @berita_route {
-		header Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
-		header Pragma "no-cache"
-		header Expires "0"
-		reverse_proxy localhost:3000 {
-			header_up Host {host}
-			header_up X-Forwarded-For {remote_host}
-			header_up X-Forwarded-Proto {scheme}
-			header_up X-Real-IP {remote_host}
-		}
-	}
-
 	@transform_port_query {
 		query XTransformPort=*
 	}

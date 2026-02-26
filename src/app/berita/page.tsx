@@ -5,14 +5,10 @@ import { AutoTTSWrapper } from '@/components/ui/auto-tts-wrapper';
 import { MaintenanceCheck } from '@/components/MaintenanceCheck';
 import { redirect } from 'next/navigation';
 import { shouldRedirectToMaintenance } from '@/lib/maintenance';
-import { headers } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 export default async function BeritaPage() {
-  // Ensure no caching
-  await headers();
 
   // Check maintenance mode
   const shouldRedirect = await shouldRedirectToMaintenance();
