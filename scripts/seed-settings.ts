@@ -39,6 +39,10 @@ async function main() {
       value: '',
     },
     {
+      key: 'whatsapp_number',
+      value: '6282350442244',
+    },
+    {
       key: 'maintenance_mode',
       value: 'false',
     },

@@ -5,6 +5,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { TTSProvider } from "@/components/ui/tts-provider";
 import VisitorTracker from "@/components/VisitorTracker";
+import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
 import { getSetting } from "@/lib/wordpress";
 
 const geistSans = Geist({
@@ -50,6 +51,7 @@ export default function RootLayout({
       >
         <TTSProvider>
           <VisitorTracker />
+          <FloatingWhatsAppButton />
           {children}
           <Toaster />
         </TTSProvider>
