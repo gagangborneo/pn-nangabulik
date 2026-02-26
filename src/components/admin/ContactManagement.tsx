@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, Save, MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { Loader2, Save, MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface ContactSettings {
@@ -13,6 +13,7 @@ interface ContactSettings {
   phone: string;
   email: string;
   hours: string;
+  whatsapp_number: string;
 }
 
 const defaultSettings: ContactSettings = {
@@ -20,6 +21,7 @@ const defaultSettings: ContactSettings = {
   phone: '(0513) 123456',
   email: 'info@pn-nangabulik.go.id',
   hours: 'Senin - Jumat: 08:00 - 16:00 WIB',
+  whatsapp_number: '6282350442244',
 };
 
 export default function ContactManagement() {
@@ -42,6 +44,7 @@ export default function ContactManagement() {
             phone: settingsMap['phone'] || defaultSettings.phone,
             email: settingsMap['email'] || defaultSettings.email,
             hours: settingsMap['hours'] || defaultSettings.hours,
+            whatsapp_number: settingsMap['whatsapp_number'] || defaultSettings.whatsapp_number,
           });
         }
       } catch (error) {
@@ -65,6 +68,7 @@ export default function ContactManagement() {
           { key: 'phone', value: settings.phone },
           { key: 'email', value: settings.email },
           { key: 'hours', value: settings.hours },
+          { key: 'whatsapp_number', value: settings.whatsapp_number },
         ]),
       });
 
@@ -159,6 +163,23 @@ export default function ContactManagement() {
               placeholder="Jam operasional"
             />
           </div>
+
+          {/* WhatsApp Number */}
+          <div className="space-y-2">
+            <Label htmlFor="whatsapp_number" className="flex items-center gap-2">
+              <MessageCircle className="h-4 w-4 text-gray-500" />
+              Nomor WhatsApp (untuk Floating Button)
+            </Label>
+            <Input
+              id="whatsapp_number"
+              value={settings.whatsapp_number}
+              onChange={(e) => setSettings({ ...settings, whatsapp_number: e.target.value })}
+              placeholder="Nomor WhatsApp (format: 62xxxxxxxxxx)"
+            />
+            <p className="text-xs text-gray-500">
+              Format: gunakan kode negara (62 untuk Indonesia) tanpa tanda + atau spasi
+            </p>
+          </div>
         </CardContent>
       </Card>
 
@@ -184,6 +205,10 @@ export default function ContactManagement() {
             <div className="flex items-center gap-3">
               <Clock className="h-4 w-4 text-[#8B0000] flex-shrink-0" />
               <span className="text-sm text-gray-600">{settings.hours}</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <MessageCircle className="h-4 w-4 text-[#8B0000] flex-shrink-0" />
+              <span className="text-sm text-gray-600">https://wa.me/{settings.whatsapp_number}</span>
             </div>
           </div>
         </CardContent>
