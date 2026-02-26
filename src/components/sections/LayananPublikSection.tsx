@@ -1,86 +1,79 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { ExternalLink, FileText, Calendar, BookOpen, ClipboardList, AlertCircle, Gavel, FolderSync } from 'lucide-react';
 
 interface LayananItem {
   id: string;
   title: string;
   description: string;
-  icon: React.ElementType;
-  url: string;
-  gradient: string;
-  iconBg: string;
+  icon: string;
+  url: string | null;
+  order: number;
+  isActive: boolean;
 }
 
-const layananData: LayananItem[] = [
-  {
-    id: '1',
-    title: 'SIPP',
-    description: 'Layanan digital untuk mengakses informasi perkara dengan mudah.',
-    icon: FileText,
-    url: 'https://sipp.pn-nangabulik.go.id/',
-    gradient: 'from-blue-50 to-white',
-    iconBg: 'bg-blue-500',
-  },
-  {
-    id: '2',
-    title: 'Jadwal Sidang',
-    description: 'Jadwal sidang disusun dan diumumkan secara terbuka.',
-    icon: Calendar,
-    url: 'http://sipp.pn-nangabulik.go.id/list_jadwal_sidang/',
-    gradient: 'from-green-50 to-white',
-    iconBg: 'bg-green-500',
-  },
-  {
-    id: '3',
-    title: 'Direktori Putusan',
-    description: 'Akses publik terhadap salinan putusan pengadilan.',
-    icon: BookOpen,
-    url: 'https://putusan3.mahkamahagung.go.id/search.html?&court=29e34643d20beb9e89ceec68971fb933',
-    gradient: 'from-purple-50 to-white',
-    iconBg: 'bg-purple-500',
-  },
-  {
-    id: '4',
-    title: 'Survey Elektronik',
-    description: 'Sarana penilaian kualitas layanan secara online.',
-    icon: ClipboardList,
-    url: 'http://esurvey.badilum.mahkamahagung.go.id/index.php/pengadilan/402028',
-    gradient: 'from-yellow-50 to-white',
-    iconBg: 'bg-yellow-500',
-  },
-  {
-    id: '5',
-    title: 'SIWAS',
-    description: 'Sistem pelaporan pelanggaran di lingkungan pengadilan.',
-    icon: AlertCircle,
-    url: 'https://siwas.mahkamahagung.go.id/',
-    gradient: 'from-red-50 to-white',
-    iconBg: 'bg-red-500',
-  },
-  {
-    id: '6',
-    title: 'E-Court',
-    description: 'Layanan pendaftaran, pembayaran, dan persidangan online.',
-    icon: Gavel,
-    url: 'https://ecourt.mahkamahagung.go.id/',
-    gradient: 'from-indigo-50 to-white',
-    iconBg: 'bg-indigo-500',
-  },
-  {
-    id: '7',
-    title: 'e-Berpadu',
-    description: 'Integrasi berkas pidana antar penegak hukum.',
-    icon: FolderSync,
-    url: 'https://eberpadu.mahkamahagung.go.id/',
-    gradient: 'from-teal-50 to-white',
-    iconBg: 'bg-teal-500',
-  },
+interface LayananItemWithUI extends LayananItem {
+  gradient: string;
+  iconBg: string;
+  iconComponent: React.ElementType;
+}
+
+const iconMap: Record<string, React.ElementType> = {
+  FileText,
+  Calendar,
+  BookOpen,
+  ClipboardList,
+  AlertCircle,
+  Gavel,
+  FolderSync,
+};
+
+const gradients = [
+  { gradient: 'from-blue-50 to-white', bg: 'bg-blue-500' },
+  { gradient: 'from-green-50 to-white', bg: 'bg-green-500' },
+  { gradient: 'from-purple-50 to-white', bg: 'bg-purple-500' },
+  { gradient: 'from-yellow-50 to-white', bg: 'bg-yellow-500' },
+  { gradient: 'from-red-50 to-white', bg: 'bg-red-500' },
+  { gradient: 'from-indigo-50 to-white', bg: 'bg-indigo-500' },
+  { gradient: 'from-teal-50 to-white', bg: 'bg-teal-500' },
 ];
 
 export default function LayananPublikSection() {
+  const [layananData, setLayananData] = useState<LayananItemWithUI[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchLayanan = async () => {
+      try {
+        const response = await fetch('/api/layanan');
+        if (!response.ok) throw new Error('Failed to fetch layanan');
+
+        const data = await response.json();
+        const layananWithUI: LayananItemWithUI[] = data.layanan.map(
+          (item: LayananItem, index: number) => {
+            const gradientIndex = index % gradients.length;
+            return {
+              ...item,
+              gradient: gradients[gradientIndex].gradient,
+              iconBg: gradients[gradientIndex].bg,
+              iconComponent: iconMap[item.icon] || FileText,
+            };
+          }
+        );
+        setLayananData(layananWithUI);
+      } catch (error) {
+        console.error('Error fetching layanan:', error);
+        setLayananData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLayanan();
+  }, []);
   return (
-    <section className="py-16 bg-gradient-to-r from-red-900 to-red-800 relative overflow-hidden">
+    <section className="py-16 bg-linear-to-r from-red-900 to-red-800 relative overflow-hidden">
        {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
       <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
@@ -100,46 +93,52 @@ export default function LayananPublikSection() {
         </div>
 
         {/* Service Cards Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
-          {layananData.map((service) => {
-            const IconComponent = service.icon;
+        {loading ? (
+          <div className="flex justify-center items-center min-h-64">
+            <div className="text-white">Loading...</div>
+          </div>
+        ) : (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            {layananData.map((service) => {
+              const IconComponent = service.iconComponent;
 
-            return (
-              <a
-                key={service.id}
-                href={service.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`group bg-gradient-to-br ${service.gradient} rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-gray-300 hover:-translate-y-1`}
-              >
-                <div className="flex flex-row sm:flex-col items-start sm:items-center text-left sm:text-center gap-4 sm:gap-0">
-                  {/* Icon */}
-                  <div className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 ${service.iconBg} rounded-xl flex items-center justify-center sm:mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                    <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
-                  </div>
+              return (
+                <a
+                  key={service.id}
+                  href={service.url || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`group bg-linear-to-br ${service.gradient} rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-gray-300 hover:-translate-y-1`}
+                >
+                  <div className="flex flex-row sm:flex-col items-start sm:items-center text-left sm:text-center gap-4 sm:gap-0">
+                    {/* Icon */}
+                    <div className={`shrink-0 w-12 h-12 sm:w-14 sm:h-14 ${service.iconBg} rounded-xl flex items-center justify-center sm:mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                      <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
+                    </div>
 
-                  <div className="flex-1 sm:flex-none">
-                    {/* Title */}
-                    <h3 className="font-semibold text-gray-800 mb-2 group-hover:text-red-900 transition-colors">
-                      {service.title}
-                    </h3>
+                    <div className="flex-1 sm:flex-none">
+                      {/* Title */}
+                      <h3 className="font-semibold text-gray-800 mb-2 group-hover:text-red-900 transition-colors">
+                        {service.title}
+                      </h3>
 
-                    {/* Description */}
-                    <p className="text-sm text-gray-500 mb-3 leading-relaxed">
-                      {service.description}
-                    </p>
+                      {/* Description */}
+                      <p className="text-sm text-gray-500 mb-3 leading-relaxed">
+                        {service.description}
+                      </p>
 
-                    {/* Link Indicator */}
-                    <div className="flex items-center gap-1 text-xs text-red-900 font-medium opacity-50 group-hover:opacity-500 transition-opacity">
-                      <span>Akses Layanan</span>
-                      <ExternalLink className="h-3 w-3" />
+                      {/* Link Indicator */}
+                      <div className="flex items-center gap-1 text-xs text-red-900 font-medium opacity-50 group-hover:opacity-500 transition-opacity">
+                        <span>Akses Layanan</span>
+                        <ExternalLink className="h-3 w-3" />
+                      </div>
                     </div>
                   </div>
-                </div>
-              </a>
-            );
-          })}
-        </div>
+                </a>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );

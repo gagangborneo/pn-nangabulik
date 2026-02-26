@@ -34,6 +34,7 @@ import PojokInfoSlidesManagement from './PojokInfoSlidesManagement';
 import PengumumanSidangManagement from './PengumumanSidangManagement';
 import PejabatManagement from './PejabatManagement';
 import FAQManagement from './FAQManagement';
+import LayananManagement from './LayananManagement';
 import VisitorDashboard from './VisitorDashboard';
 import SettingsManagement from './SettingsManagement';
 import PageManagement from './PageManagement';
@@ -46,7 +47,7 @@ interface User {
   role: string;
 }
 
-type AdminView = 'dashboard' | 'menu' | 'hero' | 'information-slides' | 'maklumat' | 'pojok-info' | 'pengumuman-sidang' | 'pejabat' | 'kontak' | 'survey' | 'reports' | 'faq' | 'statistics' | 'settings' | 'pages' | 'account';
+type AdminView = 'dashboard' | 'menu' | 'hero' | 'information-slides' | 'maklumat' | 'pojok-info' | 'pengumuman-sidang' | 'pejabat' | 'layanan' | 'kontak' | 'survey' | 'reports' | 'faq' | 'statistics' | 'settings' | 'pages' | 'account';
 
 interface AdminDashboardProps {
   initialView?: AdminView;
@@ -69,6 +70,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     if (pathname === '/admin/pojok-info') return 'pojok-info';
     if (pathname === '/admin/pengumuman-sidang') return 'pengumuman-sidang';
     if (pathname === '/admin/pejabat') return 'pejabat';
+    if (pathname === '/admin/layanan') return 'layanan';
     if (pathname === '/admin/kontak') return 'kontak';
     if (pathname === '/admin/survey') return 'survey';
     if (pathname === '/admin/faq') return 'faq';
@@ -146,6 +148,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     { id: 'pojok-info' as AdminView, label: 'Pojok Info', icon: Image, href: '/admin/pojok-info' },
     { id: 'pengumuman-sidang' as AdminView, label: 'Pengumuman Sidang', icon: FileText, href: '/admin/pengumuman-sidang' },
     { id: 'pejabat' as AdminView, label: 'Profil Pejabat', icon: Users, href: '/admin/pejabat' },
+    { id: 'layanan' as AdminView, label: 'Layanan', icon: MenuIcon, href: '/admin/layanan' },
     { id: 'menu' as AdminView, label: 'Menu', icon: MenuIcon, href: '/admin/menu' },
     { id: 'pages' as AdminView, label: 'Halaman', icon: FileText, href: '/admin/pages' },
     { id: 'reports' as AdminView, label: 'Data Laporan', icon: FolderOpen, href: '/admin/reports' },
@@ -267,6 +270,8 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
             {currentView === 'maklumat' && 'Manajemen Maklumat'}
             {currentView === 'pojok-info' && 'Manajemen Pojok Info'}
             {currentView === 'pengumuman-sidang' && 'Manajemen Pengumuman Sidang'}
+            {currentView === 'pejabat' && 'Manajemen Profil Pejabat'}
+            {currentView === 'layanan' && 'Manajemen Layanan'}
             {currentView === 'reports' && 'Manajemen Data Laporan'}
             {currentView === 'faq' && 'Manajemen FAQ'}
             {currentView === 'kontak' && 'Manajemen Kontak'}
@@ -362,6 +367,15 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
                         <span className="text-sm">Kelola Kontak</span>
                       </Button>
                     </Link>
+                    <Link href="/admin/layanan">
+                      <Button
+                        variant="outline"
+                        className="w-full h-auto py-4 flex-col gap-2"
+                      >
+                        <MenuIcon className="h-5 w-5" />
+                        <span className="text-sm">Kelola Layanan</span>
+                      </Button>
+                    </Link>
                     <Link href="/admin/survey">
                       <Button
                         variant="outline"
@@ -419,6 +433,8 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
           {currentView === 'pengumuman-sidang' && <PengumumanSidangManagement />}
 
           {currentView === 'pejabat' && <PejabatManagement />}
+
+          {currentView === 'layanan' && <LayananManagement />}
 
           {currentView === 'pages' && <PageManagement />}
 
