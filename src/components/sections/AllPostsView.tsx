@@ -85,6 +85,9 @@ export default function AllPostsView() {
           params.append('category', selectedCategory);
         }
 
+        // Add cache busting parameter to prevent browser caching
+        params.append('_t', Date.now().toString());
+
         const response = await fetch(`/api/posts?${params.toString()}`);
         const data = await response.json();
         setPosts(data.posts || []);

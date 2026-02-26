@@ -156,8 +156,10 @@ export async function GET(request: NextRequest) {
     });
 
     // Add cache control headers
-    // Cache for 1 minute, then revalidate in background
-    jsonResponse.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+    // No caching for dynamic posts data - always fetch fresh from WordPress
+    jsonResponse.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
+    jsonResponse.headers.set('Pragma', 'no-cache');
+    jsonResponse.headers.set('Expires', '0');
     
     return jsonResponse;
   } catch (error: any) {
