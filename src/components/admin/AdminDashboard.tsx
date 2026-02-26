@@ -33,6 +33,7 @@ import MaklumatSlidesManagement from './MaklumatSlidesManagement';
 import PojokInfoSlidesManagement from './PojokInfoSlidesManagement';
 import PengumumanSidangManagement from './PengumumanSidangManagement';
 import PejabatManagement from './PejabatManagement';
+import PartnersManagement from './PartnersManagement';
 import FAQManagement from './FAQManagement';
 import LayananManagement from './LayananManagement';
 import VisitorDashboard from './VisitorDashboard';
@@ -47,7 +48,7 @@ interface User {
   role: string;
 }
 
-type AdminView = 'dashboard' | 'menu' | 'hero' | 'information-slides' | 'maklumat' | 'pojok-info' | 'pengumuman-sidang' | 'pejabat' | 'layanan' | 'kontak' | 'survey' | 'reports' | 'faq' | 'statistics' | 'settings' | 'pages' | 'account';
+type AdminView = 'dashboard' | 'menu' | 'hero' | 'information-slides' | 'maklumat' | 'pojok-info' | 'pengumuman-sidang' | 'pejabat' | 'partners' | 'layanan' | 'kontak' | 'survey' | 'reports' | 'faq' | 'statistics' | 'settings' | 'pages' | 'account';
 
 interface AdminDashboardProps {
   initialView?: AdminView;
@@ -70,6 +71,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     if (pathname === '/admin/pojok-info') return 'pojok-info';
     if (pathname === '/admin/pengumuman-sidang') return 'pengumuman-sidang';
     if (pathname === '/admin/pejabat') return 'pejabat';
+    if (pathname === '/admin/partners') return 'partners';
     if (pathname === '/admin/layanan') return 'layanan';
     if (pathname === '/admin/kontak') return 'kontak';
     if (pathname === '/admin/survey') return 'survey';
@@ -148,6 +150,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     { id: 'pojok-info' as AdminView, label: 'Pojok Info', icon: Image, href: '/admin/pojok-info' },
     { id: 'pengumuman-sidang' as AdminView, label: 'Pengumuman Sidang', icon: FileText, href: '/admin/pengumuman-sidang' },
     { id: 'pejabat' as AdminView, label: 'Profil Pejabat', icon: Users, href: '/admin/pejabat' },
+    { id: 'partners' as AdminView, label: 'Lembaga & Institusi', icon: Users, href: '/admin/partners' },
     { id: 'layanan' as AdminView, label: 'Layanan', icon: MenuIcon, href: '/admin/layanan' },
     { id: 'menu' as AdminView, label: 'Menu', icon: MenuIcon, href: '/admin/menu' },
     { id: 'pages' as AdminView, label: 'Halaman', icon: FileText, href: '/admin/pages' },
@@ -271,6 +274,7 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
             {currentView === 'pojok-info' && 'Manajemen Pojok Info'}
             {currentView === 'pengumuman-sidang' && 'Manajemen Pengumuman Sidang'}
             {currentView === 'pejabat' && 'Manajemen Profil Pejabat'}
+            {currentView === 'partners' && 'Manajemen Lembaga & Institusi'}
             {currentView === 'layanan' && 'Manajemen Layanan'}
             {currentView === 'reports' && 'Manajemen Data Laporan'}
             {currentView === 'faq' && 'Manajemen FAQ'}
@@ -433,6 +437,8 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
           {currentView === 'pengumuman-sidang' && <PengumumanSidangManagement />}
 
           {currentView === 'pejabat' && <PejabatManagement />}
+
+          {currentView === 'partners' && <PartnersManagement />}
 
           {currentView === 'layanan' && <LayananManagement />}
 
