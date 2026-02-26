@@ -12,8 +12,7 @@ export const revalidate = 0;
 
 export default async function BeritaPage() {
   // Ensure no caching
-  const headersList = await headers();
-  headersList.list(); // Force headers to be read
+  await headers();
 
   // Check maintenance mode
   const shouldRedirect = await shouldRedirectToMaintenance();
