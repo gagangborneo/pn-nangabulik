@@ -203,6 +203,70 @@ export default function PengumumanSidangManagement() {
     }
   };
 
+  const handleMoveUp = async (index: number) => {
+    if (index === 0) return;
+
+    const newItems = [...items];
+    [newItems[index - 1], newItems[index]] = [newItems[index], newItems[index - 1]];
+
+    setItems(newItems);
+
+    try {
+      const updates = newItems.map((item, idx) => ({
+        id: item.id,
+        order: idx,
+      }));
+
+      await Promise.all(
+        updates.map((update) =>
+          fetch('/api/pengumuman-sidang', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(update),
+          })
+        )
+      );
+
+      toast.success('Item berhasil dipindahkan ke atas');
+      await fetchItems();
+    } catch (error: any) {
+      console.error('Error moving up:', error);
+      toast.error('Gagal memindahkan item');
+    }
+  };
+
+  const handleMoveDown = async (index: number) => {
+    if (index === items.length - 1) return;
+
+    const newItems = [...items];
+    [newItems[index], newItems[index + 1]] = [newItems[index + 1], newItems[index]];
+
+    setItems(newItems);
+
+    try {
+      const updates = newItems.map((item, idx) => ({
+        id: item.id,
+        order: idx,
+      }));
+
+      await Promise.all(
+        updates.map((update) =>
+          fetch('/api/pengumuman-sidang', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(update),
+          })
+        )
+      );
+
+      toast.success('Item berhasil dipindahkan ke bawah');
+      await fetchItems();
+    } catch (error: any) {
+      console.error('Error moving down:', error);
+      toast.error('Gagal memindahkan item');
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -245,6 +309,24 @@ export default function PengumumanSidangManagement() {
                     <p className="font-medium text-gray-900">{item.title}</p>
                     <p className="text-sm text-gray-600 truncate">{item.url}</p>
                   </div>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => handleMoveUp(index)}
+                    disabled={index === 0}
+                    title="Pindahkan ke atas"
+                  >
+                    <MoveUp className="h-4 w-4 text-gray-600 disabled:opacity-40" />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => handleMoveDown(index)}
+                    disabled={index === items.length - 1}
+                    title="Pindahkan ke bawah"
+                  >
+                    <MoveDown className="h-4 w-4 text-gray-600 disabled:opacity-40" />
+                  </Button>
                   <Button
                     size="sm"
                     variant="ghost"
