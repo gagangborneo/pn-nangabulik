@@ -6,14 +6,20 @@ import { MaintenanceCheck } from '@/components/MaintenanceCheck';
 import { shouldRedirectToMaintenance } from '@/lib/maintenance';
 import { redirect } from 'next/navigation';
 import { getWordPressUrl } from '@/lib/wordpress';
+import { headers } from 'next/headers';
 
-// export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function BeritaDetailPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  // Ensure no caching
+  const headersList = await headers();
+  headersList.list(); // Force headers to be read
+
   // Check maintenance mode
   const shouldRedirect = await shouldRedirectToMaintenance();
   if (shouldRedirect) {
