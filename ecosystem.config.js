@@ -35,7 +35,7 @@ module.exports = {
       host: '103.127.133.230',
       ref: 'origin/main',
       repo: 'https://github.com/gagangborneo/pn-nangabulik.git',
-      path: '/home/www/pn-nangabulik',
+      path: '/www/wwwroot/landing-pn-nangabulik',
       'post-deploy':
         'npm install && npm run build && pm2 restart ecosystem.config.js --env production',
     },

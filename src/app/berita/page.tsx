@@ -6,7 +6,7 @@ import { MaintenanceCheck } from '@/components/MaintenanceCheck';
 import { redirect } from 'next/navigation';
 import { shouldRedirectToMaintenance } from '@/lib/maintenance';
 
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 
 export default async function BeritaPage() {
   // Check maintenance mode
