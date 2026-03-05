@@ -202,6 +202,7 @@ model InformationSlide {
   id        String   @id @default(cuid())
   title     String
   imageUrl  String
+  link      String?
   description String? @db.Text
   order     Int      @default(0)
   isActive  Boolean  @default(true)

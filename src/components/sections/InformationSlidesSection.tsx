@@ -7,6 +7,7 @@ interface InformationSlide {
   id: string;
   title: string;
   imageUrl: string;
+  link: string | null;
   description: string | null;
   order: number;
   isActive: boolean;
@@ -91,14 +92,27 @@ export default function InformationSlidesSection() {
               >
                 {/* Image Container */}
                 <div className="relative overflow-hidden bg-gray-200">
-                  <img
-                    src={slide.imageUrl}
-                    alt={slide.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x200?text=Image+Error';
-                    }}
-                  />
+                  {slide.link ? (
+                    <a href={slide.link} target="_blank" rel="noopener noreferrer" className="block w-full h-full">
+                      <img
+                        src={slide.imageUrl}
+                        alt={slide.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 cursor-pointer"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x200?text=Image+Error';
+                        }}
+                      />
+                    </a>
+                  ) : (
+                    <img
+                      src={slide.imageUrl}
+                      alt={slide.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x200?text=Image+Error';
+                      }}
+                    />
+                  )}
                 </div>
 
                 {/* Content */}

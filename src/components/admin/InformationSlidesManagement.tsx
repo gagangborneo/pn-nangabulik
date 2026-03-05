@@ -15,6 +15,7 @@ interface InformationSlide {
   id: string;
   title: string;
   imageUrl: string;
+  link: string | null;
   description: string | null;
   order: number;
   isActive: boolean;
@@ -25,6 +26,7 @@ interface InformationSlide {
 interface FormData {
   title: string;
   imageUrl: string;
+  link: string;
   description: string;
   isActive: boolean;
 }
@@ -32,6 +34,7 @@ interface FormData {
 const defaultFormData: FormData = {
   title: '',
   imageUrl: '',
+  link: '',
   description: '',
   isActive: true,
 };
@@ -67,6 +70,7 @@ export default function InformationSlidesManagement() {
       setFormData({
         title: slide.title,
         imageUrl: slide.imageUrl,
+        link: slide.link || '',
         description: slide.description || '',
         isActive: slide.isActive,
       });
@@ -324,6 +328,20 @@ export default function InformationSlidesManagement() {
                   />
                 </div>
               )}
+            </div>
+
+            {/* Link */}
+            <div>
+              <Label htmlFor="link">Link (opsional)</Label>
+              <Input
+                id="link"
+                type="url"
+                placeholder="https://example.com/halaman-tujuan"
+                value={formData.link}
+                onChange={(e) => setFormData({ ...formData, link: e.target.value })}
+                className="mt-2"
+              />
+              <p className="text-xs text-gray-500 mt-1">Gambar akan bisa diklik dan membuka link ini di tab baru</p>
             </div>
 
             {/* Description */}

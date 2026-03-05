@@ -20,14 +20,14 @@ export default async function BeritaPage() {
     <>
       <MaintenanceCheck />
       <div className="min-h-screen flex flex-col bg-white">
-      <Header />
-      <AutoTTSWrapper>
-        <main className="flex-1">
-          <AllPostsView />
-        </main>
-      </AutoTTSWrapper>
-      <Footer />
-    </div>
+        <Header />
+        <AutoTTSWrapper>
+          <main className="flex-1">
+            <AllPostsView />
+          </main>
+        </AutoTTSWrapper>
+        <Footer />
+      </div>
     </>
   );
 }
