@@ -3,7 +3,27 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  
+
+  // Redirect old WordPress URLs with /index.php
+  // e.g. /index.php/berita/berita-terkini/slug -> /berita/slug
+  if (pathname.startsWith('/index.php')) {
+    const strippedPath = pathname.replace('/index.php', '') || '/';
+
+    // Map old WordPress category paths to new Next.js routes
+    // /berita/berita-terkini/slug -> /berita/slug
+    // /berita/anything/slug -> /berita/slug
+    const beritaMatch = strippedPath.match(/^\/berita\/[^/]+\/(.+)$/);
+    const url = request.nextUrl.clone();
+
+    if (beritaMatch) {
+      url.pathname = `/berita/${beritaMatch[1]}`;
+    } else {
+      url.pathname = strippedPath;
+    }
+
+    return NextResponse.redirect(url, 301);
+  }
+
   // Get session cookie
   const sessionCookie = request.cookies.get('admin_session');
   const hasSession = !!sessionCookie?.value;
