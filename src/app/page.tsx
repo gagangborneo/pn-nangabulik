@@ -44,17 +44,17 @@ export default async function Home() {
       <AutoTTSWrapper>
         <main className="flex-1">
           <HeroSection />
+          <LayananPublikSection />
+          <MaklumatPojokInfoSection />
+          <BlogSection />
+          <PengumumanSidangSection />
+          <JadwalSidangSection />
           <ZonaIntegritasSection />
           <InformationSlidesSection />
-          <LayananPublikSection />
-          <JadwalSidangSection />
-          <PengumumanSidangSection />
           <ProfilPejabatSection />
           <SMAPBannerSection />
           {/* <WadahKeadilanSection /> */}
-          <MaklumatPojokInfoSection />
           <SurveySection />
-          <BlogSection />
           <FAQSection />
           <PartnersSection />
           <ContactSection />

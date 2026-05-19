@@ -73,7 +73,7 @@ export default function LayananPublikSection() {
     fetchLayanan();
   }, []);
   return (
-    <section className="py-16 bg-linear-to-r from-red-900 to-red-800 relative overflow-hidden">
+    <section className="py-16 relative overflow-hidden">
        {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
       <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
@@ -82,7 +82,7 @@ export default function LayananPublikSection() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
-        <div className="text-center mb-12">
+        {/* <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
             Layanan Publik Pengadilan
           </h2>
@@ -90,7 +90,7 @@ export default function LayananPublikSection() {
           <p className="text-red-100 max-w-2xl mx-auto">
             Berbagai layanan digital untuk memudahkan akses informasi dan pelayanan pengadilan
           </p>
-        </div>
+        </div> */}
 
         {/* Service Cards Grid */}
         {loading ? (

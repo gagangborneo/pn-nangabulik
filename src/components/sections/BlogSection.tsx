@@ -90,10 +90,10 @@ export default function BlogSection() {
   }
 
   return (
-    <section className="py-16 bg-gray-50 relative overflow-hidden">
+    <section className="py-16 relative overflow-hidden">
       {/* Decorative gradient */}
-      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-red-900/5 to-transparent"></div>
-      <div className="absolute top-0 right-0 w-64 h-64 bg-red-900/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+      <div className="absolute top-0 left-0 w-full h-32 "></div>
+      <div className="absolute top-0 right-0 w-64 h-64 "></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
