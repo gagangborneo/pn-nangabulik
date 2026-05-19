@@ -3,9 +3,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   BarChart3,
+  ChevronLeft,
+  ChevronRight,
   ExternalLink,
   Facebook,
   Globe,
+  Image as ImageIcon,
   Instagram,
   Link2,
   ListChecks,
@@ -52,6 +55,13 @@ interface SurveyLink {
   url: string;
 }
 
+interface PortraitSlide {
+  id: string;
+  imageUrl: string;
+  order: number;
+  isActive: boolean;
+}
+
 const languages: Language[] = [
   { code: 'id', name: 'Bahasa Indonesia' },
   { code: 'en', name: 'English' },
@@ -94,6 +104,9 @@ export default function LandingSidebar() {
   const [partners, setPartners] = useState<Partner[]>(defaultPartners);
   const [stats, setStats] = useState<VisitorStats | null>(null);
   const [statsLoading, setStatsLoading] = useState(true);
+  const [pojokSlides, setPojokSlides] = useState<PortraitSlide[]>([]);
+  const [pojokLoading, setPojokLoading] = useState(true);
+  const [pojokIndex, setPojokIndex] = useState(0);
 
   useEffect(() => {
     const fetchSurvey = async () => {
@@ -158,6 +171,30 @@ export default function LandingSidebar() {
     fetchPartners();
   }, []);
 
+  useEffect(() => {
+    const fetchPojokInfo = async () => {
+      try {
+        const response = await fetch('/api/pojok-info-slides');
+        const data = await response.json();
+        const activeSlides = (data.slides || []).filter((slide: PortraitSlide) => slide.isActive);
+        setPojokSlides(activeSlides);
+      } catch (error) {
+        console.error('Error fetching pojok info slides:', error);
+        setPojokSlides([]);
+      } finally {
+        setPojokLoading(false);
+      }
+    };
+
+    fetchPojokInfo();
+  }, []);
+
+  useEffect(() => {
+    if (pojokIndex >= pojokSlides.length) {
+      setPojokIndex(0);
+    }
+  }, [pojokIndex, pojokSlides.length]);
+
   const categoryLabels: Record<string, string> = {
     SPAK: 'Survey Persepsi Anti Korupsi',
     SKM: 'Survey Kepuasan Masyarakat',
@@ -174,6 +211,16 @@ export default function LandingSidebar() {
   }, [partners]);
 
   const formatNumber = (num: number) => new Intl.NumberFormat('id-ID').format(num);
+
+  const goToPreviousPojok = () => {
+    if (pojokSlides.length === 0) return;
+    setPojokIndex((prev) => (prev === 0 ? pojokSlides.length - 1 : prev - 1));
+  };
+
+  const goToNextPojok = () => {
+    if (pojokSlides.length === 0) return;
+    setPojokIndex((prev) => (prev === pojokSlides.length - 1 ? 0 : prev + 1));
+  };
 
   const changeLanguage = (lang: Language) => {
     setCurrentLanguage(lang);
@@ -456,6 +503,78 @@ export default function LandingSidebar() {
                 <div className="text-lg font-semibold text-gray-800">
                   {formatNumber(stats.total)}
                 </div>
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      <Card className="shadow-md hover:shadow-lg transition-shadow overflow-hidden">
+        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0">
+          <CardTitle className="flex items-center gap-2 text-base px-6 py-3">
+            <ImageIcon className="h-4 w-4" />
+            Pojok Info
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-4">
+          {pojokLoading ? (
+            <div className="space-y-2 animate-pulse">
+              <div className="h-48 bg-gray-100 rounded-lg"></div>
+            </div>
+          ) : pojokSlides.length === 0 ? (
+            <div className="aspect-[3/4] rounded-xl border border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-500 bg-gray-50">
+              <ImageIcon className="h-8 w-8 mb-2" />
+              <p className="text-sm">Belum ada gambar pojok info</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-gray-100">
+                <img
+                  src={pojokSlides[pojokIndex]?.imageUrl}
+                  alt="Pojok Info"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = 'https://via.placeholder.com/600x800?text=Image+Error';
+                  }}
+                />
+              </div>
+
+              <div className="flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={goToPreviousPojok}
+                  className="p-2 rounded-full border border-gray-200 hover:bg-red-900 hover:text-white transition-all"
+                  aria-label="Sebelumnya"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                <div className="flex items-center gap-2">
+                  {pojokSlides.map((_, index) => (
+                    <button
+                      key={index}
+                      type="button"
+                      onClick={() => setPojokIndex(index)}
+                      className={`h-2 rounded-full transition-all duration-300 ${
+                        index === pojokIndex
+                          ? 'bg-red-900 w-8'
+                          : 'bg-gray-300 w-2 hover:bg-gray-400'
+                      }`}
+                      aria-label={`Slide ${index + 1}`}
+                    />
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  onClick={goToNextPojok}
+                  className="p-2 rounded-full border border-gray-200 hover:bg-red-900 hover:text-white transition-all"
+                  aria-label="Berikutnya"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
+
+              <div className="text-center text-xs text-gray-500">
+                {pojokIndex + 1} / {pojokSlides.length}
               </div>
             </div>
           )}
