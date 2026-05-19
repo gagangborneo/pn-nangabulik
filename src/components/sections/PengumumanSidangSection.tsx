@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { FileText, ArrowRight } from 'lucide-react';
+import { Calendar, FileText, ArrowRight } from 'lucide-react';
 
 interface PengumumanSidang {
   id: string;
@@ -11,6 +11,7 @@ interface PengumumanSidang {
   description: string | null;
   order: number;
   isActive: boolean;
+  createdAt: string;
 }
 
 export default function PengumumanSidangSection() {
@@ -37,8 +38,17 @@ export default function PengumumanSidangSection() {
     return null;
   }
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('id-ID', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+  };
+
   return (
-    <section className="py-16 bg-gradient-to-r from-red-900 to-red-800 relative overflow-hidden">
+    <section className="py-16 bg-linear-to-r rounded-2xl from-red-900 to-red-800 relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
       <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
@@ -52,21 +62,20 @@ export default function PengumumanSidangSection() {
               Pengumuman & Pemanggilan Sidang
             </h2>
           </div>
-          <div className="w-20 h-1 bg-yellow-400 mx-auto mb-4"></div>
-          <p className="text-red-100 max-w-2xl mx-auto">
-            Pengumuman dan pemanggilan sidang terbaru dari Pengadilan Negeri Nanga Bulik
-          </p>
         </div>
 
         {/* Grid Items */}
         <div className="grid grid-cols-1 max-w-4xl mx-auto gap-6 mb-8">
           {items.map((item) => (
-            <div
+            <a
               key={item.id}
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group bg-white/95 backdrop-blur border border-red-200 rounded-xl p-6 hover:shadow-lg hover:border-yellow-400 transition-all duration-300"
             >
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                   <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-red-100 group-hover:bg-yellow-50 transition-colors">
                     <FileText className="h-6 w-6 text-red-900" />
                   </div>
@@ -75,23 +84,13 @@ export default function PengumumanSidangSection() {
                   <h3 className="text-lg font-semibold text-gray-900 group-hover:text-red-900 transition-colors line-clamp-2">
                     {item.title}
                   </h3>
-                  {item.description && (
-                    <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                      {item.description}
-                    </p>
-                  )}
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 mt-3 text-red-900 hover:text-yellow-600 font-medium text-sm transition-colors"
-                  >
-                    Buka Dokumen
-                    <ArrowRight className="h-4 w-4" />
-                  </a>
+                  <div className="flex items-center gap-2 text-sm text-gray-600 mt-2">
+                    <Calendar className="h-4 w-4" />
+                    <span>{formatDate(item.createdAt)}</span>
+                  </div>
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
 

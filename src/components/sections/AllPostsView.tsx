@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { Search, X, Calendar, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import BlogSidebar from './BlogSidebar';
+import LandingSidebar from './LandingSidebar';
 
 interface Post {
   id: number;
@@ -33,6 +34,7 @@ interface AllPostsViewProps {
 }
 
 export default function AllPostsView() {
+  const searchParams = useSearchParams();
   const [posts, setPosts] = useState<Post[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -49,6 +51,16 @@ export default function AllPostsView() {
   // Generate years (current year down to 2015)
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: currentYear - 2014 }, (_, i) => currentYear - i);
+
+  useEffect(() => {
+    const query = searchParams.get('search') ?? '';
+    const yearParam = searchParams.get('year') ?? '';
+    const categoryParam = searchParams.get('category') ?? '';
+
+    setSearchQuery(query);
+    setSelectedYear(yearParam);
+    setSelectedCategory(categoryParam);
+  }, [searchParams]);
 
   // Fetch categories on mount
   useEffect(() => {
@@ -399,10 +411,7 @@ export default function AllPostsView() {
           {/* Sidebar */}
           <div className="hidden lg:block">
             <div className="sticky top-8">
-              <BlogSidebar 
-                selectedCategory={selectedCategory}
-                onCategorySelect={setSelectedCategory}
-              />
+              <LandingSidebar />
             </div>
           </div>
         </div>

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ArrowLeft, Calendar, User, Tag, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import BlogSidebar from './BlogSidebar';
+import LandingSidebar from './LandingSidebar';
 
 interface Post {
   id: number;
@@ -295,7 +295,7 @@ export default function SinglePostView({ slug }: SinglePostViewProps) {
           {/* Sidebar */}
           <div className="hidden lg:block">
             <div className="sticky top-8">
-              <BlogSidebar currentPostId={post?.id} />
+              <LandingSidebar />
             </div>
           </div>
         </div>

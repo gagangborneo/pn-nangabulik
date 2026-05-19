@@ -18,10 +18,10 @@ export default function JadwalSidangSection() {
               Jadwal Sidang
             </h2>
           </div>
-          <div className="w-20 h-1 bg-red-900 mx-auto mb-4"></div>
+          {/* <div className="w-20 h-1 bg-red-900 mx-auto mb-4"></div>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Jadwal sidang disusun dan diumumkan secara terbuka untuk memastikan transparansi proses peradilan
-          </p>
+          </p> */}
         </div>
 
         {/* iframe Container */}

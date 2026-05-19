@@ -22,6 +22,7 @@ import WadahKeadilanSection from '@/components/sections/WadahKeadilanSection';
 import MaklumatPojokInfoSection from '@/components/sections/MaklumatPojokInfoSection';
 import SurveySection from '@/components/sections/SurveySection';
 import BlogSection from '@/components/sections/BlogSection';
+import LandingSidebar from '@/components/sections/LandingSidebar';
 import FAQSection from '@/components/sections/FAQSection';
 import PartnersSection from '@/components/sections/PartnersSection';
 import ContactSection from '@/components/sections/ContactSection';
@@ -45,17 +46,30 @@ export default async function Home() {
         <main className="flex-1">
           <HeroSection />
           <LayananPublikSection />
-          <MaklumatPojokInfoSection />
-          <BlogSection />
-          <PengumumanSidangSection />
-          <JadwalSidangSection />
-          <ZonaIntegritasSection />
-          <InformationSlidesSection />
-          <ProfilPejabatSection />
-          <SMAPBannerSection />
-          {/* <WadahKeadilanSection /> */}
-          <SurveySection />
-          <FAQSection />
+          <div className="relative">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="grid lg:grid-cols-[minmax(0,1fr)_320px] gap-8 items-start">
+                <div className="min-w-0">
+                  <MaklumatPojokInfoSection />
+                  <BlogSection />
+                  <PengumumanSidangSection />
+                  <JadwalSidangSection />
+                  {/* <ZonaIntegritasSection /> */}
+                  {/* <InformationSlidesSection /> */}
+                  {/* <ProfilPejabatSection /> */}
+                  {/* <SMAPBannerSection /> */}
+                  {/* <WadahKeadilanSection /> */}
+                  <SurveySection />
+                </div>
+                <aside>
+                  <div className="lg:sticky lg:top-24">
+                    <LandingSidebar />
+                  </div>
+                </aside>
+              </div>
+            </div>
+          </div>
+          {/* <FAQSection /> */}
           <PartnersSection />
           <ContactSection />
           <VisitorCounterSection />
