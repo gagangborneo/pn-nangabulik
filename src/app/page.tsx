@@ -25,6 +25,7 @@ import BlogSection from '@/components/sections/BlogSection';
 import LandingSidebar from '@/components/sections/LandingSidebar';
 import FAQSection from '@/components/sections/FAQSection';
 import PartnersSection from '@/components/sections/PartnersSection';
+import RssNewsSection from '@/components/sections/RssNewsSection';
 import ContactSection from '@/components/sections/ContactSection';
 import VisitorCounterSection from '@/components/sections/VisitorCounterSection';
 
@@ -53,7 +54,6 @@ export default async function Home() {
                   <MaklumatPojokInfoSection />
                   <BlogSection />
                   <PengumumanSidangSection />
-                  <JadwalSidangSection />
                   {/* <ZonaIntegritasSection /> */}
                   {/* <InformationSlidesSection /> */}
                   {/* <ProfilPejabatSection /> */}
@@ -70,6 +70,8 @@ export default async function Home() {
             </div>
           </div>
           {/* <FAQSection /> */}
+          <RssNewsSection />
+          <JadwalSidangSection />
           <PartnersSection />
           <ContactSection />
           <VisitorCounterSection />

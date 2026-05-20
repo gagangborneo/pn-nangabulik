@@ -5,6 +5,7 @@ import {
   BarChart3,
   ChevronLeft,
   ChevronRight,
+  Clock,
   ExternalLink,
   Facebook,
   Globe,
@@ -14,6 +15,7 @@ import {
   ListChecks,
   Search,
   TrendingUp,
+  User,
   Users,
   Youtube,
 } from 'lucide-react';
@@ -62,6 +64,28 @@ interface PortraitSlide {
   isActive: boolean;
 }
 
+interface OperationalHours {
+  weekdayLabel: string;
+  weekdayHours: string;
+  weekdayBreakLabel: string;
+  weekdayBreakHours: string;
+  fridayLabel: string;
+  fridayHours: string;
+  fridayBreakLabel: string;
+  fridayBreakHours: string;
+  weekendLabel: string;
+  weekendHours: string;
+}
+
+interface Pejabat {
+  id: string;
+  name: string;
+  title: string;
+  imageUrl: string | null;
+  order: number;
+  isActive: boolean;
+}
+
 const languages: Language[] = [
   { code: 'id', name: 'Bahasa Indonesia' },
   { code: 'en', name: 'English' },
@@ -94,6 +118,19 @@ const socialLinks = [
   },
 ];
 
+const defaultOperationalHours: OperationalHours = {
+  weekdayLabel: 'Hari Senin s/d Kamis',
+  weekdayHours: '08.30 - 16.00',
+  weekdayBreakLabel: 'Istirahat',
+  weekdayBreakHours: '12.00 - 13.00',
+  fridayLabel: 'Hari Jumat',
+  fridayHours: '07.30 - 15.30',
+  fridayBreakLabel: 'Istirahat',
+  fridayBreakHours: '11.30 - 13.00',
+  weekendLabel: 'Hari Sabtu/Minggu/Besar',
+  weekendHours: 'Libur',
+};
+
 export default function LandingSidebar() {
   const [currentLanguage, setCurrentLanguage] = useState<Language>(languages[0]);
   const [surveys, setSurveys] = useState<Survey[]>([]);
@@ -107,6 +144,13 @@ export default function LandingSidebar() {
   const [pojokSlides, setPojokSlides] = useState<PortraitSlide[]>([]);
   const [pojokLoading, setPojokLoading] = useState(true);
   const [pojokIndex, setPojokIndex] = useState(0);
+  const [pejabat, setPejabat] = useState<Pejabat[]>([]);
+  const [pejabatLoading, setPejabatLoading] = useState(true);
+  const [pejabatIndex, setPejabatIndex] = useState(0);
+  const [operationalHours, setOperationalHours] = useState<OperationalHours>(
+    defaultOperationalHours
+  );
+  const [hoursLoading, setHoursLoading] = useState(true);
 
   useEffect(() => {
     const fetchSurvey = async () => {
@@ -172,6 +216,36 @@ export default function LandingSidebar() {
   }, []);
 
   useEffect(() => {
+    const fetchWorkHours = async () => {
+      try {
+        const response = await fetch('/api/settings');
+        const data = await response.json();
+        if (data.settings) {
+          const settingsMap = data.settings as Record<string, string>;
+          const raw = settingsMap['operational_hours'];
+          if (raw) {
+            try {
+              const parsed = JSON.parse(raw) as Partial<OperationalHours>;
+              setOperationalHours({ ...defaultOperationalHours, ...parsed });
+            } catch (error) {
+              console.error('Error parsing operational hours:', error);
+              setOperationalHours(defaultOperationalHours);
+            }
+          } else {
+            setOperationalHours(defaultOperationalHours);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching work hours:', error);
+      } finally {
+        setHoursLoading(false);
+      }
+    };
+
+    fetchWorkHours();
+  }, []);
+
+  useEffect(() => {
     const fetchPojokInfo = async () => {
       try {
         const response = await fetch('/api/pojok-info-slides');
@@ -194,6 +268,32 @@ export default function LandingSidebar() {
       setPojokIndex(0);
     }
   }, [pojokIndex, pojokSlides.length]);
+
+  useEffect(() => {
+    const fetchPejabat = async () => {
+      try {
+        const response = await fetch('/api/pejabat');
+        const data = await response.json();
+        const activePejabat = (data.pejabat || [])
+          .filter((person: Pejabat) => person.isActive)
+          .sort((a: Pejabat, b: Pejabat) => a.order - b.order);
+        setPejabat(activePejabat);
+      } catch (error) {
+        console.error('Error fetching pejabat:', error);
+        setPejabat([]);
+      } finally {
+        setPejabatLoading(false);
+      }
+    };
+
+    fetchPejabat();
+  }, []);
+
+  useEffect(() => {
+    if (pejabatIndex >= pejabat.length) {
+      setPejabatIndex(0);
+    }
+  }, [pejabatIndex, pejabat.length]);
 
   const categoryLabels: Record<string, string> = {
     SPAK: 'Survey Persepsi Anti Korupsi',
@@ -220,6 +320,16 @@ export default function LandingSidebar() {
   const goToNextPojok = () => {
     if (pojokSlides.length === 0) return;
     setPojokIndex((prev) => (prev === pojokSlides.length - 1 ? 0 : prev + 1));
+  };
+
+  const goToPreviousPejabat = () => {
+    if (pejabat.length === 0) return;
+    setPejabatIndex((prev) => (prev === 0 ? pejabat.length - 1 : prev - 1));
+  };
+
+  const goToNextPejabat = () => {
+    if (pejabat.length === 0) return;
+    setPejabatIndex((prev) => (prev === pejabat.length - 1 ? 0 : prev + 1));
   };
 
   const changeLanguage = (lang: Language) => {
@@ -298,6 +408,57 @@ export default function LandingSidebar() {
               Cari Berita
             </Button>
           </form>
+        </CardContent>
+      </Card>
+
+      <Card className="shadow-md hover:shadow-lg transition-shadow overflow-hidden">
+        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0">
+          <CardTitle className="flex items-center gap-2 text-base px-6 py-3">
+            <Clock className="h-4 w-4" />
+            Jam Kerja Pengadilan & PTSP
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-4">
+          {hoursLoading ? (
+            <div className="space-y-2 animate-pulse">
+              <div className="h-4 bg-gray-100 rounded"></div>
+              <div className="h-4 bg-gray-100 rounded"></div>
+            </div>
+          ) : (
+            <div className="space-y-2 text-sm text-gray-600">
+              <p className="text-xs text-gray-500">
+                Berlaku untuk Pengadilan & PTSP
+              </p>
+              <div className="space-y-2">
+                <div className="flex items-start justify-between gap-3">
+                  <span className="font-semibold text-gray-700">
+                    {operationalHours.weekdayLabel}
+                  </span>
+                  <span className="text-right">{operationalHours.weekdayHours}</span>
+                </div>
+                <div className="flex items-start justify-between gap-3 text-gray-500">
+                  <span className="font-semibold">{operationalHours.weekdayBreakLabel}</span>
+                  <span className="text-right">{operationalHours.weekdayBreakHours}</span>
+                </div>
+                <div className="flex items-start justify-between gap-3">
+                  <span className="font-semibold text-gray-700">
+                    {operationalHours.fridayLabel}
+                  </span>
+                  <span className="text-right">{operationalHours.fridayHours}</span>
+                </div>
+                <div className="flex items-start justify-between gap-3 text-gray-500">
+                  <span className="font-semibold">{operationalHours.fridayBreakLabel}</span>
+                  <span className="text-right">{operationalHours.fridayBreakHours}</span>
+                </div>
+                <div className="flex items-start justify-between gap-3 text-green-700">
+                  <span className="font-semibold">
+                    {operationalHours.weekendLabel}
+                  </span>
+                  <span className="text-right">{operationalHours.weekendHours}</span>
+                </div>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -416,6 +577,76 @@ export default function LandingSidebar() {
               </a>
             ))}
           </div>
+        </CardContent>
+      </Card>
+
+      <Card className="shadow-md hover:shadow-lg transition-shadow overflow-hidden">
+        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0">
+          <CardTitle className="flex items-center gap-2 text-base px-6 py-3">
+            <User className="h-4 w-4" />
+            Profil Pejabat
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-4">
+          {pejabatLoading ? (
+            <div className="space-y-2 animate-pulse">
+              <div className="h-20 bg-gray-100 rounded-lg"></div>
+            </div>
+          ) : pejabat.length === 0 ? (
+            <p className="text-sm text-gray-500">Belum ada data pejabat.</p>
+          ) : (
+            <div className="space-y-4">
+              <div className="rounded-lg border border-gray-100 bg-gray-50 p-3">
+                <div className="flex items-center gap-3">
+                  <div className="h-16 w-16 shrink-0 rounded-lg overflow-hidden border border-gray-200 bg-white flex items-center justify-center">
+                    {pejabat[pejabatIndex]?.imageUrl ? (
+                      <img
+                        src={pejabat[pejabatIndex]?.imageUrl as string}
+                        alt={pejabat[pejabatIndex]?.name}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-xl font-semibold text-red-900">
+                        {pejabat[pejabatIndex]?.name?.charAt(0) || 'P'}
+                      </span>
+                    )}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-gray-800 line-clamp-2">
+                      {pejabat[pejabatIndex]?.name}
+                    </p>
+                    <p className="text-xs text-gray-500 line-clamp-2">
+                      {pejabat[pejabatIndex]?.title}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {pejabat.length > 1 && (
+                <div className="flex items-center justify-between text-xs text-gray-500">
+                  <button
+                    type="button"
+                    onClick={goToPreviousPejabat}
+                    className="p-1.5 rounded-full border border-gray-200 hover:bg-red-900 hover:text-white transition-all"
+                    aria-label="Sebelumnya"
+                  >
+                    <ChevronLeft className="h-3.5 w-3.5" />
+                  </button>
+                  <span>
+                    {pejabatIndex + 1} / {pejabat.length}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={goToNextPejabat}
+                    className="p-1.5 rounded-full border border-gray-200 hover:bg-red-900 hover:text-white transition-all"
+                    aria-label="Berikutnya"
+                  >
+                    <ChevronRight className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </CardContent>
       </Card>
 

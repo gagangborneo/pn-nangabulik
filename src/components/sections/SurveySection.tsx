@@ -85,7 +85,7 @@ export default function SurveySection() {
   }
 
   return (
-    <section className="py-16 my-4 rounded-2xl bg-gradient-to-br from-[#8B0000] via-[#6b0000] to-[#4a0000] relative overflow-hidden">
+    <section className="py-16 my-16 rounded-2xl bg-gradient-to-br from-[#8B0000] via-[#6b0000] to-[#4a0000] relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>

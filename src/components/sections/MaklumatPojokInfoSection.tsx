@@ -61,12 +61,8 @@ export default function MaklumatPojokInfoSection() {
   const displayedSlides = maklumatSlides.slice(0, 2);
 
   return (
-    <section className="py-16 bg-linear-to-b from-white via-gray-50 to-white">
+    <section className="bg-linear-to-b from-white via-gray-50 to-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Maklumat</h2>
-          <div className="w-20 h-1 bg-[#8B0000] mx-auto mt-3"></div>
-        </div>
         {displayedSlides.length === 0 ? (
           <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
             <div className="p-6">
