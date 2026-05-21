@@ -48,7 +48,7 @@ export default function PengumumanSidangSection() {
   };
 
   return (
-    <section className="py-16 bg-linear-to-r rounded-2xl from-red-900 to-red-800 relative overflow-hidden">
+    <section className="py-8 bg-linear-to-r rounded-2xl from-red-900 to-red-800 relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
       <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
@@ -65,14 +65,14 @@ export default function PengumumanSidangSection() {
         </div>
 
         {/* Grid Items */}
-        <div className="grid grid-cols-1 max-w-4xl mx-auto gap-6 mb-8">
+        <div className="grid grid-cols-1 max-w-4xl mx-auto gap-4 mb-8">
           {items.map((item) => (
             <a
               key={item.id}
               href={item.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group bg-white/95 backdrop-blur border border-red-200 rounded-xl p-6 hover:shadow-lg hover:border-yellow-400 transition-all duration-300"
+              className="group bg-white/95 backdrop-blur border border-red-200 rounded-xl p-4 hover:shadow-lg hover:border-yellow-400 transition-all duration-300"
             >
               <div className="flex items-start gap-4">
                 <div className="shrink-0">

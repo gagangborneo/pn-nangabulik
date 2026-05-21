@@ -25,7 +25,7 @@ export default function JadwalSidangSection() {
         </div>
 
         {/* iframe Container */}
-        <div className="max-w-6xl mx-auto bg-gray-50 rounded-xl overflow-hidden shadow-lg border border-gray-200">
+        <div className="max-w-8xl mx-auto bg-gray-50 rounded-xl overflow-hidden shadow-lg border border-gray-200">
           <iframe
             src="https://sipp.pn-nangabulik.go.id/list_jadwal_sidang"
             title="Jadwal Sidang"

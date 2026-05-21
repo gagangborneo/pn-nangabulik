@@ -373,7 +373,7 @@ export default function LandingSidebar() {
   return (
     <aside className="space-y-6">
       <Card className="shadow-md hover:shadow-lg transition-shadow overflow-hidden">
-        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0">
+        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0 mx-2 rounded-lg">
           <CardTitle className="flex items-center gap-2 text-base px-6 py-3">
             <Globe className="h-4 w-4" />
             Alih Bahasa
@@ -408,7 +408,7 @@ export default function LandingSidebar() {
       </Card>
 
       <Card className="shadow-md hover:shadow-lg transition-shadow overflow-hidden">
-        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0">
+        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0 mx-2 rounded-lg">
           <CardTitle className="flex items-center gap-2 text-base px-6 py-3">
             <Search className="h-4 w-4" />
             Pencarian
@@ -433,7 +433,7 @@ export default function LandingSidebar() {
       </Card>
 
       <Card className="shadow-md hover:shadow-lg transition-shadow overflow-hidden">
-        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0">
+        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0 mx-2 rounded-lg">
           <CardTitle className="flex items-center gap-2 text-base px-6 py-3">
             <Clock className="h-4 w-4" />
             Jam Kerja Pengadilan & PTSP
@@ -504,7 +504,7 @@ export default function LandingSidebar() {
       </Card>
 
       <Card className="shadow-md hover:shadow-lg transition-shadow overflow-hidden">
-        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0">
+        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0 mx-2 rounded-lg">
           <CardTitle className="flex items-center gap-2 text-base px-6 py-3">
             <ListChecks className="h-4 w-4" />
             Indeks Pelayanan Publik
@@ -623,7 +623,7 @@ export default function LandingSidebar() {
       </Card>
 
       <Card className="shadow-md hover:shadow-lg transition-shadow overflow-hidden">
-        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0">
+        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0 mx-2 rounded-lg">
           <CardTitle className="flex items-center gap-2 text-base px-6 py-3">
             <Link2 className="h-4 w-4" />
             Tautan Website
@@ -648,7 +648,7 @@ export default function LandingSidebar() {
       </Card>
 
       <Card className="shadow-md hover:shadow-lg transition-shadow overflow-hidden">
-        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0">
+        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0 mx-2 rounded-lg">
           <CardTitle className="flex items-center gap-2 text-base px-6 py-3">
             <User className="h-4 w-4" />
             Profil Pejabat
@@ -718,7 +718,7 @@ export default function LandingSidebar() {
       </Card>
 
       <Card className="shadow-md hover:shadow-lg transition-shadow overflow-hidden">
-        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0">
+        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0 mx-2 rounded-lg">
           <CardTitle className="flex items-center gap-2 text-base px-6 py-3">
             <Users className="h-4 w-4" />
             Media Sosial
@@ -749,7 +749,7 @@ export default function LandingSidebar() {
       </Card>
 
       <Card className="shadow-md hover:shadow-lg transition-shadow overflow-hidden">
-        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0">
+        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0 mx-2 rounded-lg">
           <CardTitle className="flex items-center gap-2 text-base px-6 py-3">
             <BarChart3 className="h-4 w-4" />
             Statistik Situs
@@ -811,7 +811,7 @@ export default function LandingSidebar() {
       </Card>
 
       <Card className="shadow-md hover:shadow-lg transition-shadow overflow-hidden">
-        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0">
+        <CardHeader className="bg-linear-to-r from-red-900 to-red-800 text-white p-0 mx-2 rounded-lg">
           <CardTitle className="flex items-center gap-2 text-base px-6 py-3">
             <ImageIcon className="h-4 w-4" />
             Pojok Info
