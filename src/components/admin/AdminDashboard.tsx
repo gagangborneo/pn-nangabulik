@@ -22,6 +22,8 @@ import {
   HelpCircle,
   X,
   Lock,
+  ListChecks,
+  Youtube,
 } from 'lucide-react';
 import MenuManagement from './MenuManagement';
 import ContactManagement from './ContactManagement';
@@ -40,6 +42,8 @@ import VisitorDashboard from './VisitorDashboard';
 import SettingsManagement from './SettingsManagement';
 import PageManagement from './PageManagement';
 import AccountManagement from './AccountManagement';
+import SidebarWidgetManagement from './SidebarWidgetManagement';
+import YoutubeVideosManagement from './YoutubeVideosManagement';
 
 interface User {
   id: string;
@@ -48,7 +52,27 @@ interface User {
   role: string;
 }
 
-type AdminView = 'dashboard' | 'menu' | 'hero' | 'information-slides' | 'maklumat' | 'pojok-info' | 'pengumuman-sidang' | 'pejabat' | 'partners' | 'layanan' | 'kontak' | 'survey' | 'reports' | 'faq' | 'statistics' | 'settings' | 'pages' | 'account';
+type AdminView =
+  | 'dashboard'
+  | 'menu'
+  | 'hero'
+  | 'information-slides'
+  | 'maklumat'
+  | 'pojok-info'
+  | 'pengumuman-sidang'
+  | 'pejabat'
+  | 'partners'
+  | 'layanan'
+  | 'kontak'
+  | 'sidebar-widget'
+  | 'youtube-videos'
+  | 'survey'
+  | 'reports'
+  | 'faq'
+  | 'statistics'
+  | 'settings'
+  | 'pages'
+  | 'account';
 
 interface AdminDashboardProps {
   initialView?: AdminView;
@@ -74,6 +98,8 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     if (pathname === '/admin/partners') return 'partners';
     if (pathname === '/admin/layanan') return 'layanan';
     if (pathname === '/admin/kontak') return 'kontak';
+    if (pathname === '/admin/sidebar-widget') return 'sidebar-widget';
+    if (pathname === '/admin/youtube-videos') return 'youtube-videos';
     if (pathname === '/admin/survey') return 'survey';
     if (pathname === '/admin/faq') return 'faq';
     if (pathname === '/admin/pages') return 'pages';
@@ -157,6 +183,8 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
     { id: 'reports' as AdminView, label: 'Data Laporan', icon: FolderOpen, href: '/admin/reports' },
     { id: 'faq' as AdminView, label: 'FAQ', icon: HelpCircle, href: '/admin/faq' },
     { id: 'kontak' as AdminView, label: 'Kontak', icon: Mail, href: '/admin/kontak' },
+    { id: 'sidebar-widget' as AdminView, label: 'Widget Sidebar', icon: ListChecks, href: '/admin/sidebar-widget' },
+    { id: 'youtube-videos' as AdminView, label: 'Video YouTube', icon: Youtube, href: '/admin/youtube-videos' },
     { id: 'survey' as AdminView, label: 'Survey Kepuasan', icon: Users, href: '/admin/survey' },
     { id: 'settings' as AdminView, label: 'Pengaturan', icon: Settings, href: '/admin/settings' },
     { id: 'account' as AdminView, label: 'Akun', icon: Lock, href: '/admin/account' },
@@ -279,6 +307,8 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
             {currentView === 'reports' && 'Manajemen Data Laporan'}
             {currentView === 'faq' && 'Manajemen FAQ'}
             {currentView === 'kontak' && 'Manajemen Kontak'}
+            {currentView === 'sidebar-widget' && 'Manajemen Widget Sidebar'}
+            {currentView === 'youtube-videos' && 'Manajemen Video YouTube'}
             {currentView === 'survey' && 'Manajemen Survey'}
             {currentView === 'settings' && 'Pengaturan Sistem'}
             {currentView === 'account' && 'Manajemen Akun'}
@@ -449,6 +479,10 @@ export default function AdminDashboard({ initialView }: AdminDashboardProps) {
           {currentView === 'faq' && <FAQManagement />}
 
           {currentView === 'kontak' && <ContactManagement />}
+
+          {currentView === 'sidebar-widget' && <SidebarWidgetManagement />}
+
+          {currentView === 'youtube-videos' && <YoutubeVideosManagement />}
 
           {currentView === 'survey' && <SurveyManagement />}
 
