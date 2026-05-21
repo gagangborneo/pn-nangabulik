@@ -46,7 +46,7 @@ export default function YoutubeVideosSection() {
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-3">
             <Youtube className="h-8 w-8 text-red-900" />
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Video YouTube</h2>
+            {/* <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Video YouTube</h2> */}
           </div>
           <p className="text-sm text-gray-600">Dokumentasi kegiatan dan informasi layanan terbaru.</p>
         </div>
@@ -86,7 +86,9 @@ export default function YoutubeVideosSection() {
                     )}
                   </div>
                   <div className="p-4 flex items-center justify-between gap-3">
-                    <div className="text-sm font-semibold text-gray-800">Video #{index + 1}</div>
+                    <div className="text-sm font-semibold text-gray-800">
+                        {/* Video #{index + 1} */}
+                    </div>
                     <a
                       href={video.url}
                       target="_blank"

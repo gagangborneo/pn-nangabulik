@@ -1,14 +1,49 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type ElementType } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Loader2, Plus, Pencil, Trash2, Eye, EyeOff, Zap, ArrowUp, ArrowDown } from 'lucide-react';
+import {
+  AlertCircle,
+  ArrowDown,
+  ArrowUp,
+  BarChart3,
+  BookOpen,
+  Calendar,
+  ClipboardList,
+  Clock,
+  Eye,
+  EyeOff,
+  FileText,
+  FolderOpen,
+  FolderSync,
+  Gavel,
+  Globe,
+  HelpCircle,
+  Home,
+  Image as ImageIcon,
+  Link2,
+  Loader2,
+  Mail,
+  MessageCircle,
+  Pencil,
+  Phone,
+  Plus,
+  Search,
+  Settings,
+  Trash2,
+  TrendingUp,
+  User,
+  Users,
+  Youtube,
+  Zap,
+} from 'lucide-react';
 import { toast } from 'sonner';
 
 interface Layanan {
@@ -31,15 +66,38 @@ interface FormData {
   isActive: boolean;
 }
 
-const iconOptions = [
-  'FileText',
-  'Calendar',
-  'BookOpen',
-  'ClipboardList',
-  'AlertCircle',
-  'Gavel',
-  'FolderSync',
+const iconOptions: { value: string; label: string; Icon: ElementType }[] = [
+  { value: 'FileText', label: 'File Text', Icon: FileText },
+  { value: 'Calendar', label: 'Calendar', Icon: Calendar },
+  { value: 'BookOpen', label: 'Book Open', Icon: BookOpen },
+  { value: 'ClipboardList', label: 'Clipboard List', Icon: ClipboardList },
+  { value: 'AlertCircle', label: 'Alert Circle', Icon: AlertCircle },
+  { value: 'Gavel', label: 'Gavel', Icon: Gavel },
+  { value: 'FolderSync', label: 'Folder Sync', Icon: FolderSync },
+  { value: 'Globe', label: 'Globe', Icon: Globe },
+  { value: 'Users', label: 'Users', Icon: Users },
+  { value: 'User', label: 'User', Icon: User },
+  { value: 'BarChart3', label: 'Bar Chart', Icon: BarChart3 },
+  { value: 'FolderOpen', label: 'Folder Open', Icon: FolderOpen },
+  { value: 'Settings', label: 'Settings', Icon: Settings },
+  { value: 'Home', label: 'Home', Icon: Home },
+  { value: 'Mail', label: 'Mail', Icon: Mail },
+  { value: 'Phone', label: 'Phone', Icon: Phone },
+  { value: 'MessageCircle', label: 'Message Circle', Icon: MessageCircle },
+  { value: 'Clock', label: 'Clock', Icon: Clock },
+  { value: 'Search', label: 'Search', Icon: Search },
+  { value: 'TrendingUp', label: 'Trending Up', Icon: TrendingUp },
+  { value: 'Link2', label: 'Link', Icon: Link2 },
+  { value: 'Image', label: 'Image', Icon: ImageIcon },
+  { value: 'HelpCircle', label: 'Help Circle', Icon: HelpCircle },
+  { value: 'Youtube', label: 'YouTube', Icon: Youtube },
+  { value: 'Zap', label: 'Zap', Icon: Zap },
 ];
+
+const iconMap = iconOptions.reduce<Record<string, ElementType>>((acc, option) => {
+  acc[option.value] = option.Icon;
+  return acc;
+}, {});
 
 const defaultFormData: FormData = {
   title: '',
@@ -250,16 +308,21 @@ export default function LayananManagement() {
             </CardContent>
           </Card>
         ) : (
-          layanan.map((item, index) => (
-            <Card key={item.id} className={!item.isActive ? 'opacity-60' : ''}>
-              <CardContent className="p-6">
-                <div className="flex gap-4">
-                  {/* Icon */}
-                  <div className="shrink-0">
-                    <div className="w-12 h-12 rounded-full bg-[#8B0000]/10 flex items-center justify-center">
-                      <Zap className="h-6 w-6 text-[#8B0000]" />
+          layanan.map((item, index) => {
+            const IconComponent = iconMap[item.icon] || Zap;
+            const iconLabel =
+              iconOptions.find((option) => option.value === item.icon)?.label || item.icon;
+
+            return (
+              <Card key={item.id} className={!item.isActive ? 'opacity-60' : ''}>
+                <CardContent className="p-6">
+                  <div className="flex gap-4">
+                    {/* Icon */}
+                    <div className="shrink-0">
+                      <div className="w-12 h-12 rounded-full bg-[#8B0000]/10 flex items-center justify-center">
+                        <IconComponent className="h-6 w-6 text-[#8B0000]" />
+                      </div>
                     </div>
-                  </div>
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
@@ -268,8 +331,9 @@ export default function LayananManagement() {
                         <h3 className="text-lg font-semibold text-gray-900 mb-2">{item.title}</h3>
                         <p className="text-sm text-gray-600 mb-3 line-clamp-2">{item.description}</p>
                         <div className="flex flex-wrap items-center gap-3 text-sm">
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-600">
-                            Icon: {item.icon}
+                          <span className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-600">
+                            <IconComponent className="h-3.5 w-3.5 text-gray-600" />
+                            <span>{iconLabel}</span>
                           </span>
                           {item.url && (
                             <a
@@ -343,10 +407,11 @@ export default function LayananManagement() {
                       </div>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })
         )}
       </div>
 
@@ -387,18 +452,39 @@ export default function LayananManagement() {
             {/* Icon */}
             <div className="space-y-2">
               <Label htmlFor="icon">Icon</Label>
-              <select
-                id="icon"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#8B0000] focus:border-transparent"
+              <Select
                 value={formData.icon}
-                onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
+                onValueChange={(value) => setFormData({ ...formData, icon: value })}
               >
-                {iconOptions.map((icon) => (
-                  <option key={icon} value={icon}>
-                    {icon}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger id="icon" className="w-full">
+                  {(() => {
+                    const selected = iconOptions.find((option) => option.value === formData.icon);
+                    if (!selected) {
+                      return <SelectValue placeholder="Pilih icon" />;
+                    }
+                    const SelectedIcon = selected.Icon;
+                    return (
+                      <span className="flex items-center gap-2">
+                        <SelectedIcon className="h-4 w-4 text-gray-600" />
+                        {selected.label}
+                      </span>
+                    );
+                  })()}
+                </SelectTrigger>
+                <SelectContent>
+                  {iconOptions.map((option) => {
+                    const OptionIcon = option.Icon;
+                    return (
+                      <SelectItem key={option.value} value={option.value}>
+                        <span className="flex items-center gap-2">
+                          <OptionIcon className="h-4 w-4 text-gray-600" />
+                          {option.label}
+                        </span>
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
             </div>
 
             {/* URL */}

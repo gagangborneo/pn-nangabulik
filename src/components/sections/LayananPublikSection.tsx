@@ -1,7 +1,34 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ExternalLink, FileText, Calendar, BookOpen, ClipboardList, AlertCircle, Gavel, FolderSync } from 'lucide-react';
+import {
+  AlertCircle,
+  BarChart3,
+  BookOpen,
+  Calendar,
+  ClipboardList,
+  Clock,
+  ExternalLink,
+  FileText,
+  FolderOpen,
+  FolderSync,
+  Gavel,
+  Globe,
+  HelpCircle,
+  Home,
+  Image as ImageIcon,
+  Link2,
+  Mail,
+  MessageCircle,
+  Phone,
+  Search,
+  Settings,
+  TrendingUp,
+  User,
+  Users,
+  Youtube,
+  Zap,
+} from 'lucide-react';
 
 interface LayananItem {
   id: string;
@@ -27,6 +54,24 @@ const iconMap: Record<string, React.ElementType> = {
   AlertCircle,
   Gavel,
   FolderSync,
+  Globe,
+  Users,
+  User,
+  BarChart3,
+  FolderOpen,
+  Settings,
+  Home,
+  Mail,
+  Phone,
+  MessageCircle,
+  Clock,
+  Search,
+  TrendingUp,
+  Link2,
+  Image: ImageIcon,
+  HelpCircle,
+  Youtube,
+  Zap,
 };
 
 const gradients = [
