@@ -17,6 +17,13 @@ interface FeedSource {
   displayUrl?: string;
 }
 
+type SafeFetchInit = RequestInit & { next?: { revalidate?: number } };
+type FetchError = { message?: string; code?: string; cause?: { code?: string } };
+
+const FETCH_TIMEOUT_MS = 8000;
+const FETCH_RETRY_COUNT = 2;
+const FETCH_RETRY_DELAY_MS = 400;
+
 const feedSources: FeedSource[] = [
   {
     id: 'mahkamahagung-berita',
@@ -56,6 +63,52 @@ const feedSources: FeedSource[] = [
     mode: 'html',
   },
 ];
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const getErrorCode = (error: unknown) => {
+  if (!error || typeof error !== 'object') return undefined;
+  const err = error as FetchError;
+  return err.code || err.cause?.code;
+};
+
+const isRetryableFetchError = (error: unknown) => {
+  const code = getErrorCode(error);
+  if (code && ['ECONNRESET', 'ETIMEDOUT', 'ECONNREFUSED', 'EAI_AGAIN'].includes(code)) {
+    return true;
+  }
+  if (error instanceof Error) {
+    const message = error.message.toLowerCase();
+    return message.includes('fetch failed') || message.includes('aborted') || message.includes('timeout');
+  }
+  return false;
+};
+
+const safeFetch = async (url: string, init: SafeFetchInit) => {
+  let lastError: unknown;
+
+  for (let attempt = 0; attempt <= FETCH_RETRY_COUNT; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+    try {
+      const response = await fetch(url, { ...init, signal: controller.signal });
+      clearTimeout(timeout);
+      return response;
+    } catch (error) {
+      clearTimeout(timeout);
+      lastError = error;
+      if (!isRetryableFetchError(error) || attempt === FETCH_RETRY_COUNT) {
+        break;
+      }
+      await sleep(FETCH_RETRY_DELAY_MS * (attempt + 1));
+    }
+  }
+
+  if (process.env.NODE_ENV !== 'production') {
+    console.warn('Rss fetch failed:', url, lastError);
+  }
+  return null;
+};
 
 const normalizeText = (value: string) => value.replace(/\s+/g, ' ').trim();
 
@@ -298,7 +351,7 @@ const extractRssItems = (xml: string): FeedItem[] => {
 
 async function fetchFeedItems(source: FeedSource): Promise<FeedItem[]> {
   try {
-    const response = await fetch(source.url, {
+    const response = await safeFetch(source.url, {
       next: { revalidate: 1800 },
       headers: {
         'User-Agent':
@@ -306,7 +359,13 @@ async function fetchFeedItems(source: FeedSource): Promise<FeedItem[]> {
         Accept: 'text/html,application/xhtml+xml,application/rss+xml,application/xml;q=0.9',
       },
     });
-    if (!response.ok) return [];
+    if (!response) return [];
+    if (!response.ok) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn('Rss fetch non-200:', source.url, response.status);
+      }
+      return [];
+    }
     const raw = await response.text();
     if (source.mode === 'rss') {
       return extractRssItems(raw).slice(0, 5);
