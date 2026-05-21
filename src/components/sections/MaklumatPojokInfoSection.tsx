@@ -61,11 +61,11 @@ export default function MaklumatPojokInfoSection() {
   const displayedSlides = maklumatSlides.slice(0, 2);
 
   return (
-    <section className="bg-linear-to-b from-white via-gray-50 to-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {displayedSlides.length === 0 ? (
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-            <div className="p-6">
+          <div className="border border-gray-100 overflow-hidden">
+            <div className="">
               <div className="aspect-3/4 rounded-xl border border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-500 bg-gray-50">
                 <ImageIcon className="h-8 w-8 mb-2" />
                 <p className="text-sm">Belum ada gambar maklumat</p>

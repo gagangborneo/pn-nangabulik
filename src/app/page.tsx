@@ -17,6 +17,7 @@ import ProfilPejabatSection from '@/components/sections/ProfilPejabatSection';
 import SMAPBannerSection from '@/components/sections/SMAPBannerSection';
 import LayananPublikSection from '@/components/sections/LayananPublikSection';
 import JadwalSidangSection from '@/components/sections/JadwalSidangSection';
+import YoutubeVideosSection from '@/components/sections/YoutubeVideosSection';
 import PengumumanSidangSection from '@/components/sections/PengumumanSidangSection';
 import WadahKeadilanSection from '@/components/sections/WadahKeadilanSection';
 import MaklumatPojokInfoSection from '@/components/sections/MaklumatPojokInfoSection';
@@ -59,7 +60,8 @@ export default async function Home() {
                   {/* <ProfilPejabatSection /> */}
                   {/* <SMAPBannerSection /> */}
                   {/* <WadahKeadilanSection /> */}
-                  <SurveySection />
+                  {/* <SurveySection /> */}
+                  <RssNewsSection />
                 </div>
                 <aside>
                   <div className="lg:sticky lg:top-24">
@@ -70,8 +72,8 @@ export default async function Home() {
             </div>
           </div>
           {/* <FAQSection /> */}
-          <RssNewsSection />
           <JadwalSidangSection />
+          <YoutubeVideosSection />
           <PartnersSection />
           <ContactSection />
           <VisitorCounterSection />

@@ -416,14 +416,13 @@ export default function Header() {
   return (
     <header className={`bg-white transition-shadow z-50 ${isScrolled ? 'shadow-lg' : ''}`}>
       {/* Top Bar */}
-      <div className="bg-gradient-to-r from-red-900 to-red-800 text-white py-2">
+      {/* <div className="bg-gradient-to-r from-red-900 to-red-800 text-white py-2">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between gap-2 md:gap-4 text-xs md:text-sm">
             {contactLoading ? (
               <TopBarSkeleton />
             ) : (
               <>
-                {/* Left: Phone Number */}
                 <div className="flex items-center gap-1.5">
                   <a
                     href={`tel:${contactSettings.phone.replace(/\s/g, '')}`}
@@ -434,14 +433,12 @@ export default function Header() {
                   </a>
                 </div>
 
-                {/* Center: Operating Hours */}
                 <div className="hidden md:flex text-center flex-1 md:flex-none">
                   <TTSText as="span" className="text-red-200" hoverEffect={false}>
                     {contactSettings.hours}
                   </TTSText>
                 </div>
 
-                {/* Right: Language Selector */}
                 <div className="hidden md:flex items-center">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -470,7 +467,7 @@ export default function Header() {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Main Navigation */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

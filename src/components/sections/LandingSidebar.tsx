@@ -150,7 +150,24 @@ export default function LandingSidebar() {
   const [operationalHours, setOperationalHours] = useState<OperationalHours>(
     defaultOperationalHours
   );
+  const [publicServiceImages, setPublicServiceImages] = useState<string[]>([]);
+  const [workHoursImages, setWorkHoursImages] = useState<string[]>([]);
   const [hoursLoading, setHoursLoading] = useState(true);
+
+  const parseImageList = (raw: string | undefined) => {
+    if (!raw) return [] as string[];
+    try {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        return parsed.filter(
+          (item): item is string => typeof item === 'string' && item.trim().length > 0
+        );
+      }
+    } catch (error) {
+      console.error('Error parsing sidebar widget images:', error);
+    }
+    return [] as string[];
+  };
 
   useEffect(() => {
     const fetchSurvey = async () => {
@@ -223,6 +240,8 @@ export default function LandingSidebar() {
         if (data.settings) {
           const settingsMap = data.settings as Record<string, string>;
           const raw = settingsMap['operational_hours'];
+          setPublicServiceImages(parseImageList(settingsMap['sidebar_public_service_images']));
+          setWorkHoursImages(parseImageList(settingsMap['sidebar_work_hours_images']));
           if (raw) {
             try {
               const parsed = JSON.parse(raw) as Partial<OperationalHours>;
@@ -237,6 +256,8 @@ export default function LandingSidebar() {
         }
       } catch (error) {
         console.error('Error fetching work hours:', error);
+        setPublicServiceImages([]);
+        setWorkHoursImages([]);
       } finally {
         setHoursLoading(false);
       }
@@ -424,6 +445,26 @@ export default function LandingSidebar() {
               <div className="h-4 bg-gray-100 rounded"></div>
               <div className="h-4 bg-gray-100 rounded"></div>
             </div>
+          ) : workHoursImages.length > 0 ? (
+            <div className="space-y-3">
+              {workHoursImages.map((url, index) => (
+                <div
+                  key={`${url}-${index}`}
+                  className="overflow-hidden rounded-lg border border-gray-100 bg-gray-50"
+                >
+                  <img
+                    src={url}
+                    alt="Jam Kerja Pengadilan & PTSP"
+                    className="w-full h-auto object-contain bg-white"
+                    loading="lazy"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src =
+                        'https://via.placeholder.com/640x360?text=Image+Error';
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
           ) : (
             <div className="space-y-2 text-sm text-gray-600">
               <p className="text-xs text-gray-500">
@@ -470,7 +511,33 @@ export default function LandingSidebar() {
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-4 space-y-4">
-          {surveyLoading ? (
+          {hoursLoading ? (
+            <div className="space-y-2 animate-pulse">
+              {[...Array(4)].map((_, index) => (
+                <div key={index} className="h-9 bg-gray-100 rounded-lg"></div>
+              ))}
+            </div>
+          ) : publicServiceImages.length > 0 ? (
+            <div className="space-y-3">
+              {publicServiceImages.map((url, index) => (
+                <div
+                  key={`${url}-${index}`}
+                  className="overflow-hidden rounded-lg border border-gray-100 bg-gray-50"
+                >
+                  <img
+                    src={url}
+                    alt="Indeks Pelayanan Publik"
+                    className="w-full h-auto object-contain bg-white"
+                    loading="lazy"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src =
+                        'https://via.placeholder.com/640x360?text=Image+Error';
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : surveyLoading ? (
             <div className="space-y-2 animate-pulse">
               {[...Array(4)].map((_, index) => (
                 <div key={index} className="h-9 bg-gray-100 rounded-lg"></div>

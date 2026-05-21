@@ -302,7 +302,7 @@ export default function ContactManagement() {
               </div>
             </div>
             <p className="text-xs text-gray-500">
-              Data ini ditampilkan pada widget Jam Kerja Pengadilan & PTSP di sidebar.
+              Data ini ditampilkan pada widget Jam Kerja Pengadilan & PTSP jika belum ada gambar.
             </p>
           </div>
 
