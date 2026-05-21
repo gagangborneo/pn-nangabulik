@@ -157,6 +157,26 @@ const getLinkTitle = ($el: cheerio.Cheerio<cheerio.Element>) => {
   return imgAlt;
 };
 
+const getLastSlug = (pathname: string) => {
+  const segments = pathname.split('/').filter(Boolean);
+  return segments[segments.length - 1] || '';
+};
+
+const formatSlugTitle = (slug: string) => {
+  const cleaned = decodeURIComponent(slug)
+    .replace(/^\d+[-_]+/, '')
+    .replace(/\.(html?|php)$/i, '')
+    .replace(/[-_]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const withoutLeadingNumbers = cleaned.replace(/^\d+\s+/, '');
+  if (!withoutLeadingNumbers) return '';
+  return withoutLeadingNumbers
+    .split(' ')
+    .map((word) => (word ? word[0].toUpperCase() + word.slice(1).toLowerCase() : ''))
+    .join(' ');
+};
+
 const extractMahkamahagungItems = (
   $: cheerio.Root,
   baseUrl: URL,
@@ -309,9 +329,6 @@ async function fetchFeedItems(source: FeedSource): Promise<FeedItem[]> {
       const $link = $(element);
       const href = $link.attr('href');
       if (!href || href.startsWith('#')) return;
-      const rawTitle = getLinkTitle($link);
-      if (!rawTitle || rawTitle.length < 8) return;
-
       let link: URL;
       try {
         link = new URL(href, baseUrl);
@@ -323,6 +340,11 @@ async function fetchFeedItems(source: FeedSource): Promise<FeedItem[]> {
       if (!source.pathPrefix) return;
       if (!link.pathname.startsWith(source.pathPrefix)) return;
       if (link.pathname === source.pathPrefix.replace(/\/$/, '')) return;
+
+      const rawTitle = source.id === 'pt-palangkaraya'
+        ? formatSlugTitle(getLastSlug(link.pathname))
+        : getLinkTitle($link);
+      if (!rawTitle || (source.id !== 'pt-palangkaraya' && rawTitle.length < 8)) return;
 
       const normalizedLink = link.toString();
       if (seen.has(normalizedLink)) return;
@@ -343,8 +365,6 @@ async function fetchFeedItems(source: FeedSource): Promise<FeedItem[]> {
         const $link = $(element);
         const href = $link.attr('href');
         if (!href || href.startsWith('#')) return;
-        const rawTitle = getLinkTitle($link);
-        if (!rawTitle || rawTitle.length < 8) return;
         let link: URL;
         try {
           link = new URL(href, baseUrl);
@@ -354,6 +374,10 @@ async function fetchFeedItems(source: FeedSource): Promise<FeedItem[]> {
         if (link.origin !== baseUrl.origin) return;
         if (!source.pathPrefix) return;
         if (!link.pathname.startsWith(source.pathPrefix)) return;
+        const rawTitle = source.id === 'pt-palangkaraya'
+          ? formatSlugTitle(getLastSlug(link.pathname))
+          : getLinkTitle($link);
+        if (!rawTitle || (source.id !== 'pt-palangkaraya' && rawTitle.length < 8)) return;
         const normalizedLink = link.toString();
         if (seen.has(normalizedLink)) return;
         seen.add(normalizedLink);
@@ -382,7 +406,7 @@ export default async function RssNewsSection() {
   );
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
@@ -395,7 +419,7 @@ export default async function RssNewsSection() {
           {feeds.map((feed) => (
             <Card key={feed.id} className="shadow-md hover:shadow-lg transition-shadow">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-2 text-lg text-gray-800">
+                <CardTitle className="inline-flex items-center gap-2 text-lg text-gray-800 bg-red-50/70 px-3 py-1.5 rounded-md">
                   <Rss className="h-5 w-5 text-red-900" />
                   {feed.title}
                 </CardTitle>
