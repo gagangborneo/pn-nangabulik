@@ -12,8 +12,8 @@ interface PortraitSlide {
 
 function MaklumatCard({ slide }: { slide: PortraitSlide }) {
   return (
-    <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-      <div className="p-6">
+    <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+      <div className="p-0">
         <div className="relative aspect-3/4 rounded-xl overflow-hidden bg-gray-100">
           <img
             src={slide.imageUrl}
@@ -62,7 +62,7 @@ export default function MaklumatPojokInfoSection() {
 
   return (
     <section className="">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto px-2">
         {displayedSlides.length === 0 ? (
           <div className="border border-gray-100 overflow-hidden">
             <div className="">
