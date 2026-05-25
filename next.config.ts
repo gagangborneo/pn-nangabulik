@@ -13,52 +13,83 @@ const contentSecurityPolicy = [
   "frame-src 'self' https:",
   "form-action 'self' https:",
   "upgrade-insecure-requests",
-].join('; ');
+].join("; ");
 
 const securityHeaders = [
-  { key: 'Content-Security-Policy', value: contentSecurityPolicy },
-  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-  { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
-  { key: 'X-Content-Type-Options', value: 'nosniff' },
-  { key: 'X-DNS-Prefetch-Control', value: 'on' },
+  { key: "Content-Security-Policy", value: contentSecurityPolicy },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  { key: "X-Frame-Options", value: "SAMEORIGIN" },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-DNS-Prefetch-Control", value: "on" },
   {
-    key: 'Permissions-Policy',
-    value: 'camera=(), microphone=(), geolocation=(), payment=(), usb=()'
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
   },
   {
-    key: 'Strict-Transport-Security',
-    value: 'max-age=31536000; includeSubDomains; preload',
+    key: "Strict-Transport-Security",
+    value: "max-age=31536000; includeSubDomains; preload",
   },
 ];
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  /* config options here */
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+
   reactStrictMode: false,
+
+  poweredByHeader: false,
+
+  compress: true,
+
+  generateBuildId: async () => {
+    return `build-${Date.now()}`;
+  },
+
+  experimental: {
+    staleTimes: {
+      dynamic: 0,
+    },
+  },
+
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+
   async headers() {
     return [
       {
-        source: '/:path*',
-        headers: securityHeaders,
+        source: "/:path*",
+        headers: [
+          ...securityHeaders,
+          {
+            key: "Cache-Control",
+            value:
+              "no-store, no-cache, must-revalidate, proxy-revalidate",
+          },
+        ],
+      },
+      {
+        source: "/_next/static/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
       },
     ];
   },
+
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'web.pn-nangabulik.go.id',
-        port: '',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "web.pn-nangabulik.go.id",
+        pathname: "/**",
       },
       {
-        protocol: 'https',
-        hostname: 'upload.wikimedia.org',
-        port: '',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "upload.wikimedia.org",
+        pathname: "/**",
       },
     ],
   },
