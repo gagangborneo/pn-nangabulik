@@ -8,8 +8,10 @@ services:
     environment:
       NODE_ENV: production
       # DATABASE_URL: mysql://user:pass@host:3306/dbname
+      DATABASE_URL: mysql://landing_nextjs:T2pbt3rNYtdmjXGE@103.127.133.230:3306/landing_nextjs
+
       # NEXTAUTH_SECRET: your_secret
-      # NEXTAUTH_URL: https://your-domain.com
+      NEXTAUTH_URL: https://pn-nangabulik.go.id
       # NEXT_PUBLIC_APP_URL: https://your-domain.com
       # NEXT_PUBLIC_API_URL: https://your-domain.com
     # Optional: use env file instead of inline env

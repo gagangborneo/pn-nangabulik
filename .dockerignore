@@ -3,7 +3,6 @@ Dockerfile
 node_modules
 npm-debug.log
 README.md
-.next
 .git
 package-lock.json
 yarn.lock
@@ -11,3 +10,4 @@ pnpm-lock.yaml
 test
 *.log
 local-*
+.bun
