@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # Next.js Application (prebuilt image)
+  app:
+    image: ghcr.io/gagangborneo/pn-nangabulik:latest
+    container_name: pn-nangabulik-app
+    environment:
+      NODE_ENV: production
+      # DATABASE_URL: mysql://user:pass@host:3306/dbname
+      # NEXTAUTH_SECRET: your_secret
+      # NEXTAUTH_URL: https://your-domain.com
+      # NEXT_PUBLIC_APP_URL: https://your-domain.com
+      # NEXT_PUBLIC_API_URL: https://your-domain.com
+    # Optional: use env file instead of inline env
+    # env_file:
+    #   - .env.production
+    volumes:
+      - ./upload:/app/upload
+      - ./public:/app/public
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - pn-network
+
+  # Caddy Reverse Proxy
+  caddy:
+    image: caddy:2-alpine
+    container_name: pn-nangabulik-caddy
+    depends_on:
+      - app
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      ACME_AGREE: "true"
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: unless-stopped
+    networks:
+      - pn-network
+
+volumes:
+  caddy_data:
+    driver: local
+  caddy_config:
+    driver: local
+
+networks:
+  pn-network:
+    driver: bridge
