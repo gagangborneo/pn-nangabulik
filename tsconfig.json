@@ -37,6 +37,13 @@
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "examples",
+    "mini-services",
+    "scripts",
+    "**/*-old.tsx",
+    "**/*-old.ts",
+    "**/*.backup.tsx",
+    "**/*.backup.ts"
   ]
 }
