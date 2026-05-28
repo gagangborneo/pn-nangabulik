@@ -1,13 +1,16 @@
 import { NextResponse } from 'next/server';
 import { getWordPressUrl } from '@/lib/wordpress';
+import { safeFetch } from '@/lib/safe-fetch';
 
 export async function GET() {
   try {
     const WP_API_URL = await getWordPressUrl();
-    const response = await fetch(`${WP_API_URL}/categories?per_page=50`, {
+    const response = await safeFetch(`${WP_API_URL}/categories?per_page=50`, {
       headers: {
         'Accept': 'application/json',
       },
+      timeoutMs: 15_000,
+      retries: 3,
     });
 
     if (!response.ok) {

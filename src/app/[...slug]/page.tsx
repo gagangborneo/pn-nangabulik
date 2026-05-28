@@ -4,6 +4,7 @@ import Footer from '@/components/layout/Footer';
 import { AutoTTSWrapper } from '@/components/ui/auto-tts-wrapper';
 import { MaintenanceCheck } from '@/components/MaintenanceCheck';
 import { shouldRedirectToMaintenance } from '@/lib/maintenance';
+import { safeFetch } from '@/lib/safe-fetch';
 
 export const dynamic = 'force-dynamic';
 
@@ -43,8 +44,10 @@ export default async function DynamicPage({
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
   let pageResponse: Response;
   try {
-    pageResponse = await fetch(`${baseUrl}/api/pages?url=${encodeURIComponent(url)}`, {
+    pageResponse = await safeFetch(`${baseUrl}/api/pages?url=${encodeURIComponent(url)}`, {
       next: { revalidate: 60 },
+      timeoutMs: 10_000,
+      retries: 2,
     });
   } catch (err) {
     console.error('Error fetching page data:', err);
@@ -70,9 +73,9 @@ export default async function DynamicPage({
   // Fetch WordPress content
   let post: WordPressPost | null = null;
   try {
-    const wpResponse = await fetch(
+    const wpResponse = await safeFetch(
       `https://web.pn-nangabulik.go.id/wp-json/wp/v2/posts?slug=${page.wordpressSlug}&_embed`,
-      { next: { revalidate: 60 } }
+      { next: { revalidate: 60 }, timeoutMs: 15_000, retries: 2 }
     );
 
     if (wpResponse.ok) {

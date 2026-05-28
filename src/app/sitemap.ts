@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { db } from '@/lib/db';
 import { getWordPressUrl } from '@/lib/wordpress';
+import { safeFetch } from '@/lib/safe-fetch';
 
 export const dynamic = 'force-dynamic';
 
@@ -75,8 +76,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let blogPostPages: MetadataRoute.Sitemap = [];
   try {
     const wpUrl = await getWordPressUrl();
-    const response = await fetch(`${wpUrl}/posts?per_page=100&_fields=slug,modified`, {
+    const response = await safeFetch(`${wpUrl}/posts?per_page=100&_fields=slug,modified`, {
       next: { revalidate: 3600 },
+      timeoutMs: 20_000,
+      retries: 2,
     });
 
     if (response.ok) {

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getWordPressUrl } from '@/lib/wordpress';
+import { safeFetch } from '@/lib/safe-fetch';
 
 /**
  * Decode HTML entities to natural text
@@ -97,10 +98,12 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const response = await fetch(url, {
+    const response = await safeFetch(url, {
       headers: {
         'Accept': 'application/json',
       },
+      timeoutMs: 15_000,
+      retries: 3,
     });
 
     if (!response.ok) {
