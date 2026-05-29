@@ -1,58 +1,50 @@
-version: '3.8'
-
 services:
-  # Next.js Application
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: pn-nangabulik-app
+    image: pn-nangabulik:latest
+    container_name: pn-nangabulik
+    restart: unless-stopped
+
+    # Secrets/DB dari .env host — TIDAK dibakar ke image
+    env_file:
+      - .env
+
     environment:
       NODE_ENV: production
-      # Add other environment variables as needed
-      # DATABASE_URL: your-external-database-url (if needed)
-      # NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
-      # NEXTAUTH_URL: ${NEXTAUTH_URL}
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      NODE_OPTIONS: --dns-result-order=ipv4first
+      UV_THREADPOOL_SIZE: 16
+      TZ: Asia/Jakarta
+
+    ports:
+      # Hanya loopback host — tidak terbuka ke internet.
+      # Nginx aaPanel di host meneruskan via proxy_pass http://127.0.0.1:3000.
+      - "127.0.0.1:3000:3000"
+
     volumes:
       - ./upload:/app/upload
-      - ./public:/app/public
-    ports:
-      - "3000:3000"
+      - ./download:/app/download
+      - ./logs:/app/logs
+
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://127.0.0.1:3000/api/maintenance', r => process.exit(r.statusCode < 500 ? 0 : 1)).on('error', () => process.exit(1))\""]
       interval: 30s
-      timeout: 10s
+      timeout: 5s
       retries: 3
-      start_period: 40s
-    restart: unless-stopped
-    networks:
-      - pn-network
+      start_period: 30s
 
-  # Caddy Reverse Proxy
-  caddy:
-    image: caddy:2-alpine
-    container_name: pn-nangabulik-caddy
-    depends_on:
-      - app
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
-    environment:
-      ACME_AGREE: "true"
-    ports:
-      - "80:80"
-      - "443:443"
-    restart: unless-stopped
-    networks:
-      - pn-network
+    # Rotate Docker JSON log supaya disk tidak penuh
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
 
-volumes:
-  caddy_data:
-    driver: local
-  caddy_config:
-    driver: local
-
-networks:
-  pn-network:
-    driver: bridge
+    # Batas resource — sesuaikan dengan VPS
+    deploy:
+      resources:
+        limits:
+          memory: 900M
