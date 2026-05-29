@@ -18,6 +18,10 @@ module.exports = {
         UV_THREADPOOL_SIZE: 16,
         // Force IPv4 first — some VPS providers have flaky IPv6 to upstream WordPress
         NODE_OPTIONS: '--dns-result-order=ipv4first',
+        // Stable Server-Action IDs across rebuilds. The actual secret is loaded
+        // from .env (NEXT_SERVER_ACTIONS_ENCRYPTION_KEY=<base64-32-bytes>) — do
+        // NOT hardcode it here. Generate once on the VPS:
+        //   openssl rand -base64 32
       },
 
       autorestart: true,
