@@ -63,9 +63,19 @@ export async function safeFetch(
     mergedHeaders.set('Accept', 'application/json');
   }
 
+  const externalSignal = rest.signal as AbortSignal | undefined;
+
   let lastError: unknown = null;
   for (let attempt = 0; attempt <= retries; attempt++) {
+    // If the caller's signal already fired (e.g. browser closed the SSR
+    // request), bail immediately — do NOT retry, that work is wasted.
+    if (externalSignal?.aborted) {
+      throw new DOMException('Aborted', 'AbortError');
+    }
+
     const controller = new AbortController();
+    const onExternalAbort = () => controller.abort();
+    externalSignal?.addEventListener('abort', onExternalAbort, { once: true });
     const timer = setTimeout(() => controller.abort(), timeoutMs);
 
     try {
@@ -87,6 +97,10 @@ export async function safeFetch(
       return response;
     } catch (err) {
       lastError = err;
+      // External abort = client gave up. Don't retry, don't spam logs.
+      if (externalSignal?.aborted) {
+        throw err;
+      }
       if (attempt < retries && isTransientError(err)) {
         await sleep(retryDelayMs * Math.pow(2, attempt));
         continue;
@@ -94,6 +108,7 @@ export async function safeFetch(
       throw err;
     } finally {
       clearTimeout(timer);
+      externalSignal?.removeEventListener('abort', onExternalAbort);
     }
   }
 

@@ -5,6 +5,7 @@ import { AutoTTSWrapper } from '@/components/ui/auto-tts-wrapper';
 import { MaintenanceCheck } from '@/components/MaintenanceCheck';
 import { shouldRedirectToMaintenance } from '@/lib/maintenance';
 import { safeFetch } from '@/lib/safe-fetch';
+import { db } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
@@ -40,29 +41,25 @@ export default async function DynamicPage({
   const { slug } = params;
   const url = '/' + (Array.isArray(slug) ? slug.join('/') : slug);
 
-  // Fetch page data by URL
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-  let pageResponse: Response;
-  try {
-    pageResponse = await safeFetch(`${baseUrl}/api/pages?url=${encodeURIComponent(url)}`, {
-      next: { revalidate: 60 },
-      timeoutMs: 10_000,
-      retries: 2,
-    });
-  } catch (err) {
-    console.error('Error fetching page data:', err);
-    return notFound();
-  }
-
-  if (!pageResponse.ok) {
-    return notFound();
-  }
-
+  // Query the DB directly — avoid self-fetching our own /api/pages over HTTP,
+  // which adds latency and surfaces noisy AbortError logs when the client
+  // navigates away mid-request.
   let page: PageData | null = null;
   try {
-    page = (await pageResponse.json()) as PageData;
+    const row = await db.page.findUnique({ where: { url } });
+    if (row) {
+      page = {
+        id: row.id,
+        url: row.url,
+        title: row.title,
+        seoTitle: row.seoTitle,
+        seoDescription: row.seoDescription,
+        wordpressSlug: row.wordpressSlug,
+        isActive: row.isActive,
+      };
+    }
   } catch (err) {
-    console.error('Error parsing page data:', err);
+    console.error('Error querying page from DB:', err);
     return notFound();
   }
 
