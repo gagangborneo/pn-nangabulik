@@ -20,13 +20,14 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { title, description, icon, url, order } = body;
+    const { title, description, icon, imageUrl, url, order } = body;
 
     const layanan = await db.layanan.create({
       data: {
         title,
         description,
         icon,
+        imageUrl,
         url,
         order: order || 0,
       },
@@ -43,7 +44,7 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    const { id, title, description, icon, url, order, isActive } = body;
+    const { id, title, description, icon, imageUrl, url, order, isActive } = body;
 
     const layanan = await db.layanan.update({
       where: { id },
@@ -51,6 +52,7 @@ export async function PUT(request: NextRequest) {
         title,
         description,
         icon,
+        imageUrl,
         url,
         order,
         isActive,

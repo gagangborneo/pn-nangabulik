@@ -92,6 +92,7 @@ model Layanan {
   title       String
   description String
   icon        String
+  imageUrl    String?
   url         String?
   order       Int      @default(0)
   isActive    Boolean  @default(true)

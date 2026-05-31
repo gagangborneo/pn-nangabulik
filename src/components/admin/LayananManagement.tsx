@@ -18,8 +18,6 @@ import {
   Calendar,
   ClipboardList,
   Clock,
-  Eye,
-  EyeOff,
   FileText,
   FolderOpen,
   FolderSync,
@@ -51,6 +49,7 @@ interface Layanan {
   title: string;
   description: string;
   icon: string;
+  imageUrl: string | null;
   url: string | null;
   order: number;
   isActive: boolean;
@@ -62,6 +61,7 @@ interface FormData {
   title: string;
   description: string;
   icon: string;
+  imageUrl: string;
   url: string;
   isActive: boolean;
 }
@@ -103,6 +103,7 @@ const defaultFormData: FormData = {
   title: '',
   description: '',
   icon: 'FileText',
+  imageUrl: '',
   url: '',
   isActive: true,
 };
@@ -140,6 +141,7 @@ export default function LayananManagement() {
         title: item.title,
         description: item.description,
         icon: item.icon,
+        imageUrl: item.imageUrl || '',
         url: item.url || '',
         isActive: item.isActive,
       });
@@ -210,24 +212,6 @@ export default function LayananManagement() {
     } catch (error) {
       console.error('Error deleting layanan:', error);
       toast.error('Terjadi kesalahan saat menghapus');
-    }
-  };
-
-  const handleToggleActive = async (item: Layanan) => {
-    try {
-      const response = await fetch('/api/layanan', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: item.id, isActive: !item.isActive }),
-      });
-
-      if (response.ok) {
-        toast.success(`Layanan ${!item.isActive ? 'diaktifkan' : 'dinonaktifkan'}`);
-        fetchLayanan();
-      }
-    } catch (error) {
-      console.error('Error toggling active:', error);
-      toast.error('Gagal mengubah status');
     }
   };
 
@@ -317,11 +301,19 @@ export default function LayananManagement() {
               <Card key={item.id} className={!item.isActive ? 'opacity-60' : ''}>
                 <CardContent className="p-6">
                   <div className="flex gap-4">
-                    {/* Icon */}
+                    {/* Icon / Image */}
                     <div className="shrink-0">
-                      <div className="w-12 h-12 rounded-full bg-[#8B0000]/10 flex items-center justify-center">
-                        <IconComponent className="h-6 w-6 text-[#8B0000]" />
-                      </div>
+                      {item.imageUrl ? (
+                        <img
+                          src={item.imageUrl}
+                          alt={item.title}
+                          className="w-12 h-12 rounded-full object-cover border border-gray-200"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 rounded-full bg-[#8B0000]/10 flex items-center justify-center">
+                          <IconComponent className="h-6 w-6 text-[#8B0000]" />
+                        </div>
+                      )}
                     </div>
 
                   {/* Content */}
@@ -350,20 +342,6 @@ export default function LayananManagement() {
 
                       {/* Actions */}
                       <div className="flex shrink-0 gap-2">
-                        {/* Visibility Toggle */}
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => handleToggleActive(item)}
-                          title={item.isActive ? 'Nonaktifkan' : 'Aktifkan'}
-                        >
-                          {item.isActive ? (
-                            <Eye className="h-4 w-4 text-gray-600" />
-                          ) : (
-                            <EyeOff className="h-4 w-4 text-gray-400" />
-                          )}
-                        </Button>
-
                         {/* Edit Button */}
                         <Button
                           size="sm"
@@ -485,6 +463,21 @@ export default function LayananManagement() {
                   })}
                 </SelectContent>
               </Select>
+            </div>
+
+            {/* Image URL */}
+            <div className="space-y-2">
+              <Label htmlFor="imageUrl">URL Gambar (Opsional)</Label>
+              <Input
+                id="imageUrl"
+                type="url"
+                placeholder="https://example.com/gambar.png"
+                value={formData.imageUrl}
+                onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+              />
+              <p className="text-xs text-gray-500">
+                Jika diisi, gambar akan ditampilkan menggantikan icon di halaman utama.
+              </p>
             </div>
 
             {/* URL */}

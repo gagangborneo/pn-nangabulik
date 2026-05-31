@@ -14,11 +14,11 @@ function MaklumatCard({ slide }: { slide: PortraitSlide }) {
   return (
     <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
       <div className="p-0">
-        <div className="relative aspect-3/4 rounded-xl overflow-hidden bg-gray-100">
+        <div className="relative rounded-xl overflow-hidden bg-gray-100">
           <img
             src={slide.imageUrl}
             alt="Maklumat"
-            className="w-full h-full object-cover"
+            className="w-full"
             onError={(e) => {
               (e.target as HTMLImageElement).src = 'https://via.placeholder.com/600x800?text=Image+Error';
             }}
@@ -73,7 +73,7 @@ export default function MaklumatPojokInfoSection() {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {displayedSlides.map((slide) => (
               <MaklumatCard key={slide.id} slide={slide} />
             ))}

@@ -35,6 +35,7 @@ interface LayananItem {
   title: string;
   description: string;
   icon: string;
+  imageUrl: string | null;
   url: string | null;
   order: number;
   isActive: boolean;
@@ -156,10 +157,21 @@ export default function LayananPublikSection() {
                   className={`group bg-linear-to-br ${service.gradient} rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-gray-300 hover:-translate-y-1`}
                 >
                   <div className="flex flex-row sm:flex-col items-start sm:items-center text-left sm:text-center gap-4 sm:gap-0">
-                    {/* Icon */}
-                    <div className={`shrink-0 w-12 h-12 sm:w-14 sm:h-14 ${service.iconBg} rounded-xl flex items-center justify-center sm:mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                      <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
-                    </div>
+                    {/* Image or Icon */}
+                    {service.imageUrl ? (
+                      <div className="shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <img
+                          src={service.imageUrl}
+                          alt={service.title}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                    ) : (
+                      <div className={`shrink-0 w-12 h-12 sm:w-14 sm:h-14 ${service.iconBg} rounded-xl flex items-center justify-center sm:mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                        <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
+                      </div>
+                    )}
 
                     <div className="flex-1 sm:flex-none">
                       {/* Title */}
