@@ -72,9 +72,13 @@ export default function HeroSection() {
 
   if (loading) {
     return (
-      <section className="relative overflow-hidden bg-gradient-to-br from-red-900 via-red-800 to-red-700 h-[500px] md:h-[600px]">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-white border-t-transparent" />
+      <section className="relative pt-4">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-red-900 via-red-800 to-red-700 h-[500px] md:h-[600px]">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="h-8 w-8 animate-spin rounded-full border-4 border-white border-t-transparent" />
+            </div>
+          </div>
         </div>
       </section>
     );
@@ -83,16 +87,15 @@ export default function HeroSection() {
   if (slides.length === 0) {
     // Fallback if no slides available
     return (
-      <section
-        id="beranda"
-        className="relative overflow-hidden bg-gradient-to-br from-red-900 via-red-800 to-red-700"
-      >
-        <div
-          className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center opacity-20"
-        ></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-red-900/90 via-red-800/70 to-transparent"></div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32 relative">
-          <div className="max-w-2xl">
+      <section id="beranda" className="relative pt-0">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden bg-gradient-to-br from-red-900 via-red-800 to-red-700">
+            <div
+              className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center opacity-20"
+            ></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-red-900/90 via-red-800/70 to-transparent"></div>
+            <div className="px-6 md:px-12 py-20 md:py-32 relative">
+              <div className="max-w-2xl">
             <span className="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 gap-1 mb-4 bg-white/20 text-white border-white/30 backdrop-blur-sm">
               Resmi & Terpercaya
             </span>
@@ -102,6 +105,8 @@ export default function HeroSection() {
             <p className="text-lg md:text-xl text-red-50 mb-8 leading-relaxed">
               Melayani dengan integritas dan profesionalisme untuk mewujudkan keadilan bagi seluruh masyarakat
             </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -111,10 +116,9 @@ export default function HeroSection() {
   const currentSlide = slides[currentIndex];
 
   return (
-    <section
-      id="beranda"
-      className="relative overflow-hidden h-[500px] md:h-[600px]"
-    >
+    <section id="beranda" className="relative pt-0">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden h-[500px] md:h-[600px]">
       {/* Slides */}
       {slides.map((slide, index) => {
         const isActive = index === currentIndex;
@@ -140,7 +144,7 @@ export default function HeroSection() {
             ></div>
 
             {/* Content */}
-            <div className="container mx-auto px-6 sm:px-6 lg:px-8 h-full flex items-center relative z-20">
+            <div className="px-6 md:px-12 h-full flex items-center relative z-20">
               <div className="max-w-3xl pb-16 md:pb-0">
                 {/* Tag/Badge */}
                 {slide.tag && (
@@ -236,6 +240,8 @@ export default function HeroSection() {
           </div>
         </>
       )}
+        </div>
+      </div>
 
       <style jsx>{`
         @keyframes fadeIn {

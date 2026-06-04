@@ -71,16 +71,16 @@ export default function ContactSection() {
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3">
-            Hubungi Kami
+            Lokasi Kami
           </h2>
           <div className="w-20 h-1 bg-[#8B0000] mx-auto mb-4"></div>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          {/* <p className="text-gray-600 max-w-2xl mx-auto">
             Silakan hubungi kami untuk informasi lebih lanjut mengenai layanan pengadilan
-          </p>
+          </p> */}
         </div>
 
         {/* Contact Cards */}
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        {/* <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {contactInfo.map((info, index) => (
             <div
               key={index}
@@ -93,7 +93,7 @@ export default function ContactSection() {
               <p className="text-gray-600 text-sm whitespace-pre-line">{info.content}</p>
             </div>
           ))}
-        </div>
+        </div> */}
         {/* Map Placeholder */}
         <div className="mt-12 max-w-5xl mx-auto">
           <div className="bg-gray-200 rounded-xl h-64 flex items-center justify-center overflow-hidden">

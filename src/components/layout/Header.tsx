@@ -269,13 +269,13 @@ export default function Header() {
       <div key={item.id} className="relative group">
         <Link
           href={item.url}
-          className="text-sm font-medium text-gray-600 hover:text-red-800 transition-colors px-3 py-2 inline-flex items-center"
+          className="text-sm font-medium text-white hover:bg-orange-600 rounded-md transition-colors px-3 py-3 inline-flex items-center"
         >
           <TTSText as="span" hoverEffect={false}>
             {item.label}
           </TTSText>
           {hasChildren && (
-            <ChevronDown className="ml-1 h-3 w-3 text-gray-400 group-hover:text-red-800 transition-colors" />
+            <ChevronDown className="ml-1 h-3 w-3 text-white/80 group-hover:text-white transition-colors" />
           )}
         </Link>
 
@@ -471,7 +471,7 @@ export default function Header() {
 
       {/* Main Navigation */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-20 my-2 sm:my-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
             <img
@@ -627,7 +627,7 @@ export default function Header() {
         </div>
 
         {/* Desktop Navigation */}
-        <div className="relative flex justify-center border-t border-gray-100 hidden md:flex">
+        <div className="relative justify-center bg-orange-500 hidden md:flex">
           <nav className="flex items-center">
             {loading ? (
               <MenuSkeleton />

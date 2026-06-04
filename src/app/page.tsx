@@ -74,9 +74,9 @@ export default async function Home() {
           {/* <FAQSection /> */}
           <JadwalSidangSection />
           <YoutubeVideosSection />
-          <PartnersSection />
+          {/* <PartnersSection /> */}
           <ContactSection />
-          <VisitorCounterSection />
+          {/* <VisitorCounterSection /> */}
         </main>
       </AutoTTSWrapper>
       <Footer />

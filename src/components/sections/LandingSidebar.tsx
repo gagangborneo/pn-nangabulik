@@ -637,10 +637,18 @@ export default function LandingSidebar() {
                 href={partner.websiteUrl || '#'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between gap-2 rounded-lg border border-gray-100 bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-900 transition-colors"
+                className="flex items-center gap-2 rounded-lg border border-gray-100 bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-900 transition-colors"
               >
-                <span className="truncate">{partner.name}</span>
-                <ExternalLink className="h-4 w-4 text-gray-400" />
+                {partner.logoUrl && (
+                  <img
+                    src={partner.logoUrl}
+                    alt={partner.name}
+                    className="h-6 w-6 shrink-0 object-contain"
+                    loading="lazy"
+                  />
+                )}
+                <span className="flex-1 truncate">{partner.name}</span>
+                <ExternalLink className="h-4 w-4 shrink-0 text-gray-400" />
               </a>
             ))}
           </div>

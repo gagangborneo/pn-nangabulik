@@ -6,9 +6,9 @@ import {
   BarChart3,
   BookOpen,
   Calendar,
+  ChevronRight,
   ClipboardList,
   Clock,
-  ExternalLink,
   FileText,
   FolderOpen,
   FolderSync,
@@ -144,7 +144,7 @@ export default function LayananPublikSection() {
             <div className="text-white">Loading...</div>
           </div>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3 max-w-7xl mx-auto">
             {layananData.map((service) => {
               const IconComponent = service.iconComponent;
 
@@ -154,12 +154,12 @@ export default function LayananPublikSection() {
                   href={service.url || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group bg-linear-to-br ${service.gradient} rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-gray-300 hover:-translate-y-1`}
+                  className={`group bg-linear-to-br ${service.gradient} rounded-xl p-3 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-gray-300 hover:-translate-y-1`}
                 >
-                  <div className="flex flex-row sm:flex-col items-start sm:items-center text-left sm:text-center gap-4 sm:gap-0">
-                    {/* Image or Icon */}
+                  <div className="flex flex-row items-center text-left gap-3">
+                    {/* Image or Icon (left) */}
                     {service.imageUrl ? (
-                      <div className="shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                      <div className="shrink-0 w-12 h-12 rounded-xl overflow-hidden group-hover:scale-110 transition-transform duration-300">
                         <img
                           src={service.imageUrl}
                           alt={service.title}
@@ -168,28 +168,23 @@ export default function LayananPublikSection() {
                         />
                       </div>
                     ) : (
-                      <div className={`shrink-0 w-12 h-12 sm:w-14 sm:h-14 ${service.iconBg} rounded-xl flex items-center justify-center sm:mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                        <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
+                      <div className={`shrink-0 w-12 h-12 ${service.iconBg} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                        <IconComponent className="h-6 w-6 text-white" />
                       </div>
                     )}
 
-                    <div className="flex-1 sm:flex-none">
-                      {/* Title */}
-                      <h3 className="font-semibold text-gray-800 mb-2 group-hover:text-red-900 transition-colors">
+                    {/* Title + Description (middle) */}
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-sm text-gray-800 group-hover:text-red-900 transition-colors truncate">
                         {service.title}
                       </h3>
-
-                      {/* Description */}
-                      <p className="text-sm text-gray-500 mb-3 leading-relaxed">
+                      <p className="text-xs text-gray-500 leading-relaxed line-clamp-2">
                         {service.description}
                       </p>
-
-                      {/* Link Indicator */}
-                      <div className="flex items-center gap-1 text-xs text-red-900 font-medium opacity-50 group-hover:opacity-500 transition-opacity">
-                        <span>Akses Layanan</span>
-                        <ExternalLink className="h-3 w-3" />
-                      </div>
                     </div>
+
+                    {/* Arrow (right) */}
+                    <ChevronRight className="shrink-0 h-5 w-5 text-red-900 opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
                   </div>
                 </a>
               );
