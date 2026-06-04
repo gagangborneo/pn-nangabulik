@@ -67,7 +67,7 @@ export default function ContactSection() {
 
   return (
     <section id="kontak" className="py-16 bg-white">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3">
@@ -95,7 +95,7 @@ export default function ContactSection() {
           ))}
         </div> */}
         {/* Map Placeholder */}
-        <div className="mt-12 max-w-5xl mx-auto">
+        <div className="mt-12 max-w-8xl mx-auto sm:px-8">
           <div className="bg-gray-200 rounded-xl h-64 flex items-center justify-center overflow-hidden">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.888334799489!2d111.44415717496777!3d-2.1959395977846143!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e061958aed7f005%3A0xa8b22ae3ac1e4af8!2sNanga%20Bulik%20District%20Court!5e0!3m2!1sen!2sid!4v1771381661826!5m2!1sen!2sid"

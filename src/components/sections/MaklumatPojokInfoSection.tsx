@@ -62,7 +62,7 @@ export default function MaklumatPojokInfoSection() {
 
   return (
     <section className="">
-      <div className="max-w-5xl mx-auto px-2">
+      <div className="max-w-6xl mx-auto">
         {displayedSlides.length === 0 ? (
           <div className="border border-gray-100 overflow-hidden">
             <div className="">

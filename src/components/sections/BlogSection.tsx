@@ -95,7 +95,7 @@ export default function BlogSection() {
       <div className="absolute top-0 left-0 w-full h-32 "></div>
       <div className="absolute top-0 right-0 w-64 h-64 "></div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div className="container mx-auto relative">
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3">
