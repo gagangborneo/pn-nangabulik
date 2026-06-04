@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "code-review-graph": {
+      "command": "/home/asif/miniconda3/bin/python3.13",
+      "args": [
+        "-m",
+        "code_review_graph",
+        "serve"
+      ],
+      "cwd": "/home/asif/Develop/pn-nangabulik",
+      "type": "stdio"
+    }
+  }
+}

@@ -20,16 +20,17 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { title, description, icon, imageUrl, url, order } = body;
+    const { title, description, icon, imageUrl, url, order, isActive } = body;
 
     const layanan = await db.layanan.create({
       data: {
         title,
         description,
         icon,
-        imageUrl,
-        url,
+        imageUrl: imageUrl || null,
+        url: url || null,
         order: order || 0,
+        isActive: isActive ?? true,
       },
     });
 

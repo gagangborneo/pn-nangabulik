@@ -185,7 +185,8 @@ export default function LayananManagement() {
         handleCloseDialog();
         fetchLayanan();
       } else {
-        toast.error('Gagal menyimpan layanan');
+        const data = await response.json().catch(() => null);
+        toast.error(data?.error ? `Gagal menyimpan layanan: ${data.error}` : 'Gagal menyimpan layanan');
       }
     } catch (error) {
       console.error('Error saving layanan:', error);
