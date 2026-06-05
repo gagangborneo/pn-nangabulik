@@ -30,7 +30,7 @@ interface WordPressPost {
 export default async function DynamicPage({
   params,
 }: {
-  params: { slug: string[] };
+  params: Promise<{ slug: string[] }>;
 }) {
   // Check maintenance mode
   const shouldRedirect = await shouldRedirectToMaintenance();
@@ -38,7 +38,8 @@ export default async function DynamicPage({
     redirect('/maintenance');
   }
 
-  const { slug } = params;
+  // Next.js 15+/16: `params` is a Promise and must be awaited before access.
+  const { slug } = await params;
   const url = '/' + (Array.isArray(slug) ? slug.join('/') : slug);
 
   // Query the DB directly — avoid self-fetching our own /api/pages over HTTP,

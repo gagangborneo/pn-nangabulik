@@ -12,55 +12,64 @@ interface FeedSource {
   id: string;
   title: string;
   url: string;
-  mode: 'html' | 'rss';
+  mode: 'html' | 'rss' | 'ma-json';
   pathPrefix?: string;
   displayUrl?: string;
+  // For the Mahkamah Agung JSON endpoint (POST): category id (1=berita, 2=pengumuman)
+  catId?: string;
 }
 
 type SafeFetchInit = RequestInit & { next?: { revalidate?: number } };
 type FetchError = { message?: string; code?: string; cause?: { code?: string } };
 
-const FETCH_TIMEOUT_MS = 8000;
+const FETCH_TIMEOUT_MS = 12000;
 const FETCH_RETRY_COUNT = 2;
 const FETCH_RETRY_DELAY_MS = 400;
 
+const BROWSER_UA =
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36';
+
+// All sources fetch fresh content directly from the official upstreams.
+// We deliberately avoid the rss.pt-bengkulu.go.id proxy — it serves stale
+// (2022) data. MA exposes a JSON endpoint (POST), while Badilum and PT
+// Palangkaraya expose native Joomla RSS feeds via `?format=feed`.
 const feedSources: FeedSource[] = [
   {
     id: 'mahkamahagung-berita',
     title: 'MA RI - Berita',
-    url: 'https://rss.pt-bengkulu.go.id/?mari',
+    url: 'https://mahkamahagung.go.id/id/berita',
     displayUrl: 'https://mahkamahagung.go.id/id/berita',
-    mode: 'rss',
+    mode: 'ma-json',
+    catId: '1',
   },
   {
     id: 'mahkamahagung-pengumuman',
     title: 'MA RI - Pengumuman',
-    url: 'https://rss.pt-bengkulu.go.id/?maripengumuman',
+    url: 'https://mahkamahagung.go.id/id/pengumuman',
     displayUrl: 'https://mahkamahagung.go.id/id/pengumuman',
-    mode: 'rss',
+    mode: 'ma-json',
+    catId: '2',
   },
   {
     id: 'badilum-kegiatan',
     title: 'Badilum - Berita Kegiatan',
-    url: 'https://rss.pt-bengkulu.go.id/?badilum',
+    url: 'https://badilum.mahkamahagung.go.id/berita/berita-kegiatan.html?format=feed',
     displayUrl: 'https://badilum.mahkamahagung.go.id/berita/berita-kegiatan.html',
-    pathPrefix: '/berita/berita-kegiatan/',
     mode: 'rss',
   },
   {
     id: 'badilum-pengumuman',
     title: 'Badilum - Pengumuman',
-    url: 'https://rss.pt-bengkulu.go.id/?badilumpengumuman',
+    url: 'https://badilum.mahkamahagung.go.id/berita/pengumuman-surat-dinas.html?format=feed',
     displayUrl: 'https://badilum.mahkamahagung.go.id/berita/pengumuman-surat-dinas.html',
-    pathPrefix: '/berita/pengumuman-surat-dinas/',
     mode: 'rss',
   },
   {
     id: 'pt-palangkaraya',
     title: 'PT Palangkaraya - Berita Terkini',
-    url: 'https://pt-palangkaraya.go.id/berita/berita-terkini',
-    pathPrefix: '/berita/berita-terkini/',
-    mode: 'html',
+    url: 'https://pt-palangkaraya.go.id/berita/berita-terkini?format=feed',
+    displayUrl: 'https://pt-palangkaraya.go.id/berita/berita-terkini',
+    mode: 'rss',
   },
 ];
 
@@ -349,13 +358,62 @@ const extractRssItems = (xml: string): FeedItem[] => {
   return items;
 };
 
+interface MaJsonRow {
+  title?: string;
+  url?: string;
+  pt?: string;
+}
+
+const fetchMahkamahAgungItems = async (source: FeedSource): Promise<FeedItem[]> => {
+  const body = new URLSearchParams({
+    cat_id: source.catId || '1',
+    page: '1',
+    lang: 'id',
+  }).toString();
+
+  const response = await safeFetch(source.url, {
+    method: 'POST',
+    next: { revalidate: 1800 },
+    headers: {
+      'User-Agent': BROWSER_UA,
+      Accept: 'application/json, text/javascript, */*; q=0.01',
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      'X-Requested-With': 'XMLHttpRequest',
+    },
+    body,
+  });
+  if (!response || !response.ok) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn('MA JSON fetch failed:', source.url, response?.status);
+    }
+    return [];
+  }
+
+  const data = (await response.json()) as { stat?: string; data?: { rows?: MaJsonRow[] } };
+  const rows = data?.data?.rows;
+  if (!Array.isArray(rows)) return [];
+
+  const items: FeedItem[] = [];
+  for (const row of rows) {
+    if (items.length >= 5) break;
+    const title = normalizeText(row.title || '');
+    const link = normalizeText(row.url || '');
+    if (!title || !link) continue;
+    items.push({ title, link, date: row.pt ? normalizeText(row.pt) : undefined });
+  }
+  return items;
+};
+
 async function fetchFeedItems(source: FeedSource): Promise<FeedItem[]> {
   try {
+    if (source.mode === 'ma-json') {
+      return await fetchMahkamahAgungItems(source);
+    }
+
     const response = await safeFetch(source.url, {
       next: { revalidate: 1800 },
       headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36',
+        'User-Agent': BROWSER_UA,
         Accept: 'text/html,application/xhtml+xml,application/rss+xml,application/xml;q=0.9',
       },
     });
