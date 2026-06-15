@@ -144,7 +144,7 @@ export default function HeroSection() {
             ></div>
 
             {/* Content */}
-            <div className="px-6 md:px-12 h-full flex items-center relative z-20">
+            <div className="px-6 md:px-18 h-full flex items-center relative z-20">
               <div className="max-w-3xl pb-16 md:pb-0">
                 {/* Tag/Badge */}
                 {slide.tag && (
@@ -210,14 +210,14 @@ export default function HeroSection() {
           {/* Previous/Next Buttons - Hidden on mobile, visible on md screens and up */}
           <button
             onClick={goToPrevious}
-            className="hidden md:flex absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all"
+            className="hidden md:flex absolute left-2 lg:left-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all"
             aria-label="Previous slide"
           >
             <ChevronLeft className="h-6 w-6" />
           </button>
           <button
             onClick={goToNext}
-            className="hidden md:flex absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all"
+            className="hidden md:flex absolute right-2 lg:right-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all"
             aria-label="Next slide"
           >
             <ChevronRight className="h-6 w-6" />
