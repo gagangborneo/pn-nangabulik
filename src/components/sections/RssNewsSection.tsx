@@ -67,7 +67,7 @@ const feedSources: FeedSource[] = [
   {
     id: 'pt-palangkaraya',
     title: 'PT Palangkaraya - Berita Terkini',
-    url: 'https://pt-palangkaraya.go.id/berita/berita-terkini?format=feed',
+    url: 'https://pt-palangkaraya.go.id/berita/berita-terkini?format=feed&type=rss',
     displayUrl: 'https://pt-palangkaraya.go.id/berita/berita-terkini',
     mode: 'rss',
   },
@@ -536,18 +536,22 @@ export default async function RssNewsSection() {
           {feeds.map((feed) => (
             <Card key={feed.id} className="shadow-md hover:shadow-lg transition-shadow">
               <CardHeader className="pb-4">
-                <CardTitle className="inline-flex items-center gap-2 text-lg text-gray-800 bg-red-50/70 px-3 py-1.5 rounded-md">
-                  <Rss className="h-5 w-5 text-red-900" />
-                  {feed.title}
-                </CardTitle>
-                <a
-                  href={feed.displayUrl || feed.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs text-gray-500 hover:text-red-900 transition-colors"
-                >
-                  {feed.displayUrl || feed.url}
-                </a>
+                <div className="flex items-center justify-between gap-2">
+                  <CardTitle className="inline-flex items-center gap-2 text-lg text-gray-800 bg-red-50/70 px-3 py-1.5 rounded-md">
+                    <Rss className="h-5 w-5 text-red-900" />
+                    {feed.title}
+                  </CardTitle>
+                  <a
+                    href={feed.displayUrl || feed.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Buka ${feed.title}`}
+                    className="inline-flex shrink-0 items-center gap-1 rounded-md border border-gray-200 px-2.5 py-1.5 text-xs text-gray-600 hover:border-red-200 hover:bg-red-50 hover:text-red-900 transition-colors"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    <span className="hidden sm:inline">Kunjungi</span>
+                  </a>
+                </div>
               </CardHeader>
               <CardContent className="pt-0">
                 {feed.items.length === 0 ? (
