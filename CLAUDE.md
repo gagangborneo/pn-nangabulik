@@ -1,4 +1,58 @@
-<!-- code-review-graph MCP tools -->
+# PN Nangabulik
+
+Website resmi & sistem informasi publik **Pengadilan Negeri Nanga Bulik** — landing page publik
+dengan panel admin (CMS) untuk mengelola konten, layanan, pengumuman sidang, dan statistik pengunjung.
+
+## Tech Stack
+
+- **Next.js 16** (App Router, standalone output) + **React 19** + **TypeScript 5**
+- **Tailwind CSS 4** + **shadcn/ui** (Radix primitives) + Framer Motion
+- **Prisma 6** ORM → **MySQL**
+- **NextAuth.js** untuk autentikasi admin
+- **TanStack Query / Table**, **Zustand**, **React Hook Form + Zod**
+- **next-intl** (i18n), **bun** sebagai package manager & runner
+
+## Commands
+
+```bash
+bun run dev          # next dev di port 3000 (output di-tee ke dev.log)
+bun run build        # rm -rf .next && prisma generate && next build (+copy static ke standalone)
+bun run start        # jalankan build standalone (NODE_ENV=production)
+bun run lint         # eslint
+
+bun run db:push      # prisma db push (sync schema tanpa migrasi)
+bun run db:generate  # prisma generate
+bun run db:migrate   # prisma migrate dev
+bun run db:reset     # prisma migrate reset
+bun run db:seed      # bun prisma/seed.ts
+```
+
+## Architecture
+
+- **`src/app/`** — App Router
+  - Halaman publik: `berita/`, `pengumuman-sidang/`, `data-laporan/`, `[...slug]` (halaman dinamis dari CMS), `maintenance/`, `login/`
+  - **`admin/`** — panel CMS (terproteksi)
+  - **`api/`** — route handlers REST: `posts`, `pages`, `menus`, `categories`, `layanan`, `pengumuman-sidang`, `faq`, `partners`, `pejabat`, `survey`, `reports`, `statistics`, `visitor`, `settings`, `maintenance`, berbagai `*-slides` (hero/information/maklumat/pojok-info), `youtube-videos`, dan `auth/*`
+- **`src/components/`** — `ui/` (shadcn), `sections/` (blok landing page), `layout/`, `admin/`
+- **`src/lib/`** — `db.ts` (Prisma client), `auth.ts` (NextAuth), `maintenance.ts`, `safe-fetch.ts`, `wordpress.ts`, `youtube.ts`, `utils.ts`
+- **`prisma/schema.prisma`** — model utama: `User`, `MenuItem` (nested via `parentId`), `SiteSetting` (key/value), serta model konten/layanan/laporan
+- Konten situs (menu, slide, halaman, pengaturan) di-drive dari database lewat panel admin, bukan hardcode.
+
+## Deployment
+
+- Output **standalone** Next.js; tersedia konfigurasi **Docker** (`Dockerfile`, `docker-compose*.yml`), **Caddy** (`Caddyfile*`), **nginx/aaPanel**, dan **PM2** (`ecosystem.config.js`).
+- **Maintenance mode** dikontrol via `src/lib/maintenance.ts` + API `api/maintenance` (lihat `MAINTENANCE-MODE.md`).
+- Dokumentasi tambahan: `DEPLOYMENT-CHECKLIST.md`, `DOCKER-DEPLOYMENT.md`, `PRODUCTION-DEPLOYMENT.md`, `VISITOR-STATISTICS.md`, `TTS-FEATURE.md`.
+- `DATABASE_URL` (MySQL) wajib di-set di `.env`.
+
+## Konvensi
+
+- Komentar & teks UI berbahasa Indonesia; ikuti gaya kode di sekitarnya.
+- Validasi input dengan Zod; form dengan React Hook Form.
+- Akses DB selalu lewat singleton Prisma client di `src/lib/db.ts`.
+
+---
+
 ## MCP Tools: code-review-graph
 
 **IMPORTANT: This project has a knowledge graph. ALWAYS use the
